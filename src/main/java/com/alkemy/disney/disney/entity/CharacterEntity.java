@@ -9,7 +9,7 @@ import java.util.*;
 @Entity
 @Getter
 @Setter
-@Table(name = "characters")
+@Table(name = "character")
 public class CharacterEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
