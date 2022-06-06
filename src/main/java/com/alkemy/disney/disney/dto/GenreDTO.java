@@ -5,18 +5,20 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.Column;
+import java.util.List;
+
 @Getter
 @Setter
 
-public class GenderDTO {
+public class GenreDTO {
     private Long id;
 
-    @Column(nullable = false)
     private String name;
-
 
     @Column(name = "image_url", nullable = false)
     private String imageUrl;
+
+    private List<MovieDTO> movies;
 
 
 }

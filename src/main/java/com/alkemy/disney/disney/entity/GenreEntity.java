@@ -6,14 +6,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-@Table (name = "gender")
+@Table (name = "genre")
 @Entity
-public class GenderEntity {
+public class GenreEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
 
@@ -25,8 +26,8 @@ public class GenderEntity {
     @Column(name = "image_url", nullable = false)
     private String imageUrl;
 
-   /* @OneToMany(mappedBy="gender")
-    private Set<MovieEntity> movies;*/
+    @OneToMany(mappedBy="genre")
+    private Set<MovieEntity> movies;
 
 
 }

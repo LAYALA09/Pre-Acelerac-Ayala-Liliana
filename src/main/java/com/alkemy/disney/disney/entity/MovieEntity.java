@@ -11,9 +11,9 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@Table (name="Movie")
+@Table(name = "Movie")
 public class MovieEntity {
-   @Id
+    @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "movie_id")
     private Long Id;
@@ -27,11 +27,11 @@ public class MovieEntity {
     @Column(name = "creation_date", nullable = false)
     private Date creationDate;
 
-    @Column(name = "grade", nullable = false)
-    private Integer grade;
+    @Column(name = "rating", nullable = false)
+    private Integer rating;
 
 
-    //relacion de mucho a muchos entre peliculaoserie y personaje
+    //Many to Many between movie and character
     @ManyToMany(cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE
@@ -42,15 +42,14 @@ public class MovieEntity {
     )
     private Set<CharacterEntity> characters = new HashSet<>();
 
-//relacion de muchos a uno entre Pelicula serie y genero
+   //Many to One between movie and genre
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "gender_id", insertable = false, updatable = false)
-    private GenderEntity gender;
+    @JoinColumn(name = "genre_id", insertable = false, updatable = false)
+    private GenreEntity genre;
 
-    @Column(name = "gender_id", nullable = false)
-    private Long genderId;
-
+    @Column(name = "genre_id", nullable = false)
+    private Long genreId;
 
 
 }
