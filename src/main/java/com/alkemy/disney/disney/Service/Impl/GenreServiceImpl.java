@@ -14,18 +14,24 @@ import java.util.List;
 public class GenreServiceImpl implements GenreService {
     @Autowired
     private GenreMapper genreMapper;
+
     @Autowired
     private GenreRepository genreRepository;
-    public GenreDTO save(GenreDTO dto){
-        GenreEntity entity= genreMapper.genreDTO2Entity(dto);
-        GenreEntity entitySaved= genreRepository.save(entity);
-        GenreDTO result= genreMapper.genreEntity2DTO(entitySaved);
+
+
+    //Post
+    public GenreDTO save(GenreDTO dto) {
+        GenreEntity entity = genreMapper.genreDTO2Entity(dto);
+        GenreEntity entitySaved = genreRepository.save(entity);
+        GenreDTO result = genreMapper.genreEntity2DTO(entitySaved);
         return result;
     }
 
 
-    public List<GenreDTO> getAllGenders() {
-        List<GenreEntity>entities= genreRepository.findAll();
+    //Get
+    @Override
+    public List<GenreDTO> getAllGenres() {
+        List<GenreEntity> entities = genreRepository.findAll();
         List<GenreDTO> result = genreMapper.genreEntityList2DTOList(entities);
         return result;
     }

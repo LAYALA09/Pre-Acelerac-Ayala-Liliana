@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.Column;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Getter
@@ -13,9 +14,10 @@ import java.util.List;
 public class GenreDTO {
     private Long id;
 
+    @NotBlank(message = "Name is required")
     private String name;
 
-    @Column(name = "image_url", nullable = false)
+    @NotBlank(message = "Image is required")
     private String imageUrl;
 
     private List<MovieDTO> movies;

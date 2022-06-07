@@ -16,6 +16,9 @@ public class CharacterEntity {
 
     private Long id;
 
+    @Column(name = "image_url", nullable = false)
+    private String imageUrl;
+
     @Column(nullable = false)
     private String name;
 
@@ -25,17 +28,13 @@ public class CharacterEntity {
     @Column(nullable = false)
     private float weight;
 
-    @Column(name = "image_url", nullable = false)
-    private String imageUrl;
 
     @Column(nullable = false)
     private String history;
 
 
-
     @ManyToMany(mappedBy = "characters", cascade = CascadeType.ALL)
     private List<MovieEntity> movies = new ArrayList<>();
-
 
 
 }

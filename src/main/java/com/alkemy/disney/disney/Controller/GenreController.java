@@ -20,7 +20,7 @@ public class GenreController {
     @GetMapping
     public ResponseEntity<List<GenreDTO>> getAll() {
         // se llama al servicio y se le pide el listado de Genres
-        List<GenreDTO> genres = genreService.getAllGenders();
+        List<GenreDTO> genres = genreService.getAllGenres();
         // se crea el response request
         return ResponseEntity
                 .ok()

@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface GenreService {
     GenreDTO save(GenreDTO dto);
-    List<GenreDTO> getAllGenders();
+
+    List<GenreDTO> getAllGenres();
 }
