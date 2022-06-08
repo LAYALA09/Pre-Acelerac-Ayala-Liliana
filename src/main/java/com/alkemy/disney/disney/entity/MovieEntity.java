@@ -42,10 +42,10 @@ public class MovieEntity {
     )
     private Set<CharacterEntity> characters = new HashSet<>();
 
-   //Many to One between movie and genre
+   //One to One between movie and genre
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "genre_id", insertable = false, updatable = false)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "genre_id", referencedColumnName = "id")
     private GenreEntity genres;
 
     @Column(name = "genre_id", nullable = false)

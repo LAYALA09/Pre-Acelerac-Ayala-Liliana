@@ -20,7 +20,7 @@ public class GenreDTO {
     @NotBlank(message = "Image is required")
     private String imageUrl;
 
-    private List<MovieDTO> movies;
+//saque lista de peliculas
 
 
 }

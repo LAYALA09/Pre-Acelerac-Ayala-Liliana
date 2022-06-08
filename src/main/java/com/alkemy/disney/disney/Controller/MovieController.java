@@ -19,7 +19,9 @@ public class MovieController {
 
     @GetMapping
     public ResponseEntity<List<MovieDTO>> getAll() {
+
         List<MovieDTO> movies = movieService.getAllMovies();
+
         return ResponseEntity
                 .ok()
                 .body(movies);
@@ -27,7 +29,9 @@ public class MovieController {
 
     @PostMapping
     public ResponseEntity<MovieDTO> save(@RequestBody MovieDTO movie) {
+
         MovieDTO movieguardado = movieService.save(movie);
+
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(movieguardado);

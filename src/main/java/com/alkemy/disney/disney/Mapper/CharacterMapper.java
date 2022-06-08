@@ -1,8 +1,12 @@
 package com.alkemy.disney.disney.Mapper;
 
+import com.alkemy.disney.disney.dto.CharacterBasicDTO;
 import com.alkemy.disney.disney.dto.CharacterDTO;
 import com.alkemy.disney.disney.entity.CharacterEntity;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class CharacterMapper {
@@ -29,4 +33,30 @@ public class CharacterMapper {
         return dto;
     }
 
+    //List--get
+
+    public List<CharacterDTO>characterEntityList2characterDtoList(List<CharacterEntity> entities) {
+      List<CharacterDTO> dtos = new ArrayList<>();
+        for (CharacterEntity entity : entities) {
+            dtos.add(this.characterEntity2DTO(entity));
+        }
+        return dtos;
+    }
+    // --- Entity -> BasicDTO ---
+    private CharacterBasicDTO charBasicEntity2DTOBasic(CharacterEntity entity) {
+        CharacterBasicDTO dto = new CharacterBasicDTO();
+        dto.setImageUrl(entity.getImageUrl());
+        dto.setName(entity.getName());
+        return dto;
+    }
+    // --- BasicList<Entity> -> BasicList<DTO> ---
+    public List<CharacterBasicDTO>charBasicEntityList2charBasicDtoList(List<CharacterEntity> entities) {
+        List<CharacterBasicDTO> dtos = new ArrayList<>();
+        for (CharacterEntity entity : entities) {
+            dtos.add(this.charBasicEntity2DTOBasic(entity));
+        }
+        return dtos;
+    }
+
 }
+

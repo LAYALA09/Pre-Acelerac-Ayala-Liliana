@@ -34,7 +34,7 @@ public class MovieDTO {
     private Integer rating;
 
     private List<CharacterDTO> characters;
-    private List<GenreDTO> genres;
+    //saque lista de generos
 
 
 

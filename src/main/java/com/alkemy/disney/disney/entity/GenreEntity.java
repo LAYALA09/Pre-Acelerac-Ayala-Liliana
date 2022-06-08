@@ -26,8 +26,8 @@ public class GenreEntity {
     @Column(name = "image_url", nullable = false)
     private String imageUrl;
 
-    @OneToMany(mappedBy="genre")
-    private Set<MovieEntity> movies;
+    @OneToOne(mappedBy = "genres")
+    private MovieEntity movies;
 
 
 }
