@@ -48,8 +48,8 @@ public class MovieEntity {
     @JoinColumn(name = "genre_id", referencedColumnName = "id")
     private GenreEntity genres;
 
-    @Column(name = "genre_id", nullable = false)
-    private Long genreId;
+
+
 
 
 }
