@@ -36,15 +36,13 @@ public class CharacterMapper {
         dto.setAge(entity.getAge());
         dto.setWeight(entity.getWeight());
         dto.setHistory(entity.getHistory());
-        if (fetchMovies) {
-            dto.setCharacterMovies(movieMapper.movieEntityList2DTOList(savedEntity.getCharacterMovies(), false));
-        }
+
         return dto;
 
 
     }
-     // --- List<Entity> -> List<DTO> ---
 
+     // --- List<Entity> -> List<DTO> ---
     public List<CharacterDTO> characterEntityList2characterDtoList(List<CharacterEntity> entities, boolean b) {
         List<CharacterDTO> dtos = new ArrayList<>();
         for (CharacterEntity entity : entities) {

@@ -23,22 +23,21 @@ public class CharacterServiceImpl implements CharacterService {
     public CharacterDTO save(CharacterDTO dto) {
         CharacterEntity entity = characterMapper.characterDTO2Entity(dto);
         CharacterEntity entitySaved = characterRepository.save(entity);
-        CharacterDTO result = characterMapper.characterEntity2DTO(entitySaved);
+        CharacterDTO result = characterMapper.characterEntity2DTO(entitySaved, false);
 
         return result;
     }
-   //Put
+
     @Override
     public CharacterDTO update(Long id, CharacterDTO character) throws ChangeSetPersister.NotFoundException {
         return null;
     }
 
 
-
     //Get--List
     public List<CharacterDTO> getAllCharacters() {
-        List<CharacterEntity> entities = characterRepository.findAll();
-        List<CharacterDTO> result = characterMapper.characterEntityList2characterDtoList(entities);
+        List<CharacterEntity> characters = characterRepository.findAll();
+        List<CharacterDTO> result = characterMapper.characterEntityList2characterDtoList(characters, true);
         return result;
     }
 
@@ -51,11 +50,10 @@ public class CharacterServiceImpl implements CharacterService {
         return result;
     }
 
-    // --- DELETE ---
+    // Delete
     @Override
     public void deleteCharacterById(Long id) {
         characterRepository.deleteById(id);
     }
-
 
 }

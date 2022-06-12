@@ -18,7 +18,7 @@ public class MovieController {
     @Autowired
     private MovieService movieService;
 
-//Get Movies
+    //Get Movies
     @GetMapping
     public ResponseEntity<List<MovieDTO>> getAll() {
         List<MovieDTO> movies = movieService.getAllMovies();
@@ -27,34 +27,30 @@ public class MovieController {
                 .body(movies);
     }
 
-//Post Movie
+    //Post Movie
     @PostMapping
     public ResponseEntity<MovieDTO> save(@RequestBody MovieDTO movie) {
         MovieDTO movieUpdate = movieService.save(movie);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(movieUpdate );
+                .body(movieUpdate);
 
     }
 
-//Get Movie Basic
+    //Get Movie Basic
     @GetMapping
     public ResponseEntity<List<MovieBasicDTO>> getBasicAll() {
-        List<MovieBasicDTO> moviesBasic = movieService.getBasicDTOList();
+        List<MovieBasicDTO> moviesBasic = movieService.getMovieBasicList();
         return ResponseEntity.ok().body(moviesBasic);
     }
+
     // == DELETE ==
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteById(@PathVariable Long id){
-        movieService.deletemovieById(id);
+    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
+        movieService.deleteMovieById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    //Put Movie
-    @PutMapping("/{id}")
-    public ResponseEntity<MovieDTO> update(@PathVariable Long id, @RequestBody MovieDTO dto) throws NotFoundException {
-        MovieDTO result = movieService.update(id, dto);
-        return ResponseEntity.ok().body(result);
-    }
+
 
 }

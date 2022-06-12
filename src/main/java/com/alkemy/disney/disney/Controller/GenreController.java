@@ -40,25 +40,12 @@ public class GenreController {
                 .body( genreUpdated);
 
     }
-    //Delete Genre
-   @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-
-        //Le pasamos el parámetro recibido desde el path al método de eliminación del Service
-        genreService.delete(id);
-
-        //Devolvemos el código 201 de creado
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    // == DELETE ==
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteById(@PathVariable Long id){
+       genreService.deleteGenreById(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    //EndPoint para actualizar los atributos del registro correspondiente al id pasado como Path Variable
-    @PutMapping("/{id}")
-    public ResponseEntity<GenreDTO> update(@PathVariable Long id, @RequestBody GenreDTO dto) throws ChangeSetPersister.NotFoundException {
 
-        //Llamamos al método del Service pasandole el id del registro a actualizar y el dto con todos los atributos nuevos
-        GenreDTO result = genreService.update(id, dto);
-
-        //Devolvemos un ResponseEntity con el dto actualizado en el body
-        return ResponseEntity.ok().body(result);
-    }
 }

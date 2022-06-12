@@ -19,24 +19,21 @@ public class MovieMapper {
         movieEntity.setImage(dto.getImage());
         movieEntity.setTitle(dto.getTitle());
         movieEntity.setRating(dto.getRating());
-        movieEntity.setCreationDate((this.String2LocalDate(dto.getCreationDate()));
+        movieEntity.setCreationDate(dto.getCreationDate());
 
         return movieEntity;
 
     }
 
     //entity to dto--post
-    public MovieDTO movieEntity2DTO(MovieEntity entity) {
+    public MovieDTO movieEntity2DTO(MovieEntity entity ) {
         MovieDTO dto = new MovieDTO();
         dto.setId(entity.getId());
         dto.setImage(entity.getImage());
         dto.setTitle(entity.getTitle());
         dto.setRating(entity.getRating());
-        dto.setCreationDate(this.localDate2String(dbMovie.getCreationDate()));
-        if(b) {
-            dto.setMovieCharacters(charMapper.charListEntity2DTOList(dbMovie.getMovieCharacters(),false));
-            dto.setMovieGenres(genreMapper.genreEntityList2DTOList(dbMovie.getMovieGenres()));
-        }
+        dto.setCreationDate((entity.getCreationDate()));
+
         return dto;
     }
 

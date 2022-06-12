@@ -35,4 +35,12 @@ public class GenreServiceImpl implements GenreService {
         List<GenreDTO> result = genreMapper.genreEntityList2DTOList(entities);
         return result;
     }
+
+    //Delete
+    @Override
+    public void deleteGenreById(Long id) {
+        genreRepository.deleteById(id);
+    }
+
+
 }
