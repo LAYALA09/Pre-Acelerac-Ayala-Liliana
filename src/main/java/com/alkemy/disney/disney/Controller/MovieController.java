@@ -19,7 +19,7 @@ public class MovieController {
     private MovieService movieService;
 
     //Get Movies
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<MovieDTO>> getAll() {
         List<MovieDTO> movies = movieService.getAllMovies();
         return ResponseEntity

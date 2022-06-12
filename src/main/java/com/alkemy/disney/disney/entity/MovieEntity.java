@@ -51,12 +51,15 @@ public class MovieEntity {
     )
     private Set<CharacterEntity> characters = new HashSet<>();
 
-//buscar información
+    //buscar información
     //FetchType.EAGER=Inicialización tipo temprana, quiere decir que la información q pida de Movie viene con su género
-    @ManyToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER,cascade={ CascadeType.PERSIST, CascadeType.MERGE } )
     @JoinColumn (name = "genre_id", insertable=false, updatable = false )
     private GenreEntity genre;
-//guardar y actualizar// define la columna de genreid en la base de datos
+
+
+
+    //guardar y actualizar// define la columna de genreid en la base de datos
     @Column(name="genre_id", nullable= false)
     private Long genreId;
 

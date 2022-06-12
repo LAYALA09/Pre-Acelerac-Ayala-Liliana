@@ -19,7 +19,7 @@ public class GenreController {
     private GenreService genreService;
 
     //Get Genres
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<GenreDTO>> getAll() {
         // se llama al servicio y se le pide el listado de Genres
         List<GenreDTO> genres = genreService.getAllGenres();

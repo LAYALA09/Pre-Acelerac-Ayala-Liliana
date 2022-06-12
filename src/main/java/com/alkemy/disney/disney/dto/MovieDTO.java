@@ -17,7 +17,8 @@ public class MovieDTO {
     private Long id;
     private String image;
     private String title;
-    @Column(name= "date_creation") @DateTimeFormat(pattern = "YYYY/MM/dd")
+    @Column(name= "date_creation")
+    @DateTimeFormat(pattern = "YYYY/MM/dd")
     private LocalDate creationDate;
     private Float rating;
     private Long genreId;

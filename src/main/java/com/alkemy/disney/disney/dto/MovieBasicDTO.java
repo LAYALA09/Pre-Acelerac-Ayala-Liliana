@@ -17,7 +17,8 @@ public class MovieBasicDTO {
 
     private String image;
     private String title;
-    @Column(name= "date_creation") @DateTimeFormat(pattern = "YYYY/MM/dd")
+    @Column(name= "date_creation")
+    @DateTimeFormat(pattern = "YYYY/MM/dd")
     private LocalDate creationDate;
 
 }

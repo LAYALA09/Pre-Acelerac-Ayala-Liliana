@@ -28,6 +28,7 @@ public class CharacterServiceImpl implements CharacterService {
         return result;
     }
 
+    // TODO: Falta desarrolar método
     @Override
     public CharacterDTO update(Long id, CharacterDTO character) throws ChangeSetPersister.NotFoundException {
         return null;

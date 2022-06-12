@@ -2,7 +2,6 @@ package com.alkemy.disney.disney.Mapper;
 
 import com.alkemy.disney.disney.dto.GenreDTO;
 import com.alkemy.disney.disney.entity.GenreEntity;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 
@@ -13,7 +12,6 @@ import java.util.List;
 public class GenreMapper {
 
     //dto to Entity--Post
-
     public GenreEntity genreDTO2Entity(GenreDTO dto) {
         GenreEntity genreEntity = new GenreEntity();
         genreEntity.setName(dto.getName());

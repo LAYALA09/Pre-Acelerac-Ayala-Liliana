@@ -15,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("characters")
+//Controller==> se recibe una solicitud y se devuelve una respuesta
 public class CharacterController {
     @Autowired
     private CharacterService characterService;
@@ -38,8 +39,9 @@ public class CharacterController {
    // Post
     @PostMapping
     public ResponseEntity<CharacterDTO> save(@RequestBody CharacterDTO character) {
+        //save
         CharacterDTO characterUpdated = characterService.save(character);
-        return ResponseEntity
+        return ResponseEntity//201
                 .status(HttpStatus.CREATED)
                 .body(characterUpdated);
     }

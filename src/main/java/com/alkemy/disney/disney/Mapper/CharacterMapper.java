@@ -27,8 +27,8 @@ public class CharacterMapper {
 
     }
 
-    //entity to dto
-    public CharacterDTO characterEntity2DTO(CharacterEntity entity, boolean fetchMovies) {
+    //==Entity to DTO
+    public CharacterDTO characterEntity2DTO(CharacterEntity entity, boolean b) {
         CharacterDTO dto = new CharacterDTO();
         dto.setId(entity.getId());
         dto.setImage(entity.getImage());
