@@ -31,7 +31,7 @@ public class CharacterEntity {
 
     private String history;
 
-    private boolean delete=Boolean.FALSE;
+    //private boolean delete=Boolean.FALSE;
 
     @ManyToMany(mappedBy = "characters", cascade = CascadeType.ALL)
     private List<MovieEntity> movies = new ArrayList<>();
