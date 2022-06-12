@@ -2,8 +2,12 @@ package com.alkemy.disney.disney.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -12,23 +16,28 @@ import java.util.Set;
 @Getter
 @Setter
 @Table(name = "Movie")
+@SQLDelete(sql = "UPDATE movies SET deleted = true WHERE id=?")
+@Where(clause = "deleted=false")
 public class MovieEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "movie_id")
-    private Long Id;
 
-    @Column(name = "image_url", nullable = false)
-    private String imageUrl;
+    private Long id;
 
-    @Column(nullable = false)
+    //Atributos
+
+    private String image;
+
     private String title;
 
-    @Column(name = "creation_date", nullable = false)
-    private Date creationDate;
+    @Column(name = "creation_date")
+    @DateTimeFormat(pattern = "yyyy/MM/dd")
+    private LocalDate creationDate;
 
-    @Column(name = "rating", nullable = false)
-    private Integer rating;
+
+    private Float rating;
+
+    private boolean deleted = Boolean.FALSE;
 
 
     //Many to Many between movie and character
@@ -42,12 +51,14 @@ public class MovieEntity {
     )
     private Set<CharacterEntity> characters = new HashSet<>();
 
-   //One to One between movie and genre
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "genre_id", referencedColumnName = "id")
-    private GenreEntity genres;
-
+//buscar información
+    //FetchType.EAGER=Inicialización tipo temprana, quiere decir que la información q pida de Movie viene con su género
+    @ManyToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
+    @JoinColumn (name = "genre_id", insertable=false, updatable = false )
+    private GenreEntity genre;
+//guardar y actualizar// define la columna de genreid en la base de datos
+    @Column(name="genre_id", nullable= false)
+    private Long genreId;
 
 
 

@@ -2,6 +2,8 @@ package com.alkemy.disney.disney.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.*;
@@ -10,28 +12,26 @@ import java.util.*;
 @Getter
 @Setter
 @Table(name = "character")
+@SQLDelete(sql = "UPDATE characters SET deleted = true WHERE id=?")
+@Where(clause = "deleted=false")
 public class CharacterEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
 
     private Long id;
 
-    @Column(name = "image_url", nullable = false)
-    private String imageUrl;
+    //Atributos
+    private String image;
 
-    @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
     private Integer age;
 
-    @Column(nullable = false)
-    private float weight;
+    private Float weight;
 
-
-    @Column(nullable = false)
     private String history;
 
+    private boolean delete=Boolean.FALSE;
 
     @ManyToMany(mappedBy = "characters", cascade = CascadeType.ALL)
     private List<MovieEntity> movies = new ArrayList<>();

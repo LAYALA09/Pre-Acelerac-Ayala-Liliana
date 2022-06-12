@@ -3,13 +3,14 @@ package com.alkemy.disney.disney.Controller;
 import com.alkemy.disney.disney.Service.CharacterService;
 import com.alkemy.disney.disney.dto.CharacterBasicDTO;
 import com.alkemy.disney.disney.dto.CharacterDTO;
-import com.alkemy.disney.disney.dto.MovieDTO;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.PublicKey;
+
 import java.util.List;
 
 @RestController
@@ -17,9 +18,10 @@ import java.util.List;
 public class CharacterController {
     @Autowired
     private CharacterService characterService;
+
    //Get
-    @GetMapping
-    ResponseEntity<List<CharacterDTO>> getAll() {
+    @GetMapping("/all")
+    public ResponseEntity<List<CharacterDTO>> getAll() {
         List<CharacterDTO> characters = characterService.getAllCharacters();
         return ResponseEntity
                 .ok()
@@ -27,38 +29,35 @@ public class CharacterController {
     }
 
    //== GET ==Listado de personaje : image and name //CharacterBasicDTO
-    @GetMapping("/all")
+    @GetMapping
     public ResponseEntity<List<CharacterBasicDTO>> getBasicCharacters(){
         List<CharacterBasicDTO> character = characterService.getCharacterBasicList();
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(character);
     }
+
    // Post
     @PostMapping
-    ResponseEntity<CharacterDTO> save(@RequestBody CharacterDTO character) {
-        CharacterDTO characterguardado = characterService.save(character);
+    public ResponseEntity<CharacterDTO> save(@RequestBody CharacterDTO character) {
+        CharacterDTO characterUpdated = characterService.save(character);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(characterguardado);
+                .body(characterUpdated);
     }
+
+
 
     //Put
     @PutMapping("/{id}")
-    public ResponseEntity<CharacterDTO>update(@PathVariable Long id, @PathVariable CharacterDTO character){
-        CharacterDTO result=this.characterService.update(id, character);
-        return ResponseEntity
-                .ok()
-                .body(result);
-
+    public ResponseEntity<CharacterDTO> update(@PathVariable Long id, @RequestBody CharacterDTO dto) throws ChangeSetPersister.NotFoundException {
+        CharacterDTO result = characterService.update(id, dto);
+        return ResponseEntity.ok().body(result);
     }
 
-    @PostMapping("/{id} /movie/{idMovie}")
-    public ResponseEntity<Void>addMovie(@PathVariable long id, @PathVariable Long idMovie){
-        characterService.addMovie(id, idMovie);
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .build();
-
-
+    // == DELETE ==
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteById(@PathVariable Long id){
+       characterService.deleteCharacterById(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 

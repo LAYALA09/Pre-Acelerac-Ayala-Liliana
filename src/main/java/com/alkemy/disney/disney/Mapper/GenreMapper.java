@@ -2,6 +2,7 @@ package com.alkemy.disney.disney.Mapper;
 
 import com.alkemy.disney.disney.dto.GenreDTO;
 import com.alkemy.disney.disney.entity.GenreEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 
@@ -10,12 +11,13 @@ import java.util.List;
 
 @Component
 public class GenreMapper {
+
     //dto to Entity--Post
 
     public GenreEntity genreDTO2Entity(GenreDTO dto) {
         GenreEntity genreEntity = new GenreEntity();
         genreEntity.setName(dto.getName());
-        genreEntity.setImageUrl(dto.getImageUrl());
+        genreEntity.setImage(dto.getImage());
         return genreEntity;
 
     }
@@ -25,7 +27,7 @@ public class GenreMapper {
         GenreDTO dto = new GenreDTO();
         dto.setId(entity.getId());
         dto.setName(entity.getName());
-        dto.setImageUrl(entity.getImageUrl());
+        dto.setImage(entity.getImage());
         return dto;
 
     }

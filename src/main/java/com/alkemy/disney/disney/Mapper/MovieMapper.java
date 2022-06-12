@@ -4,6 +4,8 @@ import com.alkemy.disney.disney.dto.MovieDTO;
 import com.alkemy.disney.disney.entity.MovieEntity;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,11 +13,14 @@ import java.util.List;
 public class MovieMapper {
     //dto to entity--post
     public MovieEntity movieDTO2Entity(MovieDTO dto) {
+
         MovieEntity movieEntity = new MovieEntity();
-        movieEntity.setImageUrl(dto.getImageUrl());
+        movieEntity.setId(dto.getId());
+        movieEntity.setImage(dto.getImage());
         movieEntity.setTitle(dto.getTitle());
-        movieEntity.setCreationDate(dto.getCreationDate());
         movieEntity.setRating(dto.getRating());
+        movieEntity.setCreationDate((this.String2LocalDate(dto.getCreationDate()));
+
         return movieEntity;
 
     }
@@ -24,10 +29,14 @@ public class MovieMapper {
     public MovieDTO movieEntity2DTO(MovieEntity entity) {
         MovieDTO dto = new MovieDTO();
         dto.setId(entity.getId());
-        dto.setImageUrl(entity.getImageUrl());
+        dto.setImage(entity.getImage());
         dto.setTitle(entity.getTitle());
-        dto.setCreationDate(entity.getCreationDate());
         dto.setRating(entity.getRating());
+        dto.setCreationDate(this.localDate2String(dbMovie.getCreationDate()));
+        if(b) {
+            dto.setMovieCharacters(charMapper.charListEntity2DTOList(dbMovie.getMovieCharacters(),false));
+            dto.setMovieGenres(genreMapper.genreEntityList2DTOList(dbMovie.getMovieGenres()));
+        }
         return dto;
     }
 
@@ -38,5 +47,15 @@ public class MovieMapper {
             dtos.add(this.movieEntity2DTO(entity));
         }
         return dtos;
+    }
+    //--> Utils <--
+    public LocalDate String2LocalDate(String enteredDate) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
+        LocalDate transformedDate = LocalDate.parse(enteredDate, formatter);
+        return transformedDate;
+    }
+    public String localDate2String(LocalDate dbDate) {
+        String formattedDate = dbDate.format(DateTimeFormatter.ofPattern("d/MM/yyyy"));
+        return formattedDate;
     }
 }

@@ -2,7 +2,9 @@ package com.alkemy.disney.disney.Mapper;
 
 import com.alkemy.disney.disney.dto.CharacterBasicDTO;
 import com.alkemy.disney.disney.dto.CharacterDTO;
+
 import com.alkemy.disney.disney.entity.CharacterEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -10,10 +12,13 @@ import java.util.List;
 
 @Component
 public class CharacterMapper {
-    //dto to entity
+    @Autowired
+    private MovieMapper movieMapper;
+
+    // === DTO -> Entity ===
     public CharacterEntity characterDTO2Entity(CharacterDTO dto) {
         CharacterEntity characterEntity = new CharacterEntity();
-        characterEntity.setImageUrl(dto.getImageUrl());
+        characterEntity.setImage(dto.getImage());
         characterEntity.setName(dto.getName());
         characterEntity.setAge(dto.getAge());
         characterEntity.setWeight(dto.getWeight());
@@ -23,40 +28,48 @@ public class CharacterMapper {
     }
 
     //entity to dto
-    public CharacterDTO characterEntity2DTO(CharacterEntity entity) {
+    public CharacterDTO characterEntity2DTO(CharacterEntity entity, boolean fetchMovies) {
         CharacterDTO dto = new CharacterDTO();
         dto.setId(entity.getId());
-        dto.setImageUrl(entity.getImageUrl());
+        dto.setImage(entity.getImage());
         dto.setName(entity.getName());
         dto.setAge(entity.getAge());
         dto.setWeight(entity.getWeight());
+        dto.setHistory(entity.getHistory());
+        if (fetchMovies) {
+            dto.setCharacterMovies(movieMapper.movieEntityList2DTOList(savedEntity.getCharacterMovies(), false));
+        }
         return dto;
+
+
     }
+     // --- List<Entity> -> List<DTO> ---
 
-    //List--get
-
-    public List<CharacterDTO>characterEntityList2characterDtoList(List<CharacterEntity> entities) {
-      List<CharacterDTO> dtos = new ArrayList<>();
+    public List<CharacterDTO> characterEntityList2characterDtoList(List<CharacterEntity> entities, boolean b) {
+        List<CharacterDTO> dtos = new ArrayList<>();
         for (CharacterEntity entity : entities) {
-            dtos.add(this.characterEntity2DTO(entity));
+            dtos.add(this.characterEntity2DTO(entity,b));
         }
         return dtos;
     }
+
     // --- Entity -> BasicDTO ---
-    private CharacterBasicDTO charBasicEntity2DTOBasic(CharacterEntity entity) {
+    private CharacterBasicDTO characterEntity2BasicDTO(CharacterEntity entity) {
         CharacterBasicDTO dto = new CharacterBasicDTO();
-        dto.setImageUrl(entity.getImageUrl());
+        dto.setImage(entity.getImage());
         dto.setName(entity.getName());
         return dto;
     }
+
     // --- BasicList<Entity> -> BasicList<DTO> ---
-    public List<CharacterBasicDTO>charBasicEntityList2charBasicDtoList(List<CharacterEntity> entities) {
+    public List<CharacterBasicDTO> characterEntityList2charBasicDtoList(List<CharacterEntity> entities) {
         List<CharacterBasicDTO> dtos = new ArrayList<>();
         for (CharacterEntity entity : entities) {
-            dtos.add(this.charBasicEntity2DTOBasic(entity));
+            dtos.add(this.characterEntity2BasicDTO(entity));
         }
         return dtos;
     }
+
 
 }
 

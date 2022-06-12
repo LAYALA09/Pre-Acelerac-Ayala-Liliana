@@ -12,15 +12,12 @@ import java.util.List;
 @Setter
 
 public class GenreDTO {
+    //Atributos
     private Long id;
-
-    @NotBlank(message = "Name is required")
     private String name;
+    private String image;
 
-    @NotBlank(message = "Image is required")
-    private String imageUrl;
 
-//saque lista de peliculas
 
 
 }
