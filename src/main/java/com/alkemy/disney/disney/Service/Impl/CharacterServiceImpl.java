@@ -28,6 +28,7 @@ public class CharacterServiceImpl implements CharacterService {
         return result;
     }
 
+
     // TODO: Falta desarrolar método
     @Override
     public CharacterDTO update(Long id, CharacterDTO character) throws ChangeSetPersister.NotFoundException {
@@ -44,10 +45,9 @@ public class CharacterServiceImpl implements CharacterService {
 
 
     //GET DE CharacterBasicDTO
-    @Override
     public List<CharacterBasicDTO> getCharacterBasicList() {
-        List<CharacterEntity> entities = characterRepository.findAll();
-        List<CharacterBasicDTO> result = characterMapper.characterEntityList2charBasicDtoList(entities);
+        List<CharacterEntity> characters = characterRepository.findAll();
+        List<CharacterBasicDTO> result = characterMapper.characterEntityList2charBasicDtoList(characters);
         return result;
     }
 
