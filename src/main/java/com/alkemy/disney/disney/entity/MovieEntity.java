@@ -5,17 +5,16 @@ import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Entity
 @Getter
 @Setter
-@Table(name = "Movie")
+@Table(name = "movies")
 @SQLDelete(sql = "UPDATE movies SET deleted = true WHERE id=?")
 @Where(clause = "deleted=false")
 public class MovieEntity {
@@ -41,15 +40,18 @@ public class MovieEntity {
 
 
     //Many to Many between movie and character
-    @ManyToMany(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
-    @JoinTable(name = "movie_character",
+    //El tipo de cascada de la relación será con las operaciones de persistir y mergear
+    @ManyToMany(
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
+    // Definimos el nombre de la tabla intermedia y los nombres de ambas columnas
+    @JoinTable(
+            name = "movies_characters",
             joinColumns = @JoinColumn(name = "movie_id"),
-            inverseJoinColumns = @JoinColumn(name = "character_id")
-    )
-    private Set<CharacterEntity> characters = new HashSet<>();
+            inverseJoinColumns = @JoinColumn(name = "character_id"))
+    private List<CharacterEntity> characters = new ArrayList();
 
     //buscar información
     //FetchType.EAGER=Inicialización tipo temprana, quiere decir que la información q pida de Movie viene con su género

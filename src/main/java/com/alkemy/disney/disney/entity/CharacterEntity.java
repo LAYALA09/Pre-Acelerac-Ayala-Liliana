@@ -11,7 +11,7 @@ import java.util.*;
 @Entity
 @Getter
 @Setter
-@Table(name = "character")
+@Table(name = "characters")
 @SQLDelete(sql = "UPDATE characters SET deleted = true WHERE id=?")
 @Where(clause = "deleted=false")
 public class CharacterEntity {
@@ -31,7 +31,7 @@ public class CharacterEntity {
 
     private String history;
 
-    //private boolean delete=Boolean.FALSE;
+    private boolean delete=Boolean.FALSE;
 
     @ManyToMany(mappedBy = "characters", cascade = CascadeType.ALL)
     private List<MovieEntity> movies = new ArrayList<>();

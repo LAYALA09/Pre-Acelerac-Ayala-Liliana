@@ -16,7 +16,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table (name = "genre")
+@Table (name = "genres")
 @Entity
 @SQLDelete(sql = "UPDATE genre SET deleted = true WHERE id=?") // Indicamos que query ejecutar al llamar un DELETE
 @Where(clause = "deleted=false") // Le agrega una clausula extra a las queries que se realicen para diferenciar a los borrados de los no borrados

@@ -8,6 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CharacterBasicDTO {
+
     //Atributos
     private Long id;
     private String image;
