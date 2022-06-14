@@ -15,7 +15,7 @@ public class CharacterMapper {
     @Autowired
     private MovieMapper movieMapper;
 
-    // === DTO -> Entity ===
+    // === DTO To Entity ===
     public CharacterEntity characterDTO2Entity(CharacterDTO dto) {
         CharacterEntity characterEntity = new CharacterEntity();
         characterEntity.setImage(dto.getImage());
@@ -27,22 +27,25 @@ public class CharacterMapper {
 
     }
 
-    //==Entity to DTO
-    public CharacterDTO characterEntity2DTO(CharacterEntity entity, boolean b) {
+    //===Entity to DTO ===
+    public CharacterDTO characterEntity2DTO(CharacterEntity entities, boolean fetchMovies) {
         CharacterDTO dto = new CharacterDTO();
-        dto.setId(entity.getId());
-        dto.setImage(entity.getImage());
-        dto.setName(entity.getName());
-        dto.setAge(entity.getAge());
-        dto.setWeight(entity.getWeight());
-        dto.setHistory(entity.getHistory());
+        dto.setId(entities.getId());
+        dto.setImage(entities.getImage());
+        dto.setName(entities.getName());
+        dto.setAge(entities.getAge());
+        dto.setWeight(entities.getWeight());
+        dto.setHistory(entities.getHistory());
+        if (fetchMovies) {
+            dto.setMovies(movieMapper.movieEntityList2MovieDtoList(entities.getMovies(), false));
+        }
 
         return dto;
 
 
     }
 
-     // --- List<Entity> -> List<DTO> ---
+     // --- List<Entity> To List<DTO> ---
     public List<CharacterDTO> characterEntityList2characterDtoList(List<CharacterEntity> entities, boolean b) {
         List<CharacterDTO> dtos = new ArrayList<>();
         for (CharacterEntity entity : entities) {
@@ -51,7 +54,7 @@ public class CharacterMapper {
         return dtos;
     }
 
-    // --- Entity -> BasicDTO ---
+    // --- Entity To BasicDTO ---
     private CharacterBasicDTO characterEntity2BasicDTO(CharacterEntity entity) {
         CharacterBasicDTO dto = new CharacterBasicDTO();
         dto.setImage(entity.getImage());
@@ -59,7 +62,7 @@ public class CharacterMapper {
         return dto;
     }
 
-    // --- BasicList<Entity> -> BasicList<DTO> ---
+    // --- BasicList<Entity> To BasicList<DTO> ---
     public List<CharacterBasicDTO> characterEntityList2charBasicDtoList(List<CharacterEntity> entities) {
         List<CharacterBasicDTO> dtos = new ArrayList<>();
         for (CharacterEntity entity : entities) {

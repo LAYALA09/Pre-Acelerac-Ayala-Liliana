@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("characters")
@@ -16,8 +17,8 @@ import java.util.List;
 public class CharacterController {
     @Autowired
     private CharacterService characterService;
-
-   //Get
+   //5. Detalle de Personaje
+   //Get Character
     @GetMapping("/all")
     public ResponseEntity<List<CharacterDTO>> getAll() {
         List<CharacterDTO> characters = characterService.getAllCharacters();
@@ -26,12 +27,21 @@ public class CharacterController {
                 .body(characters);
     }
 
-   //== GET ==Listado de personaje : image and name //CharacterBasicDTO
-    @GetMapping
+   //== GET ==Listado de personaje punto 3: image and name //CharacterBasicDTO
+    @GetMapping("/all")
     public ResponseEntity<List<CharacterBasicDTO>> getBasicCharacters(){
         List<CharacterBasicDTO> character = characterService.getCharacterBasicList();
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(character);
+        return ResponseEntity
+                .status(HttpStatus.ACCEPTED)
+                .body(character);
     }
+    @GetMapping("/details/{id}")
+    public ResponseEntity<CharacterDTO> getDetailsById(@PathVariable Long id){
+        CharacterDTO characterDetails = characterService.getCharacterDetails(id);
+        return ResponseEntity.status(HttpStatus.OK).body(characterDetails);
+    }
+
+    //4. Creación, Edición y Eliminación de Personajes (CRUD)
 
    // Post
     @PostMapping
@@ -49,14 +59,31 @@ public class CharacterController {
     @PutMapping("/{id}")
     public ResponseEntity<CharacterDTO> update(@PathVariable Long id, @RequestBody CharacterDTO dto) throws ChangeSetPersister.NotFoundException {
         CharacterDTO result = characterService.update(id, dto);
-        return ResponseEntity.ok().body(result);
+        return ResponseEntity
+                .ok()
+                .body(result);
     }
 
     // == DELETE ==
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable Long id){
        characterService.deleteCharacterById(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity
+                .status(HttpStatus.NO_CONTENT)
+                .build();
+    }
+    //6. Búsqueda de Personajes
+    //  Filters
+    @GetMapping()
+    public ResponseEntity<List<CharacterDTO>> getDetailsByFilters(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) Integer age,
+            @RequestParam(required = false) Set<Long> movies
+    ){
+        List<CharacterDTO> characterList = characterService.getByFilters(name, age, movies);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(characterList);
     }
 
 

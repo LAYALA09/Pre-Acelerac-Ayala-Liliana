@@ -26,7 +26,7 @@ public class MovieMapper {
     }
 
     //entity to dto--post
-    public MovieDTO movieEntity2DTO(MovieEntity entity) {
+    public MovieDTO movieEntity2DTO(MovieEntity entity, boolean b) {
         MovieDTO dto = new MovieDTO();
         dto.setId(entity.getId());
         dto.setImage(entity.getImage());
@@ -38,10 +38,10 @@ public class MovieMapper {
     }
 
     //Get
-    public List<MovieDTO> movieEntityList2MovieDtoList(List<MovieEntity> entities) {
+    public List<MovieDTO> movieEntityList2MovieDtoList(List<MovieEntity> entities, boolean b) {
         List<MovieDTO> dtos = new ArrayList<>();
         for (MovieEntity entity : entities) {
-            dtos.add(this.movieEntity2DTO(entity));
+            dtos.add(this.movieEntity2DTO(entity,b));
         }
         return dtos;
     }

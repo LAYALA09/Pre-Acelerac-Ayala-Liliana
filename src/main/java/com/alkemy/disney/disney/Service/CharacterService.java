@@ -4,6 +4,7 @@ import com.alkemy.disney.disney.dto.CharacterBasicDTO;
 import com.alkemy.disney.disney.dto.CharacterDTO;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import java.util.List;
+import java.util.Set;
 
 public interface CharacterService {
 
@@ -25,7 +26,8 @@ public interface CharacterService {
 
     //TODO: Falta updateCharacter
 
-    //TODO: Falta Filters
+    // Filters
+    List<CharacterDTO> getByFilters(String name, Integer age, Set<Long> movies);
 
 
 
