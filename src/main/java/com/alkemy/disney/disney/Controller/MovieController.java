@@ -13,10 +13,11 @@ import java.util.Set;
 @RestController
 @RequestMapping(name = "movies")
 public class MovieController {
+
     @Autowired
     private MovieService movieService;
 
-   //8. Detalle de Película / Serie con sus personajes
+   //6. Detalle de Película con sus personajes
     //Get Movies
     @GetMapping("/all")
     public ResponseEntity<List<MovieDTO>> getAll() {
@@ -26,15 +27,15 @@ public class MovieController {
                 .body(movies);
     }
 
-    // 7. Listado de Películas== imagen, título y fecha de creación
+    // 8. Listado de Películas== imagen, título y fecha de creación
     //Get Movie Basic
-    @GetMapping
+    @GetMapping("/aLL")
     public ResponseEntity<List<MovieBasicDTO>> getBasicAll() {
         List<MovieBasicDTO> moviesBasic = movieService.getMovieBasicList();
         return ResponseEntity.ok().body(moviesBasic);
     }
 
-    //9. Creación, Edición y Eliminación de Película / Serie
+    //7. Creación, Edición y Eliminación de Película
     //Post
     @PostMapping
     public ResponseEntity<MovieDTO> save(@RequestBody MovieDTO movie) {
@@ -55,19 +56,24 @@ public class MovieController {
     }
     //TODO: Falta update de MOvie
 
-    //10.Búsqueda de Películas o Series
-
+    //8.Búsqueda de Películas
     //Filter
     @GetMapping
     public ResponseEntity<List<MovieDTO>> getDetailsByFilters(
             @RequestParam(required = false) String title,
             @RequestParam(required = false) Set<Long> genre,
             @RequestParam(required = false, defaultValue = "ASC") String order
-    ){
+    ) {
         List<MovieDTO> filteredMovies = movieService.getByFilters(title, genre, order);
-        return ResponseEntity.status(HttpStatus.OK).body(filteredMovies);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(filteredMovies);
+
+
     }
 
+    //9. Agregar/Remover personajes a una película
+    //TODO: FALTA HACER ESTE PUNTO
 
 
 }

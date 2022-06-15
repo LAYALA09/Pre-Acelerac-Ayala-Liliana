@@ -25,6 +25,7 @@ public class CharacterServiceImpl implements CharacterService {
     private CharacterSpecification characterSpecification;
 
     //Post
+    @Override
     public CharacterDTO save(CharacterDTO dto) {
         CharacterEntity entity = characterMapper.characterDTO2Entity(dto);
         CharacterEntity entitySaved = characterRepository.save(entity);
@@ -32,8 +33,16 @@ public class CharacterServiceImpl implements CharacterService {
 
         return result;
     }
+    //Get x Id
+   @Override
+    public CharacterDTO getCharDetails(Long id) {
+        CharacterEntity entity = this.handleFindById(id);
+        CharacterDTO resultDTO = characterMapper.characterEntity2DTO(entity,true);
+        return resultDTO;
+    }
 
     //Get All
+    @Override
     public List<CharacterDTO> getAllCharacters() {
         List<CharacterEntity> characters = characterRepository.findAll();
         List<CharacterDTO> result = characterMapper.characterEntityList2characterDtoList(characters, true);
@@ -41,6 +50,7 @@ public class CharacterServiceImpl implements CharacterService {
     }
 
     //Get de CharacterBasicDTO
+    @Override
     public List<CharacterBasicDTO> getCharacterBasicList() {
         List<CharacterEntity> characters = characterRepository.findAll();
         List<CharacterBasicDTO> result = characterMapper.characterEntityList2charBasicDtoList(characters);

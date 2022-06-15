@@ -36,6 +36,8 @@ public class CharacterMapper {
         dto.setAge(entities.getAge());
         dto.setWeight(entities.getWeight());
         dto.setHistory(entities.getHistory());
+        //para evitar un bucle infinito usamos boolean
+        //cargo movies y no character
         if (fetchMovies) {
             dto.setMovies(movieMapper.movieEntityList2MovieDtoList(entities.getMovies(), false));
         }

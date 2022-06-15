@@ -8,6 +8,7 @@ import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Set;
 
@@ -15,10 +16,12 @@ import java.util.Set;
 @RequestMapping("characters")
 //Controller==> se recibe una solicitud y se devuelve una respuesta
 public class CharacterController {
+
     @Autowired
     private CharacterService characterService;
-   //5. Detalle de Personaje
-   //Get Character
+
+    //4. Detalle de Personaje
+    //Get Character
     @GetMapping("/all")
     public ResponseEntity<List<CharacterDTO>> getAll() {
         List<CharacterDTO> characters = characterService.getAllCharacters();
@@ -26,24 +29,24 @@ public class CharacterController {
                 .ok()
                 .body(characters);
     }
-
-   //== GET ==Listado de personaje punto 3: image and name //CharacterBasicDTO
+     //5. El listado deberá mostrar:
+    //GET  image and name //CharacterBasicDTO
     @GetMapping("/all")
-    public ResponseEntity<List<CharacterBasicDTO>> getBasicCharacters(){
+    public ResponseEntity<List<CharacterBasicDTO>> getBasicCharacters() {
         List<CharacterBasicDTO> character = characterService.getCharacterBasicList();
         return ResponseEntity
                 .status(HttpStatus.ACCEPTED)
                 .body(character);
     }
+
     @GetMapping("/details/{id}")
-    public ResponseEntity<CharacterDTO> getDetailsById(@PathVariable Long id){
+    public ResponseEntity<CharacterDTO> getDetailsById(@PathVariable Long id) {
         CharacterDTO characterDetails = characterService.getCharacterDetails(id);
         return ResponseEntity.status(HttpStatus.OK).body(characterDetails);
     }
 
-    //4. Creación, Edición y Eliminación de Personajes (CRUD)
-
-   // Post
+    //2. Creación, Edición y Eliminación de Personajes (CRUD)
+    // Post
     @PostMapping
     public ResponseEntity<CharacterDTO> save(@RequestBody CharacterDTO character) {
         //save
@@ -52,7 +55,6 @@ public class CharacterController {
                 .status(HttpStatus.CREATED)
                 .body(characterUpdated);
     }
-
 
 
     //Put
@@ -64,28 +66,28 @@ public class CharacterController {
                 .body(result);
     }
 
-    // == DELETE ==
+    //Delete
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteById(@PathVariable Long id){
-       characterService.deleteCharacterById(id);
+    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
+        characterService.deleteCharacterById(id);
         return ResponseEntity
                 .status(HttpStatus.NO_CONTENT)
                 .build();
     }
-    //6. Búsqueda de Personajes
+
+    //5. Búsqueda de Personajes
     //  Filters
     @GetMapping()
     public ResponseEntity<List<CharacterDTO>> getDetailsByFilters(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) Integer age,
             @RequestParam(required = false) Set<Long> movies
-    ){
+    ) {
         List<CharacterDTO> characterList = characterService.getByFilters(name, age, movies);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(characterList);
     }
-
 
 
 }

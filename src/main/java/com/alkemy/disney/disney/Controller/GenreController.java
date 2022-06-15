@@ -11,6 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("genres")
 public class GenreController {
+    //TODO: Preguntar si solo se hace post en dicha entidad
     // Para q Spring me inicialice este servicio uso Autowired
     @Autowired
     private GenreService genreService;
@@ -25,7 +26,7 @@ public class GenreController {
                 .ok()
                 .body(genres);
     }
-
+    //3. Creación de Géneros
     //Post Genre
     @PostMapping
     public ResponseEntity<GenreDTO> save(@RequestBody GenreDTO genre) {

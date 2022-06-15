@@ -14,15 +14,17 @@ public interface CharacterService {
     //Put
     CharacterDTO update(Long id, CharacterDTO character) throws ChangeSetPersister.NotFoundException;
 
-    //Get --Get CharacterBasic
+    //Get All and Get id--Get CharacterBasic
     List<CharacterDTO> getAllCharacters();
 
     List<CharacterBasicDTO> getCharacterBasicList();
 
+    CharacterDTO getCharacterDetails(Long id);
+
     // Delete
     void deleteCharacterById(Long id);
 
-    //TODO: Falta método getByCharacterId
+
 
     //TODO: Falta updateCharacter
 
