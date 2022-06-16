@@ -29,7 +29,7 @@ public class MovieController {
 
     // 8. Listado de Películas== imagen, título y fecha de creación
     //Get Movie Basic
-    @GetMapping("/aLL")
+    @GetMapping("/all")
     public ResponseEntity<List<MovieBasicDTO>> getBasicAll() {
         List<MovieBasicDTO> moviesBasic = movieService.getMovieBasicList();
         return ResponseEntity.ok().body(moviesBasic);
@@ -45,7 +45,28 @@ public class MovieController {
                 .body(movieUpdate);
 
     }
-
+  //Post whit character
+    @PostMapping("/{movieId}/character/{charId}")
+    public ResponseEntity<Void> addChar(@PathVariable Long movieId, @PathVariable Long charId){
+        movieService.addCharacterToMovie(movieId, charId);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .build();
+    }
+    //Post with genre
+    @PostMapping("/{movieId}/genre/{genreId}")
+    public ResponseEntity<Void> addGenre(@PathVariable Long movieId, @PathVariable Long genreId){
+        movieService.addGenreToMovie(movieId, genreId);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .build();
+    }
+    //Put
+    @PutMapping("/{id}")
+    public ResponseEntity<MovieDTO> editMovie(@PathVariable Long id, @RequestBody MovieDTO movieToEdit){
+        MovieDTO editedMovie = movieService.editMovieById(id, movieToEdit);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(editedMovie);
+    }
     // Delete
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable Long id) {
@@ -54,7 +75,7 @@ public class MovieController {
                 .status(HttpStatus.NO_CONTENT)
                 .build();
     }
-    //TODO: Falta update de MOvie
+
 
     //8.Búsqueda de Películas
     //Filter

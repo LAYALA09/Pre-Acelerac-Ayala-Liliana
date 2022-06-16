@@ -2,6 +2,7 @@ package com.alkemy.disney.disney.Mapper;
 
 import com.alkemy.disney.disney.dto.MovieDTO;
 import com.alkemy.disney.disney.entity.MovieEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -10,6 +11,10 @@ import java.util.List;
 
 @Component
 public class MovieMapper {
+    @Autowired
+    private CharacterMapper characterMapper;
+    @Autowired
+    private GenreMapper genreMapper;
 
     //dto to entity--post
     public MovieEntity movieDTO2Entity(MovieDTO dto) {
@@ -19,7 +24,7 @@ public class MovieMapper {
         movieEntity.setImage(dto.getImage());
         movieEntity.setTitle(dto.getTitle());
         movieEntity.setRating(dto.getRating());
-        movieEntity.setCreationDate(dto.getCreationDate());
+        movieEntity.setCreationDate(this.String2LocalDate(dto.getCreationDate()));
 
         return movieEntity;
 
@@ -32,8 +37,12 @@ public class MovieMapper {
         dto.setImage(entity.getImage());
         dto.setTitle(entity.getTitle());
         dto.setRating(entity.getRating());
-        dto.setCreationDate((entity.getCreationDate()));
+        dto.setCreationDate(this.localDate2String(entity.getCreationDate()));
 
+        if(b) {
+            dto.setCharacters(characterMapper.characterEntityList2characterDtoList(dbMovie.getMovieCharacters(),false));
+            dto.setGenres(genreMapper.genreEntity2DTO(dbMovie.getMovieGenres()));
+        }
         return dto;
     }
 

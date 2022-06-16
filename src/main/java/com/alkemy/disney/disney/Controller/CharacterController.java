@@ -29,7 +29,8 @@ public class CharacterController {
                 .ok()
                 .body(characters);
     }
-     //5. El listado deberá mostrar:
+
+        //5. El listado deberá mostrar:
     //GET  image and name //CharacterBasicDTO
     @GetMapping("/all")
     public ResponseEntity<List<CharacterBasicDTO>> getBasicCharacters() {

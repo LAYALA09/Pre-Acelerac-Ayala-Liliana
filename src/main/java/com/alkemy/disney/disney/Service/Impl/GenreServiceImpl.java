@@ -27,19 +27,7 @@ public class GenreServiceImpl implements GenreService {
     }
 
 
-    //Get
-    @Override
-    public List<GenreDTO> getAllGenres() {
-        List<GenreEntity> entities = genreRepository.findAll();
-        List<GenreDTO> result = genreMapper.genreEntityList2DTOList(entities);
-        return result;
-    }
 
-    //Delete
-    @Override
-    public void deleteGenreById(Long id) {
-        genreRepository.deleteById(id);
-    }
 
 
 }

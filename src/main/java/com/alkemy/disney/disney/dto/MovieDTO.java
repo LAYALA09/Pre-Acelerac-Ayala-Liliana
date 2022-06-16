@@ -21,6 +21,7 @@ public class MovieDTO {
     private Float rating;
     private Long genreId;
     private List<CharacterDTO> characters;
+    private List<GenreDTO> genres;
 
 
 

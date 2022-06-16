@@ -11,21 +11,12 @@ import java.util.List;
 @RestController
 @RequestMapping("genres")
 public class GenreController {
-    //TODO: Preguntar si solo se hace post en dicha entidad
+
     // Para q Spring me inicialice este servicio uso Autowired
     @Autowired
     private GenreService genreService;
 
-    //Get Genres
-    @GetMapping("/all")
-    public ResponseEntity<List<GenreDTO>> getAll() {
-        // se llama al servicio y se le pide el listado de Genres
-        List<GenreDTO> genres = genreService.getAllGenres();
-        // se crea el response request
-        return ResponseEntity
-                .ok()
-                .body(genres);
-    }
+
     //3. Creación de Géneros
     //Post Genre
     @PostMapping
@@ -38,12 +29,7 @@ public class GenreController {
                 .body( genreUpdated);
 
     }
-    // == DELETE ==
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteById(@PathVariable Long id){
-       genreService.deleteGenreById(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-    }
+
 
 
 }

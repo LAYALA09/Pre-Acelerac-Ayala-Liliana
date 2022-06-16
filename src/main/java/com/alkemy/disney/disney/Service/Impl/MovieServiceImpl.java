@@ -38,7 +38,7 @@ public class MovieServiceImpl implements MovieService {
         MovieDTO result = moviemapper.movieEntity2DTO(entitySaved,false);
         return result;
     }
-    @Override
+    @Autowired
     public MovieDTO getMovieDetails(Long id) {
         MovieEntity dbMovie = this.handleFindById(id);
         MovieDTO resultDTO =moviemapper.movieEntity2DTO(dbMovie, true);

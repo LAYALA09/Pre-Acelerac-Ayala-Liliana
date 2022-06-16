@@ -66,6 +66,15 @@ public class MovieEntity {
     private Long genreId;
 
 
+    // --- Methods --- //
+    // Characters//
+    public void addCharacterToMovie(CharacterEntity charToBeAdded) {
+        this.characters.add(charToBeAdded);
+    }
+
+    public void removeCharacterFromMovie(CharacterEntity charToBeRemoved) {
+        this.characters.remove(charToBeRemoved);
+    }
 
 
 }
