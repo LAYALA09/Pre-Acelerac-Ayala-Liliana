@@ -24,7 +24,7 @@ public class GenreMapper {
     }
 
     // Entity to DTO--Post
-    public GenreDTO genreEntity2DTO(GenreEntity entity, boolean b) {
+    public GenreDTO genreEntity2DTO(GenreEntity entity) {
         GenreDTO dto = new GenreDTO();
         dto.setId(entity.getId());
         dto.setName(entity.getName());

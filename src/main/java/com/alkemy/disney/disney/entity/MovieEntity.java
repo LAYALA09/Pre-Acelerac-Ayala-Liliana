@@ -29,8 +29,8 @@ public class MovieEntity {
 
     private String title;
 
+
     @Column(name = "creation_date")
-    @DateTimeFormat(pattern = "yyyy/MM/dd")
     private LocalDate creationDate;
 
 
@@ -51,13 +51,13 @@ public class MovieEntity {
             name = "movies_characters",
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "character_id"))
-    private List<CharacterEntity> characters = new ArrayList();
+    private List<CharacterEntity> movieCharacters = new ArrayList();
 
     //buscar información
     //FetchType.EAGER=Inicialización tipo temprana, quiere decir que la información q pida de Movie viene con su género
     @ManyToOne(fetch = FetchType.EAGER,cascade={ CascadeType.PERSIST, CascadeType.MERGE } )
     @JoinColumn (name = "genre_id", insertable=false, updatable = false )
-    private GenreEntity genre;
+    private GenreEntity movieGenres;
 
 
 
@@ -69,12 +69,15 @@ public class MovieEntity {
     // --- Methods --- //
     // Characters//
     public void addCharacterToMovie(CharacterEntity charToBeAdded) {
-        this.characters.add(charToBeAdded);
+        this.movieCharacters.add(charToBeAdded);
     }
 
     public void removeCharacterFromMovie(CharacterEntity charToBeRemoved) {
-        this.characters.remove(charToBeRemoved);
+        this.movieCharacters.remove(charToBeRemoved);
     }
+
+
+
 
 
 }

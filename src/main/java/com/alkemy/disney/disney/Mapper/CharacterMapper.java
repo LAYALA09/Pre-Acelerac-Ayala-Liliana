@@ -15,64 +15,58 @@ public class CharacterMapper {
     @Autowired
     private MovieMapper movieMapper;
 
-    // === DTO To Entity ===
-    public CharacterEntity characterDTO2Entity(CharacterDTO dto) {
-        CharacterEntity characterEntity = new CharacterEntity();
-        characterEntity.setImage(dto.getImage());
-        characterEntity.setName(dto.getName());
-        characterEntity.setAge(dto.getAge());
-        characterEntity.setWeight(dto.getWeight());
-        characterEntity.setHistory(dto.getHistory());
-        return characterEntity;
+    // === DTO -> Entity ===
+    public CharacterEntity charDTO2Entity(CharacterDTO newChar) {
+        CharacterEntity newEntity = new CharacterEntity();
+        newEntity.setImage(newChar.getImage());
+        newEntity.setName(newChar.getName());
+        newEntity.setAge(newChar.getAge());
+        newEntity.setWeight(newChar.getWeight());
+        newEntity.setHistory(newChar.getHistory());
 
+
+        return newEntity;
     }
 
-    //===Entity to DTO ===
-    public CharacterDTO characterEntity2DTO(CharacterEntity entities, boolean fetchMovies) {
-        CharacterDTO dto = new CharacterDTO();
-        dto.setId(entities.getId());
-        dto.setImage(entities.getImage());
-        dto.setName(entities.getName());
-        dto.setAge(entities.getAge());
-        dto.setWeight(entities.getWeight());
-        dto.setHistory(entities.getHistory());
-        //para evitar un bucle infinito usamos boolean
-        //cargo movies y no character
+    // --- Entity -> DTO ---
+    public CharacterDTO entity2DTO(CharacterEntity savedEntity, Boolean fetchMovies) {
+        CharacterDTO newDTO = new CharacterDTO();
+        newDTO.setId(savedEntity.getId());
+        newDTO.setImage(savedEntity.getImage());
+        newDTO.setName(savedEntity.getName());
+        newDTO.setAge(savedEntity.getAge());
+        newDTO.setWeight(savedEntity.getWeight());
+        newDTO.setHistory(savedEntity.getHistory());
         if (fetchMovies) {
-            dto.setMovies(movieMapper.movieEntityList2MovieDtoList(entities.getMovies(), false));
+            newDTO.setCharacterMovies(movieMapper.movieEntityList2DTOList(savedEntity.getCharacterMovies(), false));
         }
-
-        return dto;
-
-
+        return newDTO;
     }
 
-     // --- List<Entity> To List<DTO> ---
-    public List<CharacterDTO> characterEntityList2characterDtoList(List<CharacterEntity> entities, boolean b) {
-        List<CharacterDTO> dtos = new ArrayList<>();
-        for (CharacterEntity entity : entities) {
-            dtos.add(this.characterEntity2DTO(entity,b));
+    // --- List<Entity> -> List<DTO> ---
+    public List<CharacterDTO> charListEntity2DTOList(List<CharacterEntity> movieCharacters, boolean b) {
+        List<CharacterDTO> newList = new ArrayList<>();
+        for (CharacterEntity ent : movieCharacters) {
+            newList.add(this.entity2DTO(ent, b));
         }
-        return dtos;
+        return newList;
     }
 
-    // --- Entity To BasicDTO ---
-    private CharacterBasicDTO characterEntity2BasicDTO(CharacterEntity entity) {
+    // --- Entity -> BasicDTO ---
+    private CharacterBasicDTO charEntity2BasicDTO(CharacterEntity ch) {
         CharacterBasicDTO dto = new CharacterBasicDTO();
-        dto.setImage(entity.getImage());
-        dto.setName(entity.getName());
+        dto.setImage(ch.getImage());
+        dto.setName(ch.getName());
         return dto;
     }
 
-    // --- BasicList<Entity> To BasicList<DTO> ---
-    public List<CharacterBasicDTO> characterEntityList2charBasicDtoList(List<CharacterEntity> entities) {
-        List<CharacterBasicDTO> dtos = new ArrayList<>();
-        for (CharacterEntity entity : entities) {
-            dtos.add(this.characterEntity2BasicDTO(entity));
+    // --- BasicList<Entity> -> BasicList<DTO> ---
+    public List<CharacterBasicDTO> basicListEntity2DTO(List<CharacterEntity> myList) {
+        List<CharacterBasicDTO> listDTO = new ArrayList<>();
+        for (CharacterEntity ch : myList) {
+            listDTO.add(this.charEntity2BasicDTO(ch));
         }
-        return dtos;
+        return listDTO;
     }
-
-
 }
 

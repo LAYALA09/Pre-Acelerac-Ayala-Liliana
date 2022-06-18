@@ -19,17 +19,12 @@ public class GenreController {
 
     //3. Creación de Géneros
     //Post Genre
+
     @PostMapping
-    public ResponseEntity<GenreDTO> save(@RequestBody GenreDTO genre) {
-
-        GenreDTO genreUpdated = genreService.save(genre);
-
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body( genreUpdated);
-
+    public ResponseEntity<GenreDTO> postNewGenre(@RequestBody GenreDTO newGenre){
+        GenreDTO savedGenre = genreService.saveNewGenre(newGenre);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(savedGenre);
     }
-
 
 
 }

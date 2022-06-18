@@ -8,22 +8,24 @@ import java.util.Set;
 
 public interface MovieService {
 
-    //Post
-    MovieDTO save(MovieDTO dto);
+    // GET
+    List<MovieBasicDTO> getBasicMoviesList();
 
-    void addCharacterToMovie(Long movieId, Long charId);
-    void addGenreToMovie(Long movieId, Long genreId);
+    MovieDTO getMovieDetails(Long id);
 
-    //Get
-    List<MovieDTO> getAllMovies();
-    List<MovieBasicDTO> getMovieBasicList();
+    // POST
+    MovieDTO saveNewMovie(MovieDTO newMovie);
+
+
+
+    // DEL
+    void deleteMovieById(Long id);
 
     // PUT
     MovieDTO editMovieById(Long id, MovieDTO movieToEdit);
 
-    // Delete
-    void deleteMovieById(Long id);
-
     // FILTERS
     List<MovieDTO> getByFilters(String name, Set<Long> genre, String order);
+
+
 }

@@ -2,36 +2,31 @@ package com.alkemy.disney.disney.Service;
 
 import com.alkemy.disney.disney.dto.CharacterBasicDTO;
 import com.alkemy.disney.disney.dto.CharacterDTO;
+import com.alkemy.disney.disney.entity.CharacterEntity;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import java.util.List;
 import java.util.Set;
 
 public interface CharacterService {
 
-    //Post
-    CharacterDTO save(CharacterDTO dto);
-
-    //Put
-    CharacterDTO update(Long id, CharacterDTO dto) throws ChangeSetPersister.NotFoundException;
-
-    //Get All and Get id--Get CharacterBasic
-    List<CharacterDTO> getAllCharacters();
+    // GET
     List<CharacterBasicDTO> getCharacterBasicList();
-    CharacterDTO getCharacterDetails(Long id);
+    CharacterDTO getCharDetails(Long id);
 
-    // Delete
+    // POST
+    CharacterDTO saveNewCharacter(CharacterDTO newChar);
+
+    // DEL
     void deleteCharacterById(Long id);
+
+    // PUT
+    CharacterDTO editCharacterById(Long id, CharacterDTO charToEdit);
+
     // FILTERS
     List<CharacterDTO> getByFilters(String name, Integer age, Set<Long> movies);
 
 
 
-
-
-    //TODO: Falta updateCharacter
-
-    // Filters
-    List<CharacterDTO> getByFilters(String name, Integer age, Set<Long> movies);
 
 
 

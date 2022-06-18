@@ -14,7 +14,7 @@ public class CharacterDTO {
     private Integer age;
     private Float weight;
     private String history;
-    private List<MovieDTO> Movies;
+    private List<MovieDTO> characterMovies;
 
 
 }

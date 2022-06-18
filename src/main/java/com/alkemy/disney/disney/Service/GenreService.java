@@ -6,7 +6,7 @@ import java.util.List;
 public interface GenreService {
 
     //Post
-    GenreDTO save(GenreDTO dto);
+    GenreDTO saveNewGenre(GenreDTO newGenre);
 
 
 

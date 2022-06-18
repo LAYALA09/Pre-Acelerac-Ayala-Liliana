@@ -26,6 +26,11 @@ public class MovieController {
                 .ok()
                 .body(movies);
     }
+    @GetMapping("/details/{id}")
+    public ResponseEntity<MovieDTO> getDetailsById(@PathVariable Long id){
+        MovieDTO movie = movieService.getMovieDetails(id);
+        return ResponseEntity.status(HttpStatus.OK).body(movie);
+    }
 
     // 8. Listado de Películas== imagen, título y fecha de creación
     //Get Movie Basic

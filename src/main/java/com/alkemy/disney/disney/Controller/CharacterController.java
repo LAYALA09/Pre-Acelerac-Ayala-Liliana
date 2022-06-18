@@ -16,79 +16,50 @@ import java.util.Set;
 @RequestMapping("characters")
 //Controller==> se recibe una solicitud y se devuelve una respuesta
 public class CharacterController {
+    private CharacterService  characterService;
 
-    @Autowired
-    private CharacterService characterService;
-
-    //4. Detalle de Personaje
-    //Get Character
+    // == GET ==
     @GetMapping("/all")
-    public ResponseEntity<List<CharacterDTO>> getAll() {
-        List<CharacterDTO> characters = characterService.getAllCharacters();
-        return ResponseEntity
-                .ok()
-                .body(characters);
-    }
-
-        //5. El listado deberá mostrar:
-    //GET  image and name //CharacterBasicDTO
-    @GetMapping("/all")
-    public ResponseEntity<List<CharacterBasicDTO>> getBasicCharacters() {
-        List<CharacterBasicDTO> character = characterService.getCharacterBasicList();
-        return ResponseEntity
-                .status(HttpStatus.ACCEPTED)
-                .body(character);
+    public ResponseEntity<List<CharacterBasicDTO>> getBasicCharacters(){
+        List<CharacterBasicDTO> charDTO = characterService.getCharacterBasicList();
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(charDTO);
     }
 
     @GetMapping("/details/{id}")
-    public ResponseEntity<CharacterDTO> getDetailsById(@PathVariable Long id) {
-        CharacterDTO characterDetails = characterService.getCharacterDetails(id);
-        return ResponseEntity.status(HttpStatus.OK).body(characterDetails);
+    public ResponseEntity<CharacterDTO> getDetailsById(@PathVariable Long id){
+        CharacterDTO charDetails = characterService.getCharDetails(id);
+        return ResponseEntity.status(HttpStatus.OK).body(charDetails);
     }
 
-    //2. Creación, Edición y Eliminación de Personajes (CRUD)
-    // Post
+    // == POST ==
     @PostMapping
-    public ResponseEntity<CharacterDTO> save(@RequestBody CharacterDTO character) {
-        //save
-        CharacterDTO characterUpdated = characterService.save(character);
-        return ResponseEntity//201
-                .status(HttpStatus.CREATED)
-                .body(characterUpdated);
+    public ResponseEntity<CharacterDTO> postNewCharacter(@RequestBody CharacterDTO newChar){
+        CharacterDTO createdChar = characterService.saveNewCharacter(newChar);
+        return ResponseEntity.status(HttpStatus.OK).body(createdChar);
     }
 
-
-    //Put
+    // == PUT ==
     @PutMapping("/{id}")
-    public ResponseEntity<CharacterDTO> update(@PathVariable Long id, @RequestBody CharacterDTO dto) throws ChangeSetPersister.NotFoundException {
-        CharacterDTO result = characterService.update(id, dto);
-        return ResponseEntity
-                .ok()
-                .body(result);
+    public ResponseEntity<CharacterDTO> editCharacter(@PathVariable Long id, @RequestBody CharacterDTO charToEdit){
+        CharacterDTO editedChar = characterService.editCharacterById(id, charToEdit);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(editedChar);
     }
 
-    //Delete
+    // == DELETE ==
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteById(@PathVariable Long id){
         characterService.deleteCharacterById(id);
-        return ResponseEntity
-                .status(HttpStatus.NO_CONTENT)
-                .build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    //5. Búsqueda de Personajes
-    //  Filters
+    // == FILTERS ==
     @GetMapping()
     public ResponseEntity<List<CharacterDTO>> getDetailsByFilters(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) Integer age,
             @RequestParam(required = false) Set<Long> movies
-    ) {
-        List<CharacterDTO> characterList = characterService.getByFilters(name, age, movies);
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(characterList);
+    ){
+        List<CharacterDTO> charList = characterService.getByFilters(name, age, movies);
+        return ResponseEntity.status(HttpStatus.OK).body(charList);
     }
-
-
 }

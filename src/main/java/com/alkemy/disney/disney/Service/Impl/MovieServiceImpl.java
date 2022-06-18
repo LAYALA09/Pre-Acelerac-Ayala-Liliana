@@ -34,36 +34,33 @@ public class MovieServiceImpl implements MovieService {
     @Autowired
     private MovieSpecifications movieSpecifications;
 
-    //Post
+    // --- GET ---
     @Override
-    public MovieDTO save(MovieDTO dto) {
-        MovieEntity entity = moviemapper.movieDTO2Entity(dto);
-        MovieEntity entitySaved = movieRepository.save(entity);
-        MovieDTO result = moviemapper.movieEntity2DTO(entitySaved,false);
-        return result;
-    }
-    //get x id
-    @Autowired
-    public MovieDTO getMovieDetails(Long id) {
-        MovieEntity dbMovie = this.handleFindById(id);
-        MovieDTO resultDTO =moviemapper.movieEntity2DTO(dbMovie, true);
+    public List<MovieBasicDTO> getBasicMoviesList() {
+        List<MovieEntity> dbList = movieRepository.findAll();
+        List<MovieBasicDTO> resultDTO = moviemapper.entityList2BasicDTO(dbList);
         return resultDTO;
     }
+
     @Override
-    public void addCharacterToMovie(Long movieId, Long charId) {
-        MovieEntity savedMovie = this.handleFindById(movieId);
-        CharacterEntity savedChar = characterService.handleFindById(charId);
-        savedMovie.getMovieCharacters().size();
-        savedMovie.addCharacterToMovie(savedChar);
-        movieRepo.save(savedMovie);
+    public MovieDTO getMovieDetails(Long id) {
+        MovieEntity dbMovie = this.handleFindById(id);
+        MovieDTO resultDTO = moviemapper.entity2DTO(dbMovie, true);
+        return resultDTO;
     }
-    //Get
+
+    // --- POST ---
     @Override
-    public List<MovieDTO> getAllMovies() {
-        List<MovieEntity> entities = movieRepository.findAll();
-        List<MovieDTO> result = moviemapper.movieEntityList2MovieDtoList(entities, true);
-        return null;
+    public MovieDTO saveNewMovie(MovieDTO newMovie) {
+        MovieEntity newEntity = moviemapper.movieDTO2Entity(newMovie);
+        MovieEntity savedEntity = movieRepository.save(newEntity);
+        MovieDTO resultDTO = moviemapper.entity2DTO(savedEntity, false);
+        return resultDTO;
     }
+
+
+
+
 
     // --- PUT ---
     @Override
@@ -74,48 +71,26 @@ public class MovieServiceImpl implements MovieService {
         savedMovie.setRating(movieToEdit.getRating());
         savedMovie.setCreationDate(moviemapper.String2LocalDate(movieToEdit.getCreationDate()));
         MovieEntity editedMovie = movieRepository.save(savedMovie);
-        MovieDTO resultDTO = moviemapper.movieEntity2DTO(editedMovie, false);
+        MovieDTO resultDTO = moviemapper.entity2DTO(editedMovie, false);
         return resultDTO;
     }
 
-
-    //--- Entity -> BasicDTO ---
-    public MovieBasicDTO entity2BasicDTO(MovieEntity entity) {
-        MovieBasicDTO dto = new MovieBasicDTO();
-        dto.setImage(entity.getImage());
-        dto.setTitle(entity.getTitle());
-        dto.setCreationDate(this.localDate2String(entity.getCreationDate()));
-        return dto;
-    }
-
-
-
-    //List<Entity to List<BasicDTO>
-    public List<MovieBasicDTO> entityList2BasicDTO(List<MovieEntity> entities) {
-        List<MovieBasicDTO> dtoList = new ArrayList<>();
-        for(MovieEntity ent : entities) {
-            dtoList.add(this.entity2BasicDTO(ent));
-        }
-        return dtoList;
-    }
-
-    //Delete
+    // --- DELETE ---
     @Override
     public void deleteMovieById(Long id) {
-       movieRepository.deleteById(id);
-
+        movieRepository.deleteById(id);
     }
 
-    // Filters
+    // --- FILTERS ---
     @Override
     public List<MovieDTO> getByFilters(String title, Set<Long> genre, String order) {
         MovieFiltersDTO movieFilters = new MovieFiltersDTO(title, genre, order);
         List<MovieEntity> entityList = movieRepository.findAll(movieSpecifications.getFiltered(movieFilters));
-        List<MovieDTO> resultDTO = moviemapper.movieEntityList2MovieDtoList(entityList, true);
+        List<MovieDTO> resultDTO = moviemapper.movieEntityList2DTOList(entityList, true);
         return resultDTO;
     }
 
-    // -Error Handling
+    // --- ERROR HANDLING ---
     public MovieEntity handleFindById(Long id) {
         Optional<MovieEntity> toBeFound = movieRepository.findById(id);
         if(!toBeFound.isPresent()) {
@@ -123,7 +98,4 @@ public class MovieServiceImpl implements MovieService {
         }
         return toBeFound.get();
     }
-
-
-
 }

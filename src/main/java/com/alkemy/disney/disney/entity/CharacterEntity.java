@@ -28,7 +28,8 @@ public class CharacterEntity {
     private String history;
     private boolean deleted= Boolean.FALSE;
 
-    @ManyToMany(mappedBy = "characters", cascade=CascadeType.ALL)
-    private List<MovieEntity> movies= new ArrayList<>();
+    // ManyToMany: Movies
+    @ManyToMany(mappedBy = "movieCharacters", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<MovieEntity> characterMovies = new ArrayList<>();
 
 }

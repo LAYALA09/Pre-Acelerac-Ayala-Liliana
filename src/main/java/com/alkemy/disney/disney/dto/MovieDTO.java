@@ -15,13 +15,11 @@ public class MovieDTO {
     private Long id;
     private String image;
     private String title;
-    @Column(name= "date_creation")
-    @DateTimeFormat(pattern = "YYYY/MM/dd")
-    private LocalDate creationDate;
+    private String creationDate;
     private Float rating;
     private Long genreId;
-    private List<CharacterDTO> characters;
-    private List<GenreDTO> genres;
+    private List<CharacterDTO> movieCharacters;
+
 
 
 
