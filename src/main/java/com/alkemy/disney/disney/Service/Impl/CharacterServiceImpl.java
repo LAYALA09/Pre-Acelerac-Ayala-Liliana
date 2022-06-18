@@ -6,6 +6,7 @@ import com.alkemy.disney.disney.Repository.specifications.CharacterSpecification
 import com.alkemy.disney.disney.Service.CharacterService;
 import com.alkemy.disney.disney.dto.CharacterBasicDTO;
 import com.alkemy.disney.disney.dto.CharacterDTO;
+import com.alkemy.disney.disney.dto.CharacterFiltersDTO;
 import com.alkemy.disney.disney.entity.CharacterEntity;
 import com.alkemy.disney.disney.exception.ParamNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class CharacterServiceImpl implements CharacterService {
@@ -33,13 +35,7 @@ public class CharacterServiceImpl implements CharacterService {
 
         return result;
     }
-    //Get x Id
-   @Override
-    public CharacterDTO getCharDetails(Long id) {
-        CharacterEntity entity = this.handleFindById(id);
-        CharacterDTO resultDTO = characterMapper.characterEntity2DTO(entity,true);
-        return resultDTO;
-    }
+
 
     //Get All
     @Override
@@ -57,32 +53,55 @@ public class CharacterServiceImpl implements CharacterService {
         return result;
     }
 
-    // Delete
     @Override
-    public void deleteCharacterById(Long id) {
-        characterRepository.deleteById(id);
-    }
-
-    //Put
-    @Override
-    public CharacterDTO update(Long id, CharacterDTO dto) {
-        CharacterEntity entity = this.handleFindById(id);
-        entity.setImage(dto.getImage());
-        entity.setName(dto.getName());
-        entity.setAge(dto.getAge());
-        entity.setWeight(dto.getWeight());
-        entity.setHistory(dto.getHistory());
-        CharacterEntity editedChar = characterRepository.save(entity);
-        CharacterDTO resultDTO = characterMapper.characterEntity2DTO(editedChar, false);
+    public CharacterDTO getCharacterDetails(Long id) {
+        CharacterEntity dbChar = this(id);
+        CharacterDTO resultDTO = characterMapper.characterEntity2DTO(dbChar, true);
         return resultDTO;
-    }
 
-    //ERROR HANDLING
-    public CharacterEntity handleFindById(Long id) {
-        Optional<CharacterEntity> toBeFound = characterRepository.findById(id);
-        if(!toBeFound.isPresent()) {
-            throw new ParamNotFound("No Character for id: " + id);
+        // Delete
+        @Override
+        public void deleteCharacterById(Long id){
+            characterRepository.deleteById(id);
         }
-        return toBeFound.get();
+
+        @Autowired
+        public List<CharacterDTO> getByFilters (String name, Integer age, Set < Long > movies){
+            CharacterFiltersDTO filtersDTO = new CharacterFiltersDTO(name, age, movies);
+            List<CharacterEntity> entityList = characterRepository.findAll(characterSpecification.getFiltered(filtersDTO));
+            List<CharacterDTO> resultDTO = characterMapper.characterEntityList2characterDtoList(entityList, true);
+            return resultDTO;
+        }
+
+        //Put
+        @Override
+        public CharacterDTO update (Long id, CharacterDTO dto){
+            CharacterEntity entity = this.handleFindById(id);
+            entity.setImage(dto.getImage());
+            entity.setName(dto.getName());
+            entity.setAge(dto.getAge());
+            entity.setWeight(dto.getWeight());
+            entity.setHistory(dto.getHistory());
+            CharacterEntity editedChar = characterRepository.save(entity);
+            CharacterDTO resultDTO = characterMapper.characterEntity2DTO(editedChar, false);
+            return resultDTO;
+        }
+        // --- FILTERS ---
+        @Autowired
+        public List<CharacterDTO> getByFilters (String name, Integer age, Set < Long > movies){
+            CharacterFiltersDTO filtersDTO = new CharacterFiltersDTO(name, age, movies);
+            List<CharacterEntity> entityList = characterRepository.findAll(characterSpecification.getFiltered(filtersDTO));
+            List<CharacterDTO> resultDTO = characterMapper.characterEntityList2characterDtoList(entityList, true);
+            return resultDTO;
+        }
+
+        //ERROR HANDLING
+        public CharacterEntity handleFindById (Long id){
+            Optional<CharacterEntity> toBeFound = characterRepository.findById(id);
+            if (!toBeFound.isPresent()) {
+                throw new ParamNotFound("No Character for id: " + id);
+            }
+            return toBeFound.get();
+        }
     }
 }

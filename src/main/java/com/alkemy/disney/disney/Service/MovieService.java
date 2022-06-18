@@ -11,9 +11,15 @@ public interface MovieService {
     //Post
     MovieDTO save(MovieDTO dto);
 
+    void addCharacterToMovie(Long movieId, Long charId);
+    void addGenreToMovie(Long movieId, Long genreId);
+
     //Get
     List<MovieDTO> getAllMovies();
     List<MovieBasicDTO> getMovieBasicList();
+
+    // PUT
+    MovieDTO editMovieById(Long id, MovieDTO movieToEdit);
 
     // Delete
     void deleteMovieById(Long id);

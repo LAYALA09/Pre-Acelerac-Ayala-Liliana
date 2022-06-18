@@ -12,17 +12,19 @@ public interface CharacterService {
     CharacterDTO save(CharacterDTO dto);
 
     //Put
-    CharacterDTO update(Long id, CharacterDTO character) throws ChangeSetPersister.NotFoundException;
+    CharacterDTO update(Long id, CharacterDTO dto) throws ChangeSetPersister.NotFoundException;
 
     //Get All and Get id--Get CharacterBasic
     List<CharacterDTO> getAllCharacters();
-
     List<CharacterBasicDTO> getCharacterBasicList();
-
     CharacterDTO getCharacterDetails(Long id);
 
     // Delete
     void deleteCharacterById(Long id);
+    // FILTERS
+    List<CharacterDTO> getByFilters(String name, Integer age, Set<Long> movies);
+
+
 
 
 
