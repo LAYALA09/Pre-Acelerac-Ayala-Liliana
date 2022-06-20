@@ -1,18 +1,24 @@
 package com.alkemy.disney.disney.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;import javax.persistence.Column;
-import java.time.LocalDate;
-
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
 
 @Getter
 @Setter
 public class MovieBasicDTO {
 
+    @NotBlank(message = "image is required")
     private String image;
+    @NotBlank(message = "Title is required")
     private String title;
+    @JsonFormat(pattern = "d-MM-yyyy")
+    @NotNull(message = "Creation date is required")
+    @PastOrPresent(message = "The date of creation can be past or present")
     private String creationDate;
 
 }

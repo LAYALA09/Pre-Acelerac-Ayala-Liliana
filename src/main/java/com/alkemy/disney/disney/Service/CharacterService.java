@@ -2,8 +2,6 @@ package com.alkemy.disney.disney.Service;
 
 import com.alkemy.disney.disney.dto.CharacterBasicDTO;
 import com.alkemy.disney.disney.dto.CharacterDTO;
-import com.alkemy.disney.disney.entity.CharacterEntity;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import java.util.List;
 import java.util.Set;
 

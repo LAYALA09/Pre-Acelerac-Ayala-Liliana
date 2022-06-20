@@ -1,23 +1,19 @@
 package com.alkemy.disney.disney.Service.Impl;
 
+import com.alkemy.disney.disney.Mapper.CharacterMapper;
 import com.alkemy.disney.disney.Mapper.MovieMapper;
 import com.alkemy.disney.disney.Repository.MovieRepository;
 
 import com.alkemy.disney.disney.Repository.specifications.MovieSpecifications;
 import com.alkemy.disney.disney.Service.MovieService;
-
 import com.alkemy.disney.disney.dto.MovieBasicDTO;
 import com.alkemy.disney.disney.dto.MovieDTO;
 import com.alkemy.disney.disney.dto.MovieFiltersDTO;
-
 import com.alkemy.disney.disney.entity.CharacterEntity;
-import com.alkemy.disney.disney.entity.GenreEntity;
 import com.alkemy.disney.disney.entity.MovieEntity;
 import com.alkemy.disney.disney.exception.ParamNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -27,6 +23,8 @@ public class MovieServiceImpl implements MovieService {
     @Autowired
     private MovieMapper moviemapper;
     @Autowired
+    private CharacterMapper characterMapper;
+    @Autowired
     private MovieRepository movieRepository;
     @Autowired
     private GenreServiceImpl genreService;
@@ -35,21 +33,21 @@ public class MovieServiceImpl implements MovieService {
     @Autowired
     private MovieSpecifications movieSpecifications;
 
-    // --- GET ---
+    // GET
     @Override
     public List<MovieBasicDTO> getBasicMoviesList() {
         List<MovieEntity> dbList = movieRepository.findAll();
         List<MovieBasicDTO> resultDTO = moviemapper.entityList2BasicDTO(dbList);
         return resultDTO;
     }
-   //GET FOR ID// CORREGIDO
+   //GET FOR ID
     @Override
     public MovieDTO getMovieDetails(Long id) {
         MovieEntity dbMovie = this.handleFindById(id);
         MovieDTO resultDTO = moviemapper.entity2DTO(dbMovie, true);
         return resultDTO;
     }
-    //GET ALL MOVIES//CORREGIDO
+    //GET ALL MOVIES
     /*@Override
     public List<MovieDTO> getAllMovies() {
         List<MovieEntity> entities = movieRepository.findAll();
@@ -66,7 +64,6 @@ public class MovieServiceImpl implements MovieService {
         return resultDTO;
     }
 
-
     // PUT
     @Override
     public MovieDTO editMovieById(Long id, MovieDTO movieToEdit) {
@@ -80,13 +77,13 @@ public class MovieServiceImpl implements MovieService {
         return resultDTO;
     }
 
-    // --- DELETE ---
+    //DELETE
     @Override
     public void deleteMovieById(Long id) {
         movieRepository.deleteById(id);
     }
 
-    // --- FILTERS ---
+    //FILTERS
     @Override
     public List<MovieDTO> getByFilters(String title, Set<Long> genre, String order) {
         MovieFiltersDTO movieFilters = new MovieFiltersDTO(title, genre, order);
@@ -94,6 +91,7 @@ public class MovieServiceImpl implements MovieService {
         List<MovieDTO> resultDTO = moviemapper.movieEntityList2DTOList(entityList, true);
         return resultDTO;
     }
+
     @Override
     public void addCharacterToMovie(Long movieId, Long charId) {
         MovieEntity savedMovie = this.handleFindById(movieId);
@@ -102,6 +100,15 @@ public class MovieServiceImpl implements MovieService {
         savedMovie.addCharacterToMovie(savedChar);
         movieRepository.save(savedMovie);
     }
+
+    /*@Override
+    public void removeCharacterFromMovie(Long movieId, Long chardId) {
+        MovieEntity deletedmovie= this.handleFindById(movieId);
+        deletedmovie.getMovieCharacters().size();
+        CharacterEntity characterEntity=characterMapper.charDTO2Entity(chardId);
+        deletedmovie.removeCharacterFromMovie(characterEntity);
+        movieRepository.save(deletedmovie);
+    }*/
 
    /* @Override
     public void addGenreToMovie(Long movieId, Long genreId) {
@@ -112,7 +119,7 @@ public class MovieServiceImpl implements MovieService {
         movieRepository.save(savedMovie);
     }*/
 
-    // --- ERROR HANDLING ---
+    // ERROR HANDLING
     public MovieEntity handleFindById(Long id) {
         Optional<MovieEntity> toBeFound = movieRepository.findById(id);
         if(!toBeFound.isPresent()) {

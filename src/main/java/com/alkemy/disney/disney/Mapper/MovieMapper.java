@@ -19,7 +19,7 @@ public class MovieMapper {
     @Autowired
     private GenreMapper genreMapper;
 
-    /// --- DTO -> Entity ---
+    //DTO to  Entity
     public MovieEntity movieDTO2Entity(MovieDTO dto) {
         MovieEntity ent = new MovieEntity();
         ent.setId(dto.getId());
@@ -30,13 +30,14 @@ public class MovieMapper {
         return ent;
     }
 
-    // --- Entity -> DTO ---
+    // Entity to DTO
     public MovieDTO entity2DTO(MovieEntity dbMovie, boolean b) {
         MovieDTO dto = new MovieDTO();
         dto.setId(dbMovie.getId());
         dto.setImage(dbMovie.getImage());
         dto.setTitle(dbMovie.getTitle());
         dto.setRating(dbMovie.getRating());
+        //indico que guarde el personaje pero no  la pelicula
         dto.setCreationDate(this.localDate2String(dbMovie.getCreationDate()));
         if(b) {
             dto.setMovieCharacters(characterMapper.charListEntity2DTOList(dbMovie.getMovieCharacters(),false));
@@ -45,8 +46,8 @@ public class MovieMapper {
         return dto;
     }
 
-    //
-    // === List<Entity> -> List<DTO> ===
+
+    // === List<Entity> to List<DTO> ===
     public List<MovieDTO> movieEntityList2DTOList(List<MovieEntity> entList, boolean b){
         List<MovieDTO> dtoList = new ArrayList<>();
         for(MovieEntity ent : entList) {
@@ -56,7 +57,7 @@ public class MovieMapper {
     }
 
 
-    //--- Entity -> BasicDTO ---
+    //Entity to BasicDto
     public MovieBasicDTO entity2BasicDTO(MovieEntity ent) {
         MovieBasicDTO dto = new MovieBasicDTO();
         dto.setImage(ent.getImage());
@@ -65,7 +66,7 @@ public class MovieMapper {
         return dto;
     }
 
-    //--- List<Entity> -> List<BasicDTO> ---
+    //List<Entity> to List<BasicDTO>
     public List<MovieBasicDTO> entityList2BasicDTO(List<MovieEntity> dbList) {
         List<MovieBasicDTO> newList = new ArrayList<>();
         for(MovieEntity ent : dbList) {
@@ -74,7 +75,7 @@ public class MovieMapper {
         return newList;
     }
 
-    // --> Utils <--
+    //Utils
     public LocalDate String2LocalDate(String enteredDate) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
         LocalDate transformedDate = LocalDate.parse(enteredDate, formatter);

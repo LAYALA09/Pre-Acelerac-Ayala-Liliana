@@ -5,8 +5,13 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,10 +37,16 @@ public class MovieEntity {
 
 
     @Column(name = "creation_date")
+    @NotNull(message = "is required")
+    @DateTimeFormat(pattern = "d/MM/yyyy")
+    @PastOrPresent(message = "the year must be past or present")
     private LocalDate creationDate;
 
 
+    @NotBlank(message = "The grade is required")
+    @Pattern(regexp = "[1,2,3,4,5]", message = "Grade contains invalid charac-ters")
     private Float rating;
+
 
     private boolean deleted = Boolean.FALSE;
 
@@ -55,45 +66,27 @@ public class MovieEntity {
             inverseJoinColumns = @JoinColumn(name = "character_id"))
     private List<CharacterEntity> movieCharacters = new ArrayList();
 
-    //buscar información
-    //FetchType.EAGER=Inicialización tipo temprana, quiere decir que la información q pida de Movie viene con su género
-    @ManyToOne(fetch = FetchType.EAGER,cascade={ CascadeType.PERSIST, CascadeType.MERGE } )
-    @JoinColumn (name = "genre_id", insertable=false, updatable = false )
-    private GenreEntity movieGenres;
-
+    //Buscar información
+    @ManyToOne
+    @JoinColumn(name = "genre_id", insertable = false, updatable = false)
+    private GenreEntity genres;
 
 
     //guardar y actualizar// define la columna de genreid en la base de datos
-    @Column(name="genre_id", nullable= false)
+    @Column(name = "genre_id", nullable = false)
     private Long genreId;
 
 
-    // --- Methods --- //
-    // Characters//
+
+    // CHARACTER
     public void addCharacterToMovie(CharacterEntity charToBeAdded) {
+
         this.movieCharacters.add(charToBeAdded);
     }
 
     public void removeCharacterFromMovie(CharacterEntity charToBeRemoved) {
         this.movieCharacters.remove(charToBeRemoved);
     }
-
-
-    // Genres //
-  /*  public void addGenreToMovie(GenreEntity id) {
-        this.movieGenres.getId(id;
-    }
-
-    public void removeGenreFromMovie(GenreEntity id) {
-        this.movieGenres.isDeleted(id);
-    }*/
-
-
-
-
-
-
-
 
 
 }

@@ -5,11 +5,9 @@ import com.alkemy.disney.disney.Repository.GenreRepository;
 import com.alkemy.disney.disney.Service.GenreService;
 import com.alkemy.disney.disney.dto.GenreDTO;
 import com.alkemy.disney.disney.entity.GenreEntity;
-import com.alkemy.disney.disney.exception.InvalidDTOException;
 import com.alkemy.disney.disney.exception.ParamNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,9 +21,6 @@ public class GenreServiceImpl implements GenreService {
 
     public GenreDTO saveNewGenre(GenreDTO dto) {
 
-        //Validamos primero que el DTO sea válido
-        validation(dto);
-
         //Utilizamos el método de conversión del Mapper para pasarle el DTO recibido y obtener el Entity
         GenreEntity entity = genreMapper.genreDTO2Entity(dto);
 
@@ -38,23 +33,9 @@ public class GenreServiceImpl implements GenreService {
         //Devolvemos el DTO con su id en la base de datos
         return result;
     }
-    private void validation(GenreDTO dto) {
-        if (dto == null)
-            throw new InvalidDTOException("Genre cannot be null");
-        if (dto.getName() == null || dto.getName().isEmpty())
-            throw new InvalidDTOException("Genre name cannot be empty or null");
-        if (dto.getImage() == null || dto.getImage().isEmpty())
-            throw new InvalidDTOException("Genre image cannot be empty or null");
-    }
 
-    // - Error Handling -
-    public GenreEntity handleFindById(Long id) {
-        Optional<GenreEntity> toBeFound = genreRepository.findById(id);
-        if(!toBeFound.isPresent()) {
-            throw new ParamNotFound("No Genre for id: " + id);
-        }
-        return toBeFound.get();
-    }
+
+
 
 
 

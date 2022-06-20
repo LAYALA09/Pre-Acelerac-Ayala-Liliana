@@ -4,8 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import net.bytebuddy.asm.Advice;
-
+import javax.validation.constraints.NotBlank;
 import java.util.Set;
 
 @Getter
@@ -13,6 +12,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MovieFiltersDTO {
+    @NotBlank(message = "title is required")
     private String title;
     private Set<Long> genre;
     private String order;

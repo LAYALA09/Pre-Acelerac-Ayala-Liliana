@@ -2,11 +2,9 @@ package com.alkemy.disney.disney.Mapper;
 
 import com.alkemy.disney.disney.dto.CharacterBasicDTO;
 import com.alkemy.disney.disney.dto.CharacterDTO;
-
 import com.alkemy.disney.disney.entity.CharacterEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +13,7 @@ public class CharacterMapper {
     @Autowired
     private MovieMapper movieMapper;
 
-    // === DTO -> Entity ===
+    // DTO TO Entity
     public CharacterEntity charDTO2Entity(CharacterDTO newChar) {
         CharacterEntity newEntity = new CharacterEntity();
         newEntity.setImage(newChar.getImage());
@@ -28,7 +26,8 @@ public class CharacterMapper {
         return newEntity;
     }
 
-    // --- Entity -> DTO ---
+    // ENTITY TO DTO
+    //uso boolean si debe cargar o no ese atributo
     public CharacterDTO entity2DTO(CharacterEntity savedEntity, Boolean fetchMovies) {
         CharacterDTO newDTO = new CharacterDTO();
         newDTO.setId(savedEntity.getId());
@@ -38,12 +37,14 @@ public class CharacterMapper {
         newDTO.setWeight(savedEntity.getWeight());
         newDTO.setHistory(savedEntity.getHistory());
         if (fetchMovies) {
+            //indico que guarde la  pelicula pero no  personaje
             newDTO.setCharacterMovies(movieMapper.movieEntityList2DTOList(savedEntity.getCharacterMovies(), false));
         }
         return newDTO;
     }
 
-    // --- List<Entity> -> List<DTO> ---
+    //List<Entity> TO List<DTO>
+
     public List<CharacterDTO> charListEntity2DTOList(List<CharacterEntity> movieCharacters, boolean b) {
         List<CharacterDTO> newList = new ArrayList<>();
         for (CharacterEntity ent : movieCharacters) {
@@ -52,7 +53,7 @@ public class CharacterMapper {
         return newList;
     }
 
-    // --- Entity -> BasicDTO ---
+    // Entity TO BasicDTO
     private CharacterBasicDTO charEntity2BasicDTO(CharacterEntity ch) {
         CharacterBasicDTO dto = new CharacterBasicDTO();
         dto.setImage(ch.getImage());
@@ -60,7 +61,7 @@ public class CharacterMapper {
         return dto;
     }
 
-    // --- BasicList<Entity> -> BasicList<DTO> ---
+    // BasicList<Entity>  TO  BasicList<DTO>
     public List<CharacterBasicDTO> basicListEntity2DTO(List<CharacterEntity> myList) {
         List<CharacterBasicDTO> listDTO = new ArrayList<>();
         for (CharacterEntity ch : myList) {

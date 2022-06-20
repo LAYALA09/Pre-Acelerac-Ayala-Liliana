@@ -1,11 +1,13 @@
 package com.alkemy.disney.disney.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
-import javax.persistence.Column;
-import java.time.LocalDate;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Pattern;
 import java.util.List;
 
 @Setter
@@ -13,10 +15,19 @@ import java.util.List;
 public class MovieDTO {
 
     private Long id;
+    @NotBlank(message = "image is required")
     private String image;
+    @NotBlank(message = "title is required")
     private String title;
+    @JsonFormat(pattern = "d-MM-yyyy")
+    @NotNull(message = "creation date is required")
+    //@PastOrPresent es para validar que la fecha que se ingresa se una actual o pasada, no futura
+    @PastOrPresent(message = "the date of creation can be past or present")
     private String creationDate;
+    @NotBlank(message = "the grade is required")
+    @Pattern(regexp = "[1,2,3,4,5]", message = "rating contains invalid charac-ters")
     private Float rating;
+
     private Long genreId;
     private List<CharacterDTO> movieCharacters;
 

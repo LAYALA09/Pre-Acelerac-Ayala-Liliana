@@ -17,7 +17,7 @@ public class MovieController {
     @Autowired
     private MovieService movieService;
 
-   //6. Detalle de Película con sus personajes
+    //6. Detalle de Película con sus personajes
     //Get Movies
    /* @GetMapping("/all")
     public ResponseEntity<List<MovieDTO>> getAll() {
@@ -26,14 +26,15 @@ public class MovieController {
                 .ok()
                 .body(movies);
     }*/
-    @GetMapping("/details/{id}")
-    public ResponseEntity<MovieDTO> getDetailsById(@PathVariable Long id){
+    //GET FOR ID
+    @GetMapping("/{id}")
+    public ResponseEntity<MovieDTO> getDetailsById(@PathVariable Long id) {
         MovieDTO movie = movieService.getMovieDetails(id);
         return ResponseEntity.status(HttpStatus.OK).body(movie);
     }
 
     // 8. Listado de Películas== imagen, título y fecha de creación
-    //Get Movie Basic
+    //GET MOVIEBASIC
     @GetMapping
     public ResponseEntity<List<MovieBasicDTO>> getBasicAll() {
         List<MovieBasicDTO> moviesBasic = movieService.getBasicMoviesList();
@@ -41,7 +42,7 @@ public class MovieController {
     }
 
     //7. Creación, Edición y Eliminación de Película
-    //Post
+    //POST
     @PostMapping
     public ResponseEntity<MovieDTO> save(@RequestBody MovieDTO movie) {
         MovieDTO movieUpdate = movieService.saveNewMovie(movie);
@@ -50,27 +51,23 @@ public class MovieController {
                 .body(movieUpdate);
 
     }
+
     @PostMapping("/{movieId}/character/{charId}")
-    public ResponseEntity<Void> addChar(@PathVariable Long movieId, @PathVariable Long charId){
+    public ResponseEntity<Void> addChar(@PathVariable Long movieId, @PathVariable Long charId) {
         movieService.addCharacterToMovie(movieId, charId);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    /*@PostMapping("/{movieId}/genre/{genreId}")
-    public ResponseEntity<Void> addGenre(@PathVariable Long movieId, @PathVariable Long genreId){
-        movieService.addGenreToMovie(movieId, genreId);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    }*/
 
-
-    //Put
+    //PUT
     @PutMapping("/{id}")
-    public ResponseEntity<MovieDTO> editMovie(@PathVariable Long id, @RequestBody MovieDTO movieToEdit){
+    public ResponseEntity<MovieDTO> editMovie(@PathVariable Long id, @RequestBody MovieDTO movieToEdit) {
         MovieDTO editedMovie = movieService.editMovieById(id, movieToEdit);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(editedMovie);
     }
-    // Delete
-    @DeleteMapping("/delete/{id}")
+
+    // DELETE
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         movieService.deleteMovieById(id);
         return ResponseEntity
@@ -81,7 +78,7 @@ public class MovieController {
 
     //8.Búsqueda de Películas
     //Filter
-    @GetMapping
+    @GetMapping("/filters")
     public ResponseEntity<List<MovieDTO>> getDetailsByFilters(
             @RequestParam(required = false) String title,
             @RequestParam(required = false) Set<Long> genre,
@@ -91,7 +88,6 @@ public class MovieController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(filteredMovies);
-
 
 
     }

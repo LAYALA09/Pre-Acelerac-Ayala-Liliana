@@ -10,7 +10,6 @@ import com.alkemy.disney.disney.dto.CharacterFiltersDTO;
 import com.alkemy.disney.disney.entity.CharacterEntity;
 import com.alkemy.disney.disney.exception.ParamNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,14 +25,14 @@ public class CharacterServiceImpl implements CharacterService {
     @Autowired
     private CharacterSpecification characterSpecification;
 
-    // --- GET ---
+    // GET
     @Override
     public List<CharacterBasicDTO> getCharacterBasicList() {
         List<CharacterEntity> myList = characterRepository.findAll();
         List<CharacterBasicDTO> resultDTO = characterMapper.basicListEntity2DTO(myList);
         return resultDTO;
     }
-
+   //GET FOR ID
     @Override
     public CharacterDTO getCharDetails(Long id) {
         CharacterEntity dbChar = this.handleFindById(id);
@@ -41,7 +40,7 @@ public class CharacterServiceImpl implements CharacterService {
         return resultDTO;
     }
 
-    // --- POST ---
+    //POST
     @Override
     public CharacterDTO saveNewCharacter(CharacterDTO newChar) {
         CharacterEntity newEntity = characterMapper.charDTO2Entity(newChar);
@@ -50,13 +49,13 @@ public class CharacterServiceImpl implements CharacterService {
         return savedChar;
     }
 
-    // --- DELETE ---
+    // DELETE
     @Override
     public void deleteCharacterById(Long id) {
         characterRepository.deleteById(id);
     }
 
-    // == PUT ==
+    // PUT
     @Override
     public CharacterDTO editCharacterById(Long id, CharacterDTO charToEdit) {
         CharacterEntity savedChar = this.handleFindById(id);
@@ -70,7 +69,7 @@ public class CharacterServiceImpl implements CharacterService {
         return resultDTO;
     }
 
-    // --- FILTERS ---
+    //FILTERS
     @Override
     public List<CharacterDTO> getByFilters(String name, Integer age, Set<Long> movies) {
         CharacterFiltersDTO filtersDTO = new CharacterFiltersDTO(name, age, movies);
@@ -79,7 +78,7 @@ public class CharacterServiceImpl implements CharacterService {
         return resultDTO;
     }
 
-    // --- ERROR HANDLING ---
+    // ERROR HANDLING
     public CharacterEntity handleFindById(Long id) {
         Optional<CharacterEntity> toBeFound = characterRepository.findById(id);
         if(!toBeFound.isPresent()) {

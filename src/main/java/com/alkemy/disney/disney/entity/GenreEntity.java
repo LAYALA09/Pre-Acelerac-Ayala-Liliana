@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,7 +22,9 @@ public class GenreEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
 
     private Long id;
+    @NotBlank(message = "Name is required")
     private String name;
+    @NotBlank(message = "Image is required")
     private String image;
 
     private boolean deleted = Boolean.FALSE; // Booleano para ejecutar un SOFT DELETE
