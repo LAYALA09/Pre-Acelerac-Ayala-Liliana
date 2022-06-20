@@ -12,6 +12,9 @@ public interface MovieService {
     List<MovieBasicDTO> getBasicMoviesList();
 
     MovieDTO getMovieDetails(Long id);
+   /* List<MovieDTO> getAllMovies();*/
+    void addCharacterToMovie(Long movieId, Long charId);
+   /* void addGenreToMovie(Long movieId, Long genreId);*/
 
     // POST
     MovieDTO saveNewMovie(MovieDTO newMovie);

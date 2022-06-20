@@ -6,9 +6,11 @@ import com.alkemy.disney.disney.Service.GenreService;
 import com.alkemy.disney.disney.dto.GenreDTO;
 import com.alkemy.disney.disney.entity.GenreEntity;
 import com.alkemy.disney.disney.exception.InvalidDTOException;
+import com.alkemy.disney.disney.exception.ParamNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class GenreServiceImpl implements GenreService {
@@ -43,6 +45,15 @@ public class GenreServiceImpl implements GenreService {
             throw new InvalidDTOException("Genre name cannot be empty or null");
         if (dto.getImage() == null || dto.getImage().isEmpty())
             throw new InvalidDTOException("Genre image cannot be empty or null");
+    }
+
+    // - Error Handling -
+    public GenreEntity handleFindById(Long id) {
+        Optional<GenreEntity> toBeFound = genreRepository.findById(id);
+        if(!toBeFound.isPresent()) {
+            throw new ParamNotFound("No Genre for id: " + id);
+        }
+        return toBeFound.get();
     }
 
 

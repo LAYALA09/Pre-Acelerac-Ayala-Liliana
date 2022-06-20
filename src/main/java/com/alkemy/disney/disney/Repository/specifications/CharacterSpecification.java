@@ -19,7 +19,8 @@ import java.util.List;
 @Component
 public class CharacterSpecification {
 
-    public Specification<CharacterEntity> getFiltered(CharacterFiltersDTO filtersDTO){
+    public Specification<CharacterEntity> getFiltered(CharacterFiltersDTO filtersDTO
+    ){
 
         // LAMBDA Function:
         return (root, query, criteriaBuilder) -> {

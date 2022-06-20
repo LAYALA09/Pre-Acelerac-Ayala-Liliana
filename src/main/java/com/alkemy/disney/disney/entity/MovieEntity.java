@@ -1,10 +1,11 @@
 package com.alkemy.disney.disney.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
-import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -41,6 +42,7 @@ public class MovieEntity {
 
     //Many to Many between movie and character
     //El tipo de cascada de la relación será con las operaciones de persistir y mergear
+    @JsonIgnore
     @ManyToMany(
             cascade = {
                     CascadeType.PERSIST,
@@ -75,6 +77,20 @@ public class MovieEntity {
     public void removeCharacterFromMovie(CharacterEntity charToBeRemoved) {
         this.movieCharacters.remove(charToBeRemoved);
     }
+
+
+    // Genres //
+  /*  public void addGenreToMovie(GenreEntity id) {
+        this.movieGenres.getId(id;
+    }
+
+    public void removeGenreFromMovie(GenreEntity id) {
+        this.movieGenres.isDeleted(id);
+    }*/
+
+
+
+
 
 
 

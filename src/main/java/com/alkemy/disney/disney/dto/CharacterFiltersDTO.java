@@ -15,3 +15,5 @@ public class CharacterFiltersDTO {
     private Integer age;
     private Set<Long> movies;
 }
+
+

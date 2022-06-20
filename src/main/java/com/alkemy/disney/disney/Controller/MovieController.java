@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
-@RequestMapping(name = "movies")
+@RequestMapping("movies")
 public class MovieController {
 
     @Autowired
@@ -19,13 +19,13 @@ public class MovieController {
 
    //6. Detalle de Película con sus personajes
     //Get Movies
-    @GetMapping("/all")
+   /* @GetMapping("/all")
     public ResponseEntity<List<MovieDTO>> getAll() {
         List<MovieDTO> movies = movieService.getAllMovies();
         return ResponseEntity
                 .ok()
                 .body(movies);
-    }
+    }*/
     @GetMapping("/details/{id}")
     public ResponseEntity<MovieDTO> getDetailsById(@PathVariable Long id){
         MovieDTO movie = movieService.getMovieDetails(id);
@@ -34,9 +34,9 @@ public class MovieController {
 
     // 8. Listado de Películas== imagen, título y fecha de creación
     //Get Movie Basic
-    @GetMapping("/all")
+    @GetMapping
     public ResponseEntity<List<MovieBasicDTO>> getBasicAll() {
-        List<MovieBasicDTO> moviesBasic = movieService.getMovieBasicList();
+        List<MovieBasicDTO> moviesBasic = movieService.getBasicMoviesList();
         return ResponseEntity.ok().body(moviesBasic);
     }
 
@@ -44,28 +44,25 @@ public class MovieController {
     //Post
     @PostMapping
     public ResponseEntity<MovieDTO> save(@RequestBody MovieDTO movie) {
-        MovieDTO movieUpdate = movieService.save(movie);
+        MovieDTO movieUpdate = movieService.saveNewMovie(movie);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(movieUpdate);
 
     }
-  //Post whit character
     @PostMapping("/{movieId}/character/{charId}")
     public ResponseEntity<Void> addChar(@PathVariable Long movieId, @PathVariable Long charId){
         movieService.addCharacterToMovie(movieId, charId);
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
-    //Post with genre
-    @PostMapping("/{movieId}/genre/{genreId}")
+
+    /*@PostMapping("/{movieId}/genre/{genreId}")
     public ResponseEntity<Void> addGenre(@PathVariable Long movieId, @PathVariable Long genreId){
         movieService.addGenreToMovie(movieId, genreId);
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .build();
-    }
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }*/
+
+
     //Put
     @PutMapping("/{id}")
     public ResponseEntity<MovieDTO> editMovie(@PathVariable Long id, @RequestBody MovieDTO movieToEdit){
@@ -94,6 +91,7 @@ public class MovieController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(filteredMovies);
+
 
 
     }
