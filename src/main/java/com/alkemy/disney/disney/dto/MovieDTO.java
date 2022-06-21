@@ -25,7 +25,7 @@ public class MovieDTO {
     @PastOrPresent(message = "the date of creation can be past or present")
     private String creationDate;
     @NotNull(message = "the rating is required")
-    /*@Pattern(regexp = "[1,2,3,4,5]", message = "rating contains invalid charac-ters")*/
+    @Pattern(regexp = "[1,2,3,4,5]", message = "rating contains invalid charac-ters")
     private Integer rating;
     @NotNull(message = "genre id is required")
     private Long genreId;

@@ -12,8 +12,6 @@ public interface MovieService {
     List<MovieBasicDTO> getBasicMoviesList();
     MovieDTO getMovieDetails(Long id);
     void addCharacterToMovie(Long movieId, Long charId);
-    // TODO: pendiente
-   /* List<MovieDTO> getAllMovies();
 
     // TODO: pendiente
     /*void removeCharacterFromMovie(Long movieId, Long charId);No llegue a resolverlo*/
