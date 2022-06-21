@@ -19,15 +19,15 @@ public class MovieDTO {
     private String image;
     @NotBlank(message = "title is required")
     private String title;
-    @JsonFormat(pattern = "d-MM-yyyy")
+    @JsonFormat(pattern = "yyyy/MM/dd")
     @NotNull(message = "creation date is required")
     //@PastOrPresent es para validar que la fecha que se ingresa se una actual o pasada, no futura
     @PastOrPresent(message = "the date of creation can be past or present")
     private String creationDate;
-    @NotBlank(message = "the grade is required")
-    @Pattern(regexp = "[1,2,3,4,5]", message = "rating contains invalid charac-ters")
-    private Float rating;
-
+    @NotNull(message = "the rating is required")
+    /*@Pattern(regexp = "[1,2,3,4,5]", message = "rating contains invalid charac-ters")*/
+    private Integer rating;
+    @NotNull(message = "genre id is required")
     private Long genreId;
     private List<CharacterDTO> movieCharacters;
 

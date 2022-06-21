@@ -38,14 +38,14 @@ public class MovieEntity {
 
     @Column(name = "creation_date")
     @NotNull(message = "is required")
-    @DateTimeFormat(pattern = "d/MM/yyyy")
+    @DateTimeFormat(pattern = "yyyy/MM/dd")
     @PastOrPresent(message = "the year must be past or present")
     private LocalDate creationDate;
 
 
-    @NotBlank(message = "The grade is required")
-    @Pattern(regexp = "[1,2,3,4,5]", message = "Grade contains invalid charac-ters")
-    private Float rating;
+    @NotNull(message = "The grade is required")
+   /* @Pattern(regexp = "[1,2,3,4,5]", message = "Grade contains invalid characters")*/
+    private Integer rating;
 
 
     private boolean deleted = Boolean.FALSE;

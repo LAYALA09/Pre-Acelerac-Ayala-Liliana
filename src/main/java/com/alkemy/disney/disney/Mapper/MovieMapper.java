@@ -21,13 +21,13 @@ public class MovieMapper {
 
     //DTO to  Entity
     public MovieEntity movieDTO2Entity(MovieDTO dto) {
-        MovieEntity ent = new MovieEntity();
-        ent.setId(dto.getId());
-        ent.setImage(dto.getImage());
-        ent.setTitle(dto.getTitle());
-        ent.setRating(dto.getRating());
-        ent.setCreationDate(this.String2LocalDate(dto.getCreationDate()));
-        return ent;
+        MovieEntity entity = new MovieEntity();
+        entity.setId(dto.getId());
+        entity.setImage(dto.getImage());
+        entity.setTitle(dto.getTitle());
+        entity.setRating(dto.getRating());
+        entity.setCreationDate(this.String2LocalDate(dto.getCreationDate()));
+        return entity;
     }
 
     // Entity to DTO
@@ -77,13 +77,13 @@ public class MovieMapper {
 
     //Utils
     public LocalDate String2LocalDate(String enteredDate) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
         LocalDate transformedDate = LocalDate.parse(enteredDate, formatter);
         return transformedDate;
     }
 
     public String localDate2String(LocalDate dbDate) {
-        String formattedDate = dbDate.format(DateTimeFormatter.ofPattern("d/MM/yyyy"));
+        String formattedDate = dbDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
         return formattedDate;
     }
 }

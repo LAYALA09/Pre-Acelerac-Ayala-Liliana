@@ -59,8 +59,8 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public MovieDTO saveNewMovie(MovieDTO newMovie) {
         MovieEntity newEntity = moviemapper.movieDTO2Entity(newMovie);
-        MovieEntity savedEntity = movieRepository.save(newEntity);
-        MovieDTO resultDTO = moviemapper.entity2DTO(savedEntity, false);
+        MovieEntity save = movieRepository.save(newEntity);
+        MovieDTO resultDTO = moviemapper.entity2DTO(save, false);
         return resultDTO;
     }
 

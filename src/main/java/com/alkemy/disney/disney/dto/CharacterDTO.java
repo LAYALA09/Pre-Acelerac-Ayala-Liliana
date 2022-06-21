@@ -19,7 +19,7 @@ public class CharacterDTO {
     @NotNull(message = "Age is required")
     private Integer age;
     @NotNull(message = "Weight is required")
-    private Float weight;
+    private float weight;
     @NotBlank(message = "History is required")
     private String history;
     private List<MovieDTO> characterMovies;

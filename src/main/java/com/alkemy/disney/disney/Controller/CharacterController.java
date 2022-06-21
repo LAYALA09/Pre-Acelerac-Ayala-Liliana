@@ -11,7 +11,9 @@ import java.util.Set;
 @RestController
 @RequestMapping("characters")
 //Controller==> se recibe una solicitud y se devuelve una respuesta
-public class CharacterController {
+public class
+
+CharacterController {
     private CharacterService  characterService;
 
     // GET

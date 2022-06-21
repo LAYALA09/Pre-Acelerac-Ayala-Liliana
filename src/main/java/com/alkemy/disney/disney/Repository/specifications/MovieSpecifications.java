@@ -33,15 +33,7 @@ public class MovieSpecifications {
                 );
             }
 
-            // Genre
-            if(!CollectionUtils.isEmpty(movieFilters.getGenre())) {
-                Join<MovieEntity, GenreEntity> join = root.join("movieGenres", JoinType.INNER);
-                Expression<String> genresId = join.get("id");
-                predicates.add(genresId.in(movieFilters.getGenre()));
-            }
-
-            query.distinct(true);
-
+            
             // Order
             String orderByField = "title";
             query.orderBy(

@@ -26,7 +26,7 @@ public class CharacterEntity {
     @NotNull(message = "Age is required")
     private Integer age;
     @NotNull(message = "Weight is required")
-    private Float weight;
+    private float weight;
     private String history;
     private boolean deleted= Boolean.FALSE;
 
