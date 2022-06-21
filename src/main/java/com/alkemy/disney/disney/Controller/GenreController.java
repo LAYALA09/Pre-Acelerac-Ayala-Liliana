@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 
 @RestController
 @RequestMapping("genres")
@@ -19,7 +21,7 @@ public class GenreController {
     //3. Creación de Géneros
     //POST GENRE
     @PostMapping
-    public ResponseEntity<GenreDTO> postNewGenre(@RequestBody GenreDTO newGenre){
+    public ResponseEntity<GenreDTO> postNewGenre(@Valid @RequestBody GenreDTO newGenre){
         GenreDTO savedGenre = genreService.saveNewGenre(newGenre);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(savedGenre);
     }

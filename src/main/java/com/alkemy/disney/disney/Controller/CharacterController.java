@@ -5,6 +5,8 @@ import com.alkemy.disney.disney.dto.CharacterDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Set;
 
@@ -31,14 +33,14 @@ CharacterController {
 
     // POST
     @PostMapping
-    public ResponseEntity<CharacterDTO> postNewCharacter( @RequestBody CharacterDTO newChar){
+    public ResponseEntity<CharacterDTO> postNewCharacter(@Valid @RequestBody CharacterDTO newChar){
         CharacterDTO createdChar = characterService.saveNewCharacter(newChar);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdChar);
     }
 
     // PUT CHARACTER
     @PutMapping("/{id}")
-    public ResponseEntity<CharacterDTO> editCharacter(@PathVariable Long id, @RequestBody CharacterDTO charToEdit){
+    public ResponseEntity<CharacterDTO> editCharacter(@Valid @PathVariable Long id, @RequestBody CharacterDTO charToEdit){
         CharacterDTO editedChar = characterService.editCharacterById(id, charToEdit);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(editedChar);
     }

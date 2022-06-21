@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Set;
 
@@ -18,14 +20,7 @@ public class MovieController {
     private MovieService movieService;
 
     //6. Detalle de Película con sus personajes
-    //Get Movies
-   /* @GetMapping("/all")
-    public ResponseEntity<List<MovieDTO>> getAll() {
-        List<MovieDTO> movies = movieService.getAllMovies();
-        return ResponseEntity
-                .ok()
-                .body(movies);
-    }*/
+
     //GET FOR ID
     @GetMapping("/{id}")
     public ResponseEntity<MovieDTO> getDetailsById(@PathVariable Long id) {
@@ -44,7 +39,7 @@ public class MovieController {
     //7. Creación, Edición y Eliminación de Película
     //POST
     @PostMapping
-    public ResponseEntity<MovieDTO> save(@RequestBody MovieDTO movie) {
+    public ResponseEntity<MovieDTO> save(@Valid  @RequestBody MovieDTO movie) {
         MovieDTO movieUpdate = movieService.saveNewMovie(movie);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -53,7 +48,7 @@ public class MovieController {
     }
 
     @PostMapping("/{movieId}/character/{charId}")
-    public ResponseEntity<Void> addChar(@PathVariable Long movieId, @PathVariable Long charId) {
+    public ResponseEntity<Void> addChar(@Valid @PathVariable Long movieId, @PathVariable Long charId) {
         movieService.addCharacterToMovie(movieId, charId);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -61,7 +56,7 @@ public class MovieController {
 
     //PUT
     @PutMapping("/{id}")
-    public ResponseEntity<MovieDTO> editMovie(@PathVariable Long id, @RequestBody MovieDTO movieToEdit) {
+    public ResponseEntity<MovieDTO> editMovie(@Valid @PathVariable Long id, @RequestBody MovieDTO movieToEdit) {
         MovieDTO editedMovie = movieService.editMovieById(id, movieToEdit);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(editedMovie);
     }
