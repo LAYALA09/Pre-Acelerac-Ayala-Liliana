@@ -20,7 +20,6 @@ public class MovieController {
     private MovieService movieService;
 
     //6. Detalle de Película con sus personajes
-
     //GET FOR ID
     @GetMapping("/{id}")
     public ResponseEntity<MovieDTO> getDetailsById(@PathVariable Long id) {

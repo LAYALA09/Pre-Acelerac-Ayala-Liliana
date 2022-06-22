@@ -12,7 +12,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MovieFiltersDTO {
-    @NotBlank(message = "title is required")
+    @NotBlank(message = "Title is required")
     private String title;
     private Set<Long> genre;
     private String order;

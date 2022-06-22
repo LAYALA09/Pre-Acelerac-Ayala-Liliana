@@ -4,10 +4,8 @@ package com.alkemy.disney.disney.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PastOrPresent;
-import javax.validation.constraints.Pattern;
+
+import javax.validation.constraints.*;
 import java.util.List;
 
 @Setter
@@ -15,19 +13,23 @@ import java.util.List;
 public class MovieDTO {
 
     private Long id;
-    @NotBlank(message = "image is required")
+    @NotBlank(message = "Image is required")
     private String image;
-    @NotBlank(message = "title is required")
+    @NotBlank(message = "Title is required")
+    @Pattern(regexp = "^[a-zA-ZáéíóúÁÉÍÓÚÜüñÑ\\s]*$", message = "Title contains invalid characters")
     private String title;
+
     @JsonFormat(pattern = "yyyy/MM/dd")
-    @NotNull(message = "creation date is required")
+    @NotNull(message = "Creation date is required")
     //@PastOrPresent es para validar que la fecha que se ingresa se una actual o pasada, no futura
-    @PastOrPresent(message = "the date of creation can be past or present")
+    /*@PastOrPresent(message = "The date of creation can be past or present")*/
     private String creationDate;
-    @NotNull(message = "the rating is required")
-    @Pattern(regexp = "[1,2,3,4,5]", message = "rating contains invalid charac-ters")
-    private Integer rating;
-    @NotNull(message = "genre id is required")
+    @NotNull(message = "The rating is required")
+   /*@Pattern(regexp = "[1,2,3,4,5]", message = "rating contains invalid charac-ters")*/
+    @Min(1)
+    @Max(5)
+    private int rating;
+    @NotNull(message = "Genre id is required")
     private Long genreId;
     private List<CharacterDTO> movieCharacters;
 

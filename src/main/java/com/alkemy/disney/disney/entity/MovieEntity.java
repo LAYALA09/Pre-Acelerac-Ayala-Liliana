@@ -8,10 +8,7 @@ import org.hibernate.annotations.Where;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PastOrPresent;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,13 +36,14 @@ public class MovieEntity {
     @Column(name = "creation_date")
     @NotNull(message = "is required")
     @DateTimeFormat(pattern = "yyyy/MM/dd")
-    @PastOrPresent(message = "the year must be past or present")
+    /*@PastOrPresent(message = "the year must be past or present")*/
     private LocalDate creationDate;
 
 
     @NotNull(message = "The rating is required")
-    @Pattern(regexp = "[1,2,3,4,5]", message = "Grade contains invalid characters")
-    private Integer rating;
+    @Min(1)
+    @Max(5)
+    private int rating;
 
 
     private boolean deleted = Boolean.FALSE;

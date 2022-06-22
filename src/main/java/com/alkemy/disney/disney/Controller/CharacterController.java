@@ -13,9 +13,8 @@ import java.util.Set;
 @RestController
 @RequestMapping("characters")
 //Controller==> se recibe una solicitud y se devuelve una respuesta
-public class
+public class CharacterController {
 
-CharacterController {
     private CharacterService  characterService;
 
     // GET
@@ -25,7 +24,7 @@ CharacterController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(charDTO);
     }
 
-    @GetMapping("/details/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<CharacterDTO> getDetailsById(@PathVariable Long id){
         CharacterDTO charDetails = characterService.getCharDetails(id);
         return ResponseEntity.status(HttpStatus.OK).body(charDetails);
