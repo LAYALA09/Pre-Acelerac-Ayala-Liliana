@@ -37,14 +37,16 @@ public class MovieController {
 
     //7. Creación, Edición y Eliminación de Película
     //POST
-    @PostMapping
-    public ResponseEntity<MovieDTO> save(@Valid  @RequestBody MovieDTO movie) {
-        MovieDTO movieUpdate = movieService.saveNewMovie(movie);
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(movieUpdate);
 
+
+    // == POST ==
+    @PostMapping
+    public ResponseEntity<MovieDTO> postNewMovie(@RequestBody MovieDTO newMovie){
+        MovieDTO createdMovie = movieService.saveNewMovie(newMovie);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdMovie);
     }
+
+
 
     @PostMapping("/{movieId}/character/{charId}")
     public ResponseEntity<Void> addChar(@Valid @PathVariable Long movieId, @PathVariable Long charId) {

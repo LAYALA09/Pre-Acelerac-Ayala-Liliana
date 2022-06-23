@@ -12,6 +12,7 @@ import com.alkemy.disney.disney.exception.ParamNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -32,11 +33,12 @@ public class CharacterServiceImpl implements CharacterService {
         List<CharacterBasicDTO> resultDTO = characterMapper.basicListEntity2DTO(myList);
         return resultDTO;
     }
-   //GET FOR ID
+
+    //GET FOR ID
     @Override
     public CharacterDTO getCharDetails(Long id) {
         CharacterEntity dbChar = this.handleFindById(id);
-        CharacterDTO resultDTO = characterMapper.entity2DTO(dbChar,true);
+        CharacterDTO resultDTO = characterMapper.entity2DTO(dbChar, true);
         return resultDTO;
     }
 
@@ -48,6 +50,7 @@ public class CharacterServiceImpl implements CharacterService {
         CharacterDTO savedChar = characterMapper.entity2DTO(savedEntity, false);
         return savedChar;
     }
+
 
     // DELETE
     @Override
@@ -81,9 +84,30 @@ public class CharacterServiceImpl implements CharacterService {
     // ERROR HANDLING
     public CharacterEntity handleFindById(Long id) {
         Optional<CharacterEntity> toBeFound = characterRepository.findById(id);
-        if(!toBeFound.isPresent()) {
+        if (!toBeFound.isPresent()) {
             throw new ParamNotFound("No Character for id: " + id);
         }
         return toBeFound.get();
+    }
+
+    public List<CharacterEntity> look4OrCreate(List<CharacterDTO> dtos) {
+
+        /* Verifies id of each DTO. If it has a value, verifies if it exists in the DataBase.
+         * If it does, it's added to the List. Else, it will be created and added using the Mapper. */
+        List<CharacterEntity> entities = new ArrayList();
+        for (CharacterDTO dto : dtos) {
+            if (dto.getId() != null) {
+                Optional<CharacterEntity> result = characterRepository.findById(dto.getId());
+                if (result.isPresent()) {
+                    entities.add(result.get());
+                } else {
+                    entities.add(characterMapper.charDTO2Entity(dto));
+                }
+            } else {
+                entities.add(characterMapper.charDTO2Entity(dto));
+            }
+        }
+
+        return entities;
     }
 }

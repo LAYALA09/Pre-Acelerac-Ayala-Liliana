@@ -16,7 +16,6 @@ public class MovieDTO {
     @NotBlank(message = "Image is required")
     private String image;
     @NotBlank(message = "Title is required")
-    @Pattern(regexp = "^[a-zA-ZáéíóúÁÉÍÓÚÜüñÑ\\s]*$", message = "Title contains invalid characters")
     private String title;
 
     @JsonFormat(pattern = "yyyy/MM/dd")

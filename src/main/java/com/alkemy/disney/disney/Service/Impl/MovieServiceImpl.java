@@ -2,18 +2,23 @@ package com.alkemy.disney.disney.Service.Impl;
 
 import com.alkemy.disney.disney.Mapper.CharacterMapper;
 import com.alkemy.disney.disney.Mapper.MovieMapper;
+import com.alkemy.disney.disney.Repository.CharacterRepository;
 import com.alkemy.disney.disney.Repository.MovieRepository;
 
 import com.alkemy.disney.disney.Repository.specifications.MovieSpecifications;
 import com.alkemy.disney.disney.Service.MovieService;
+import com.alkemy.disney.disney.dto.CharacterDTO;
 import com.alkemy.disney.disney.dto.MovieBasicDTO;
 import com.alkemy.disney.disney.dto.MovieDTO;
 import com.alkemy.disney.disney.dto.MovieFiltersDTO;
 import com.alkemy.disney.disney.entity.CharacterEntity;
+import com.alkemy.disney.disney.entity.GenreEntity;
 import com.alkemy.disney.disney.entity.MovieEntity;
 import com.alkemy.disney.disney.exception.ParamNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -27,13 +32,15 @@ public class MovieServiceImpl implements MovieService {
     @Autowired
     private MovieRepository movieRepository;
     @Autowired
+    private CharacterRepository characterRepository;
+    @Autowired
     private GenreServiceImpl genreService;
     @Autowired
     private CharacterServiceImpl characterService;
     @Autowired
     private MovieSpecifications movieSpecifications;
 
-    // GET
+    // GET MOVIE BASIC DTO
     @Override
     public List<MovieBasicDTO> getBasicMoviesList() {
         List<MovieEntity> dbList = movieRepository.findAll();
@@ -47,13 +54,7 @@ public class MovieServiceImpl implements MovieService {
         MovieDTO resultDTO = moviemapper.entity2DTO(dbMovie, true);
         return resultDTO;
     }
-    //GET ALL MOVIES
-    /*@Override
-    public List<MovieDTO> getAllMovies() {
-        List<MovieEntity> entities = movieRepository.findAll();
-        List<MovieDTO> dtos = moviemapper.movieEntityList2DTOList(entities, true);
-        return dtos;
-    }*/
+
 
     // POST
     @Override
@@ -62,6 +63,15 @@ public class MovieServiceImpl implements MovieService {
         MovieEntity save = movieRepository.save(newEntity);
         MovieDTO resultDTO = moviemapper.entity2DTO(save, false);
         return resultDTO;
+    }
+
+    @Override
+    public void addCharacterToMovie(Long movieId, Long charId) {
+        MovieEntity savedMovie = this.handleFindById(movieId);
+        CharacterEntity savedChar = characterService.handleFindById(charId);
+        savedMovie.getMovieCharacters().size();
+        savedMovie.addCharacterToMovie(savedChar);
+        movieRepository.save(savedMovie);
     }
 
     // PUT
@@ -92,34 +102,14 @@ public class MovieServiceImpl implements MovieService {
         return resultDTO;
     }
 
-    @Override
-    public void addCharacterToMovie(Long movieId, Long charId) {
-        MovieEntity savedMovie = this.handleFindById(movieId);
-        CharacterEntity savedChar = characterService.handleFindById(charId);
-        savedMovie.getMovieCharacters().size();
-        savedMovie.addCharacterToMovie(savedChar);
-        movieRepository.save(savedMovie);
-    }
 
-    /*@Override
-    public void removeCharacterFromMovie(Long movieId, Long chardId) {
-        MovieEntity deletedmovie= this.handleFindById(movieId);
-        deletedmovie.getMovieCharacters().size();
-        CharacterEntity characterEntity=characterMapper.charDTO2Entity(chardId);
-        deletedmovie.removeCharacterFromMovie(characterEntity);
-        movieRepository.save(deletedmovie);
-    }*/
 
-   /* @Override
-    public void addGenreToMovie(Long movieId, Long genreId) {
-        MovieEntity savedMovie = this.handleFindById(movieId);
-        GenreEntity savedGenre = genreService.handleFindById(genreId);
-        savedMovie.getmovieGenres().size();
-        savedMovie.addGenreToMovie(savedGenre);
-        movieRepository.save(savedMovie);
-    }*/
+
+
+
 
     // ERROR HANDLING
+    //method para verificar si existe la película
     public MovieEntity handleFindById(Long id) {
         Optional<MovieEntity> toBeFound = movieRepository.findById(id);
         if(!toBeFound.isPresent()) {
@@ -127,4 +117,5 @@ public class MovieServiceImpl implements MovieService {
         }
         return toBeFound.get();
     }
+
 }

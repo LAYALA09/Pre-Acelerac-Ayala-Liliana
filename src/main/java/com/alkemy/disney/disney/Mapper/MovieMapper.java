@@ -1,8 +1,13 @@
 package com.alkemy.disney.disney.Mapper;
 
+import com.alkemy.disney.disney.Repository.CharacterRepository;
+import com.alkemy.disney.disney.Service.CharacterService;
+import com.alkemy.disney.disney.dto.CharacterDTO;
 import com.alkemy.disney.disney.dto.MovieBasicDTO;
 import com.alkemy.disney.disney.dto.MovieDTO;
+import com.alkemy.disney.disney.entity.CharacterEntity;
 import com.alkemy.disney.disney.entity.MovieEntity;
+import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -11,6 +16,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class MovieMapper {
@@ -18,6 +24,12 @@ public class MovieMapper {
     private CharacterMapper characterMapper;
     @Autowired
     private GenreMapper genreMapper;
+    @Autowired
+    private CharacterService characterService;
+    @Autowired
+    private CharacterRepository characterRepository;
+
+
 
     //DTO to  Entity
     public MovieEntity movieDTO2Entity(MovieDTO dto) {
@@ -27,6 +39,9 @@ public class MovieMapper {
         entity.setTitle(dto.getTitle());
         entity.setRating(dto.getRating());
         entity.setCreationDate(this.String2LocalDate(dto.getCreationDate()));
+        entity.setGenreId(dto.getGenreId());
+        entity.setMovieCharacters(characterService.look4OrCreate(dto.getMovieCharacters()));
+
         return entity;
     }
 
@@ -37,8 +52,9 @@ public class MovieMapper {
         dto.setImage(dbMovie.getImage());
         dto.setTitle(dbMovie.getTitle());
         dto.setRating(dbMovie.getRating());
-        //indico que guarde el personaje pero no  la pelicula
+        dto.setGenreId(dbMovie.getGenreId());
         dto.setCreationDate(this.localDate2String(dbMovie.getCreationDate()));
+        //indico que guarde el personaje pero no  la pelicula
         if(b) {
             dto.setMovieCharacters(characterMapper.charListEntity2DTOList(dbMovie.getMovieCharacters(),false));
 

@@ -1,6 +1,6 @@
 package com.alkemy.disney.disney.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
@@ -51,32 +51,28 @@ public class MovieEntity {
 
     //Many to Many between movie and character
     //El tipo de cascada de la relación será con las operaciones de persistir y mergear
-    @JsonIgnore
     @ManyToMany(
             cascade = {
                     CascadeType.PERSIST,
-                    CascadeType.MERGE
-            })
-    // Definimos el nombre de la tabla intermedia y los nombres de ambas columnas
+                    CascadeType.MERGE,
+            }, fetch = FetchType.LAZY)
     @JoinTable(
-            name = "movies_characters",
-            joinColumns = @JoinColumn(name = "movie_id"),
+            name = "movie_characters",
+            joinColumns= @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "character_id"))
-    private List<CharacterEntity> movieCharacters = new ArrayList();
+    private List<CharacterEntity> movieCharacters = new ArrayList<>();
 
     //Buscar información
     @ManyToOne
     @JoinColumn(name = "genre_id", insertable = false, updatable = false)
     private GenreEntity genres;
-
-
     //guardar y actualizar// define la columna de genreid en la base de datos
     @Column(name = "genre_id", nullable = false)
     private Long genreId;
 
 
 
-    // CHARACTER
+   /// CHARACTER
     public void addCharacterToMovie(CharacterEntity charToBeAdded) {
 
         this.movieCharacters.add(charToBeAdded);
@@ -85,6 +81,7 @@ public class MovieEntity {
     public void removeCharacterFromMovie(CharacterEntity charToBeRemoved) {
         this.movieCharacters.remove(charToBeRemoved);
     }
+
 
 
 }

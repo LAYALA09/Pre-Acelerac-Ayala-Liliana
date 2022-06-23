@@ -2,6 +2,7 @@ package com.alkemy.disney.disney.Controller;
 import com.alkemy.disney.disney.Service.CharacterService;
 import com.alkemy.disney.disney.dto.CharacterBasicDTO;
 import com.alkemy.disney.disney.dto.CharacterDTO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +15,7 @@ import java.util.Set;
 @RequestMapping("characters")
 //Controller==> se recibe una solicitud y se devuelve una respuesta
 public class CharacterController {
-
+@Autowired
     private CharacterService  characterService;
 
     // GET
@@ -34,7 +35,7 @@ public class CharacterController {
     @PostMapping
     public ResponseEntity<CharacterDTO> postNewCharacter(@Valid @RequestBody CharacterDTO newChar){
         CharacterDTO createdChar = characterService.saveNewCharacter(newChar);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdChar);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(createdChar);
     }
 
     // PUT CHARACTER
