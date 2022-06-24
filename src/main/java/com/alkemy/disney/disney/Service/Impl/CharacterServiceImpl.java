@@ -142,6 +142,7 @@ public class CharacterServiceImpl implements CharacterService {
 
         return entities;
     }
+
     //VALIDATION
     private void validation(CharacterDTO dto) {
         if (dto == null)

@@ -20,19 +20,14 @@ public class MovieController {
 
     //6. Detalle de Película con sus personajes
     //GET FOR ID
-    @GetMapping("/{i}")
+    @GetMapping("/{id}")
     public ResponseEntity<MovieDTO> getDetailsById(@Valid @PathVariable Long id) {
         MovieDTO movie = movieService.getMovieDetails(id);
         return ResponseEntity.status(HttpStatus.OK).body(movie);
     }
 
-    // 8. Listado de Películas== imagen, título y fecha de creación
-    //GET MOVIEBASIC
-    @GetMapping
-    public ResponseEntity<List<MovieBasicDTO>> getBasicAll() {
-        List<MovieBasicDTO> moviesBasic = movieService.getBasicMoviesList();
-        return ResponseEntity.ok().body(moviesBasic);
-    }
+
+
 
     //7. Creación, Edición y Eliminación de Película
     //POST

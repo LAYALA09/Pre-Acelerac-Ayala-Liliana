@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Set;
@@ -25,6 +24,7 @@ public class CharacterController {
         List<CharacterBasicDTO> charDTO = characterService.getCharacterBasicList();
         return ResponseEntity.ok().body(charDTO);
     }
+
 
     //GET DETAILS BY ID
     @GetMapping("/{id}")
@@ -55,7 +55,7 @@ public class CharacterController {
     }
 
     // FILTERS
-    @GetMapping()
+    @GetMapping("/filters")
     public ResponseEntity<List<CharacterDTO>> getDetailsByFilters(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) Integer age,
