@@ -4,21 +4,19 @@ import com.alkemy.disney.disney.Mapper.CharacterMapper;
 import com.alkemy.disney.disney.Mapper.MovieMapper;
 import com.alkemy.disney.disney.Repository.CharacterRepository;
 import com.alkemy.disney.disney.Repository.MovieRepository;
-
 import com.alkemy.disney.disney.Repository.specifications.MovieSpecifications;
+import com.alkemy.disney.disney.Service.CharacterService;
 import com.alkemy.disney.disney.Service.MovieService;
-import com.alkemy.disney.disney.dto.CharacterDTO;
 import com.alkemy.disney.disney.dto.MovieBasicDTO;
 import com.alkemy.disney.disney.dto.MovieDTO;
 import com.alkemy.disney.disney.dto.MovieFiltersDTO;
 import com.alkemy.disney.disney.entity.CharacterEntity;
-import com.alkemy.disney.disney.entity.GenreEntity;
 import com.alkemy.disney.disney.entity.MovieEntity;
+import com.alkemy.disney.disney.exception.InvalidDTOException;
 import com.alkemy.disney.disney.exception.ParamNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -26,96 +24,149 @@ import java.util.Set;
 @Service
 public class MovieServiceImpl implements MovieService {
     @Autowired
-    private MovieMapper moviemapper;
-    @Autowired
-    private CharacterMapper characterMapper;
-    @Autowired
     private MovieRepository movieRepository;
     @Autowired
-    private CharacterRepository characterRepository;
-    @Autowired
-    private GenreServiceImpl genreService;
-    @Autowired
-    private CharacterServiceImpl characterService;
+    private MovieMapper movieMapper;
     @Autowired
     private MovieSpecifications movieSpecifications;
+    @Autowired
+    private CharacterService characterService;
+    @Autowired
+    private CharacterServiceImpl characterServiceImpl;
+
+    // Setter/Field Injection of Dependencies so we can handle BeanCurrentlyInCreationException
+    @Autowired
+    public void setMovieRepository(MovieRepository movieRepository, MovieSpecifications movieSpecifications, MovieMapper movieMapper, CharacterService characterService, CharacterServiceImpl charService) {
+        this.movieRepository = movieRepository;
+        this.movieSpecifications = movieSpecifications;
+        this.movieMapper = movieMapper;
+        this.characterService = characterService;
+        this.characterServiceImpl = characterServiceImpl;
+    }
 
     // GET MOVIE BASIC DTO
-    @Override
+    //TODO CORREGIDO
     public List<MovieBasicDTO> getBasicMoviesList() {
         List<MovieEntity> dbList = movieRepository.findAll();
-        List<MovieBasicDTO> resultDTO = moviemapper.entityList2BasicDTO(dbList);
+        List<MovieBasicDTO> resultDTO = movieMapper.entityList2BasicDTO(dbList);
         return resultDTO;
     }
-   //GET FOR ID
-    @Override
+
+
+    //GET FOR ID
     public MovieDTO getMovieDetails(Long id) {
         MovieEntity dbMovie = this.handleFindById(id);
-        MovieDTO resultDTO = moviemapper.entity2DTO(dbMovie, true);
+        MovieDTO resultDTO = movieMapper.entity2DTO(dbMovie, true);
         return resultDTO;
     }
 
 
     // POST
-    @Override
-    public MovieDTO saveNewMovie(MovieDTO newMovie) {
-        MovieEntity newEntity = moviemapper.movieDTO2Entity(newMovie);
+    //TODO CORREGIDO
+    public MovieDTO saveNewMovie(MovieDTO dto) {
+        validation(dto);
+        MovieEntity newEntity = movieMapper.movieDTO2Entity(dto);
         MovieEntity save = movieRepository.save(newEntity);
-        MovieDTO resultDTO = moviemapper.entity2DTO(save, false);
+        MovieDTO resultDTO = movieMapper.entity2DTO(save, true);
         return resultDTO;
     }
 
     @Override
     public void addCharacterToMovie(Long movieId, Long charId) {
         MovieEntity savedMovie = this.handleFindById(movieId);
-        CharacterEntity savedChar = characterService.handleFindById(charId);
-        savedMovie.getMovieCharacters().size();
+        CharacterEntity savedChar = characterServiceImpl.handleFindById(charId);
         savedMovie.addCharacterToMovie(savedChar);
         movieRepository.save(savedMovie);
     }
 
     // PUT
-    @Override
-    public MovieDTO editMovieById(Long id, MovieDTO movieToEdit) {
-        MovieEntity savedMovie = this.handleFindById(id);
-        savedMovie.setImage(movieToEdit.getImage());
-        savedMovie.setTitle(movieToEdit.getTitle());
-        savedMovie.setRating(movieToEdit.getRating());
-        savedMovie.setCreationDate(moviemapper.String2LocalDate(movieToEdit.getCreationDate()));
-        MovieEntity editedMovie = movieRepository.save(savedMovie);
-        MovieDTO resultDTO = moviemapper.entity2DTO(editedMovie, false);
-        return resultDTO;
+
+    /**
+     * Update
+     * an Entity related to the received id with the new attributes from the received dto
+     *
+     * @param id  of the entity to be updated
+     * @param dto with all the new attributes
+     * @return The Entity as DTO with its updated attributes
+     * @throws ParamNotFound
+     */
+    //TODO CORREGIDO
+    public MovieDTO editMovieById(Long id, MovieDTO dto) throws ParamNotFound {
+        //Validation of new attributes
+        validation(dto);
+
+        Optional<MovieEntity> result = movieRepository.findById(id);
+        if (result.isPresent()) {
+            MovieEntity entity = movieMapper.updateMovieDTO2Entity(result.get(), dto);
+            MovieEntity entityUpdated = movieRepository.save(entity);
+            MovieDTO dtoUpdated = movieMapper.entity2DTO(entityUpdated, true);
+            return dtoUpdated;
+        } else {
+            throw new ParamNotFound("Requested movie was not found.");
+        }
     }
 
+    /**
+     * Performs a logic delete to the Entity related to the received id
+     *
+     * @param id of the entity to be deleted
+     */
     //DELETE
-    @Override
+    //TODO CORREGIDO
     public void deleteMovieById(Long id) {
+        if (movieRepository.findById(id) == null)
+            throw new ParamNotFound("Movie requested was not found.");
         movieRepository.deleteById(id);
     }
 
     //FILTERS
-    @Override
-    public List<MovieDTO> getByFilters(String title, Set<Long> genre, String order) {
-        MovieFiltersDTO movieFilters = new MovieFiltersDTO(title, genre, order);
+    //TODO CORREGIDO
+    public List<MovieDTO> getByFilters(String title, Long genreId, String order) {
+
+        /* Creates a filtersDTO with the specifications, brings all the entities which meet these and
+         * then turns the list of entitites into a list of DTOs */
+        MovieFiltersDTO movieFilters = new MovieFiltersDTO(title, genreId, order);
         List<MovieEntity> entityList = movieRepository.findAll(movieSpecifications.getFiltered(movieFilters));
-        List<MovieDTO> resultDTO = moviemapper.movieEntityList2DTOList(entityList, true);
+        List<MovieDTO> resultDTO = movieMapper.movieEntityList2DTOList(entityList, true);
         return resultDTO;
     }
-
-
-
-
-
 
 
     // ERROR HANDLING
     //method para verificar si existe la película
     public MovieEntity handleFindById(Long id) {
         Optional<MovieEntity> toBeFound = movieRepository.findById(id);
-        if(!toBeFound.isPresent()) {
+        if (!toBeFound.isPresent()) {
             throw new ParamNotFound("No Movie for id: " + id);
         }
         return toBeFound.get();
     }
+
+    //VALIDACION
+
+    /**
+     * Validates all attributes of the received dto and throws an exception if any does not meet the requirements
+     *
+     * @param dto to be validated
+     */
+    private void validation(MovieDTO dto) {
+        if (dto == null)
+            throw new InvalidDTOException("Movie cannot be null.");
+        if (dto.getTitle() == null || dto.getTitle().isEmpty())
+            throw new InvalidDTOException("Movie title cannot be empty or null");
+        if (dto.getImage() == null || dto.getImage().isEmpty())
+            throw new InvalidDTOException("Movie image cannot be empty or null");
+        if (dto.getCreationDate() == null || dto.getCreationDate().isEmpty())
+            throw new InvalidDTOException("Movie creation date cannot be empty or null");
+        if (dto.getGenreId() == null)
+            throw new InvalidDTOException("Movie genre id cannot be null");
+        if (dto.getRating() == 0)
+            throw new InvalidDTOException("Movie rating cannot be null");
+        else if (dto.getRating() < 1 || dto.getRating() > 5)
+            throw new InvalidDTOException("Movie rating cannot be less than 1 or greater than 5.");
+        if (dto.getMovieCharacters() == null || dto.getMovieCharacters().isEmpty())
+            throw new InvalidDTOException("Movie should have at least 1 character");
+    }
+
 
 }

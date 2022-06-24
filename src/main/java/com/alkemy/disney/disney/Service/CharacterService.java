@@ -13,7 +13,7 @@ public interface CharacterService {
     List<CharacterBasicDTO> getCharacterBasicList();
     CharacterDTO getCharDetails(Long id);
 
-    List<CharacterEntity> look4OrCreate(List<CharacterDTO> dtos);
+    List<CharacterEntity> lookCreate(List<CharacterDTO> dtos);
 
     // POST
     CharacterDTO saveNewCharacter(CharacterDTO newChar);

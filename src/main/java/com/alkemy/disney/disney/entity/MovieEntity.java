@@ -36,7 +36,7 @@ public class MovieEntity {
     @Column(name = "creation_date")
     @NotNull(message = "is required")
     @DateTimeFormat(pattern = "yyyy/MM/dd")
-    /*@PastOrPresent(message = "the year must be past or present")*/
+    @PastOrPresent(message = "the year must be past or present")
     private LocalDate creationDate;
 
 
@@ -55,18 +55,22 @@ public class MovieEntity {
             cascade = {
                     CascadeType.PERSIST,
                     CascadeType.MERGE,
-            }, fetch = FetchType.LAZY)
+            })
+    // Definimos el nombre de la tabla intermedia y los nombres de ambas columnas
     @JoinTable(
             name = "movie_characters",
             joinColumns= @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "character_id"))
     private List<CharacterEntity> movieCharacters = new ArrayList<>();
 
-    //Buscar información
-    @ManyToOne
+    // RELACIÓNES
+    // El Objeto GeneroEntity, este atributo será solo para traer la información del Genero
+    // Se ha modificado el CascadeType.ALL para no eliminar el género si se elimina una película
+    @ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE } )
     @JoinColumn(name = "genre_id", insertable = false, updatable = false)
-    private GenreEntity genres;
-    //guardar y actualizar// define la columna de genreid en la base de datos
+    private GenreEntity genre;
+
+    //guardar y actualizar// define la columna de genreId en la base de datos
     @Column(name = "genre_id", nullable = false)
     private Long genreId;
 

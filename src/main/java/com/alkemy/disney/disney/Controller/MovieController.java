@@ -7,10 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Set;
+
 
 @RestController
 @RequestMapping("movies")
@@ -37,15 +36,11 @@ public class MovieController {
 
     //7. Creación, Edición y Eliminación de Película
     //POST
-
-
-    // == POST ==
     @PostMapping
     public ResponseEntity<MovieDTO> postNewMovie(@RequestBody MovieDTO newMovie){
         MovieDTO createdMovie = movieService.saveNewMovie(newMovie);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdMovie);
     }
-
 
 
     @PostMapping("/{movieId}/character/{charId}")
@@ -76,18 +71,18 @@ public class MovieController {
     /**
      * Returns a List of Movies as DTO that meet the specifications received
      * @param title Filter by title
-     * @param genre Filter by genre
+     * @param genreId Filter by genre
      * @param order Order by CreationDate (only accepting ASC / DESC)
      * @return a List of Movies as DTO that meet the specifications received
      */
     //Filter
-    @GetMapping("/filters")
+    @GetMapping()
     public ResponseEntity<List<MovieDTO>> getDetailsByFilters(
             @RequestParam(required = false) String title,
-            @RequestParam(required = false) Set<Long> genre,
+            @RequestParam(required = false) Long genreId,
             @RequestParam(required = false, defaultValue = "ASC") String order
     ) {
-        List<MovieDTO> filteredMovies = movieService.getByFilters(title, genre, order);
+        List<MovieDTO> filteredMovies = movieService.getByFilters(title, genreId, order);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(filteredMovies);
@@ -95,8 +90,7 @@ public class MovieController {
 
     }
 
-    //9. Agregar/Remover personajes a una película
-    //TODO: FALTA HACER ESTE PUNTO
+
 
 
 }

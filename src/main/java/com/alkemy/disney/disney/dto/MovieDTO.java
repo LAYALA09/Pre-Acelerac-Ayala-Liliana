@@ -21,10 +21,9 @@ public class MovieDTO {
     @JsonFormat(pattern = "yyyy/MM/dd")
     @NotNull(message = "Creation date is required")
     //@PastOrPresent es para validar que la fecha que se ingresa se una actual o pasada, no futura
-    /*@PastOrPresent(message = "The date of creation can be past or present")*/
+    @PastOrPresent(message = "The date of creation can be past or present")
     private String creationDate;
-    @NotNull(message = "The rating is required")
-   /*@Pattern(regexp = "[1,2,3,4,5]", message = "rating contains invalid charac-ters")*/
+
     @Min(1)
     @Max(5)
     private int rating;

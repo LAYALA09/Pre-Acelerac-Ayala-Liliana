@@ -18,13 +18,14 @@ public class CharacterController {
 @Autowired
     private CharacterService  characterService;
 
-    // GET
-    @GetMapping("/all")
+    // GET BASICDTO
+    @GetMapping( )
     public ResponseEntity<List<CharacterBasicDTO>> getBasicCharacters(){
         List<CharacterBasicDTO> charDTO = characterService.getCharacterBasicList();
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(charDTO);
     }
 
+    //GET DETAILS BY ID
     @GetMapping("/{id}")
     public ResponseEntity<CharacterDTO> getDetailsById(@PathVariable Long id){
         CharacterDTO charDetails = characterService.getCharDetails(id);

@@ -12,9 +12,10 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MovieFiltersDTO {
+
     @NotBlank(message = "Title is required")
     private String title;
-    private Set<Long> genre;
+    private Long genreId;
     private String order;
 
     public boolean isASC() {

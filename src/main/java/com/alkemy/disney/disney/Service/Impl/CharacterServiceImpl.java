@@ -8,10 +8,10 @@ import com.alkemy.disney.disney.dto.CharacterBasicDTO;
 import com.alkemy.disney.disney.dto.CharacterDTO;
 import com.alkemy.disney.disney.dto.CharacterFiltersDTO;
 import com.alkemy.disney.disney.entity.CharacterEntity;
+import com.alkemy.disney.disney.exception.InvalidDTOException;
 import com.alkemy.disney.disney.exception.ParamNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -26,8 +26,17 @@ public class CharacterServiceImpl implements CharacterService {
     @Autowired
     private CharacterSpecification characterSpecification;
 
-    // GET
-    @Override
+    // Setter/Field Injection of Dependencies so we can handle BeanCurrentlyInCreationException
+    @Autowired
+    public void setCharacterRepository(CharacterRepository characterRepository, CharacterSpecification characterSpecification, CharacterMapper characterMapper) {
+        this.characterRepository = characterRepository;
+        this.characterSpecification = characterSpecification;
+        this.characterMapper = characterMapper;
+    }
+
+
+    // GET CHARACTER BASIC DTO
+    //TODO CORREGIDO
     public List<CharacterBasicDTO> getCharacterBasicList() {
         List<CharacterEntity> myList = characterRepository.findAll();
         List<CharacterBasicDTO> resultDTO = characterMapper.basicListEntity2DTO(myList);
@@ -35,45 +44,68 @@ public class CharacterServiceImpl implements CharacterService {
     }
 
     //GET FOR ID
-    @Override
     public CharacterDTO getCharDetails(Long id) {
         CharacterEntity dbChar = this.handleFindById(id);
         CharacterDTO resultDTO = characterMapper.entity2DTO(dbChar, true);
         return resultDTO;
     }
-
+    /**
+     * Saves the CharacterDTO received to the DB and returns it with its brand-new id
+     * @param dto CharacterDTO with all their attributes setted
+     * @return The same CharacterDTO with its id setted
+     */
     //POST
-    @Override
-    public CharacterDTO saveNewCharacter(CharacterDTO newChar) {
-        CharacterEntity newEntity = characterMapper.charDTO2Entity(newChar);
-        CharacterEntity savedEntity = characterRepository.save(newEntity);
-        CharacterDTO savedChar = characterMapper.entity2DTO(savedEntity, false);
-        return savedChar;
+    public CharacterDTO saveNewCharacter(CharacterDTO dto) {
+        //Verifies if the DTO has all the attributes well setted
+        validation(dto);
+        CharacterEntity entity = characterMapper.charDTO2Entity(dto);
+        CharacterEntity entitySaved = characterRepository.save(entity);
+        CharacterDTO result = characterMapper.entity2DTO(entitySaved, false);
+
+        return result;
     }
 
 
     // DELETE
-    @Override
+    // Performs a logic delete to the entity related to the received id
+    // @param id Of the entity to delete
     public void deleteCharacterById(Long id) {
+        if (!characterRepository.findById(id).isPresent())
+            throw new ParamNotFound ("The id does not correspond to any Character in the Database.");
         characterRepository.deleteById(id);
     }
 
     // PUT
-    @Override
-    public CharacterDTO editCharacterById(Long id, CharacterDTO charToEdit) {
-        CharacterEntity savedChar = this.handleFindById(id);
-        savedChar.setImage(charToEdit.getImage());
-        savedChar.setName(charToEdit.getName());
-        savedChar.setAge(charToEdit.getAge());
-        savedChar.setWeight(charToEdit.getWeight());
-        savedChar.setHistory(charToEdit.getHistory());
-        CharacterEntity editedChar = characterRepository.save(savedChar);
-        CharacterDTO resultDTO = characterMapper.entity2DTO(editedChar, false);
-        return resultDTO;
+    /**
+     * Updates the attributes of the Entity related to the received id and sets the new attributes from the DTO received
+     * @param id Of the entity to update
+     * @param dto with the updated attributes
+     * @return The DTO with its attributes updated
+     * @throws ParamNotFound
+     */
+    public CharacterDTO editCharacterById(Long id, CharacterDTO dto) throws ParamNotFound {
+        //Validation of new attributes
+        validation(dto);
+        Optional<CharacterEntity> result = characterRepository.findById(id);
+        if (result.isPresent()) {
+            CharacterEntity entity = characterMapper.updateCharacterDTO2Entity(result.get(), dto);
+            CharacterEntity entityUpdated = characterRepository.save(entity);
+            CharacterDTO dtoUpdated = characterMapper.entity2DTO(entityUpdated, false);
+            return dtoUpdated;
+        } else {
+            throw new ParamNotFound("Requested character was not found.");
+        }
     }
 
     //FILTERS
-    @Override
+    /**
+     * Returns a List of CharacterDTOs that met the received filters
+     * @param name Filter by name
+     * @param age Filter by age
+     * @param movies Filter by Associated Movies
+     * @return A List of CharacterDTOs which met the filters
+     */
+
     public List<CharacterDTO> getByFilters(String name, Integer age, Set<Long> movies) {
         CharacterFiltersDTO filtersDTO = new CharacterFiltersDTO(name, age, movies);
         List<CharacterEntity> entityList = characterRepository.findAll(characterSpecification.getFiltered(filtersDTO));
@@ -90,7 +122,7 @@ public class CharacterServiceImpl implements CharacterService {
         return toBeFound.get();
     }
 
-    public List<CharacterEntity> look4OrCreate(List<CharacterDTO> dtos) {
+    public List<CharacterEntity> lookCreate(List<CharacterDTO> dtos) {
 
         /* Verifies id of each DTO. If it has a value, verifies if it exists in the DataBase.
          * If it does, it's added to the List. Else, it will be created and added using the Mapper. */
@@ -109,5 +141,20 @@ public class CharacterServiceImpl implements CharacterService {
         }
 
         return entities;
+    }
+    //VALIDATION
+    private void validation(CharacterDTO dto) {
+        if (dto == null)
+            throw new InvalidDTOException("Character cannot be null");
+        if (dto.getName() == null || dto.getName().isEmpty())
+            throw new InvalidDTOException("Character name cannot be empty or null");
+        if (dto.getImage() == null || dto.getImage().isEmpty())
+            throw new InvalidDTOException("Character image cannot be empty or null");
+        if (dto.getHistory() == null || dto.getHistory().isEmpty())
+            throw new InvalidDTOException("Character story cannot be empty or null");
+        if (dto.getAge() == null)
+            throw new InvalidDTOException("Character age cannot be null");
+        if (dto.getWeight() == 0)
+            throw new InvalidDTOException("Character weight cannot be null");
     }
 }
