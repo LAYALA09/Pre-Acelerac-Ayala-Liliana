@@ -20,8 +20,8 @@ public class MovieController {
 
     //6. Detalle de Película con sus personajes
     //GET FOR ID
-    @GetMapping("/{id}")
-    public ResponseEntity<MovieDTO> getDetailsById(@PathVariable Long id) {
+    @GetMapping("/{i}")
+    public ResponseEntity<MovieDTO> getDetailsById(@Valid @PathVariable Long id) {
         MovieDTO movie = movieService.getMovieDetails(id);
         return ResponseEntity.status(HttpStatus.OK).body(movie);
     }
@@ -37,7 +37,7 @@ public class MovieController {
     //7. Creación, Edición y Eliminación de Película
     //POST
     @PostMapping
-    public ResponseEntity<MovieDTO> postNewMovie(@RequestBody MovieDTO newMovie){
+    public ResponseEntity<MovieDTO> postNewMovie(@Valid @RequestBody MovieDTO newMovie){
         MovieDTO createdMovie = movieService.saveNewMovie(newMovie);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdMovie);
     }

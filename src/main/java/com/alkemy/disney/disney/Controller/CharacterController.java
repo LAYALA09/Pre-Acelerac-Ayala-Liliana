@@ -15,6 +15,7 @@ import java.util.Set;
 @RequestMapping("characters")
 //Controller==> se recibe una solicitud y se devuelve una respuesta
 public class CharacterController {
+
 @Autowired
     private CharacterService  characterService;
 
@@ -22,7 +23,7 @@ public class CharacterController {
     @GetMapping( )
     public ResponseEntity<List<CharacterBasicDTO>> getBasicCharacters(){
         List<CharacterBasicDTO> charDTO = characterService.getCharacterBasicList();
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(charDTO);
+        return ResponseEntity.ok().body(charDTO);
     }
 
     //GET DETAILS BY ID
