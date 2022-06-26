@@ -27,11 +27,10 @@ public class MovieEntity {
     private Long id;
 
     //Atributos
-
+    @NotNull(message = "Image is required")
     private String image;
-
+    @NotNull(message = "Title is required")
     private String title;
-
 
     @Column(name = "creation_date")
     @NotNull(message = "is required")
@@ -82,9 +81,9 @@ public class MovieEntity {
         this.movieCharacters.add(charToBeAdded);
     }
 
-    public void removeCharacterFromMovie(CharacterEntity charToBeRemoved) {
+    /*public void removeCharacterFromMovie(CharacterEntity charToBeRemoved) {
         this.movieCharacters.remove(charToBeRemoved);
-    }
+    }*/
 
 
 

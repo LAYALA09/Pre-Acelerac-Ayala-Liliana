@@ -1,13 +1,10 @@
 package com.alkemy.disney.disney.Controller;
-
 import com.alkemy.disney.disney.Service.MovieService;
-import com.alkemy.disney.disney.dto.MovieBasicDTO;
 import com.alkemy.disney.disney.dto.MovieDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import javax.validation.Valid;
 import java.util.List;
 
 
@@ -21,25 +18,27 @@ public class MovieController {
     //6. Detalle de Película con sus personajes
     //GET FOR ID
     @GetMapping("/{id}")
-    public ResponseEntity<MovieDTO> getDetailsById(@Valid @PathVariable Long id) {
+    public ResponseEntity<MovieDTO> getDetailsById(@PathVariable Long id) {
         MovieDTO movie = movieService.getMovieDetails(id);
-        return ResponseEntity.status(HttpStatus.OK).body(movie);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(movie);
     }
-
-
 
 
     //7. Creación, Edición y Eliminación de Película
     //POST
     @PostMapping
-    public ResponseEntity<MovieDTO> postNewMovie(@Valid @RequestBody MovieDTO newMovie){
+    public ResponseEntity<MovieDTO> postNewMovie( @RequestBody MovieDTO newMovie) {
         MovieDTO createdMovie = movieService.saveNewMovie(newMovie);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdMovie);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(createdMovie);
     }
 
 
     @PostMapping("/{movieId}/character/{charId}")
-    public ResponseEntity<Void> addChar(@Valid @PathVariable Long movieId, @PathVariable Long charId) {
+    public ResponseEntity<Void> addChar( @PathVariable Long movieId, @PathVariable Long charId) {
         movieService.addCharacterToMovie(movieId, charId);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -47,9 +46,11 @@ public class MovieController {
 
     //PUT
     @PutMapping("/{id}")
-    public ResponseEntity<MovieDTO> editMovie(@Valid @PathVariable Long id, @RequestBody MovieDTO movieToEdit) {
+    public ResponseEntity<MovieDTO> editMovie(@PathVariable Long id, @RequestBody MovieDTO movieToEdit) {
         MovieDTO editedMovie = movieService.editMovieById(id, movieToEdit);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(editedMovie);
+        return ResponseEntity
+                .status(HttpStatus.ACCEPTED)
+                .body(editedMovie);
     }
 
     // DELETE
@@ -63,11 +64,13 @@ public class MovieController {
 
 
     //8.Búsqueda de Películas
+
     /**
      * Returns a List of Movies as DTO that meet the specifications received
-     * @param title Filter by title
+     *
+     * @param title   Filter by title
      * @param genreId Filter by genre
-     * @param order Order by CreationDate (only accepting ASC / DESC)
+     * @param order   Order by CreationDate (only accepting ASC / DESC)
      * @return a List of Movies as DTO that meet the specifications received
      */
     //Filter
@@ -84,8 +87,6 @@ public class MovieController {
 
 
     }
-
-
 
 
 }

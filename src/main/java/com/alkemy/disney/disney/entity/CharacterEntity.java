@@ -5,6 +5,7 @@ import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,13 +21,15 @@ public class CharacterEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-
+    @NotNull(message = "Image is required")
     private String image;
+    @NotBlank(message = "Name is required")
     private String name;
     @NotNull(message = "Age is required")
     private Integer age;
     @NotNull(message = "Weight is required")
     private float weight;
+    @NotBlank(message = "History is required")
     private String history;
     private boolean deleted= Boolean.FALSE;
 

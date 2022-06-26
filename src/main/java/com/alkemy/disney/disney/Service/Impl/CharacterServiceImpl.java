@@ -35,26 +35,20 @@ public class CharacterServiceImpl implements CharacterService {
     }
 
 
-    // GET CHARACTER BASIC DTO
-    //TODO CORREGIDO
-    public List<CharacterBasicDTO> getCharacterBasicList() {
-        List<CharacterEntity> myList = characterRepository.findAll();
-        List<CharacterBasicDTO> resultDTO = characterMapper.basicListEntity2DTO(myList);
-        return resultDTO;
-    }
 
-    //GET FOR ID
+    //GET FOR ID//OK POSTMAN
     public CharacterDTO getCharDetails(Long id) {
         CharacterEntity dbChar = this.handleFindById(id);
         CharacterDTO resultDTO = characterMapper.entity2DTO(dbChar, true);
         return resultDTO;
     }
+
     /**
      * Saves the CharacterDTO received to the DB and returns it with its brand-new id
      * @param dto CharacterDTO with all their attributes setted
      * @return The same CharacterDTO with its id setted
      */
-    //POST
+    //POST//OK POSTMAN
     public CharacterDTO saveNewCharacter(CharacterDTO dto) {
         //Verifies if the DTO has all the attributes well setted
         validation(dto);
@@ -66,7 +60,7 @@ public class CharacterServiceImpl implements CharacterService {
     }
 
 
-    // DELETE
+    // DELETE/ OK POSTMAN
     // Performs a logic delete to the entity related to the received id
     // @param id Of the entity to delete
     public void deleteCharacterById(Long id) {
@@ -83,7 +77,7 @@ public class CharacterServiceImpl implements CharacterService {
      * @return The DTO with its attributes updated
      * @throws ParamNotFound
      */
-    public CharacterDTO editCharacterById(Long id, CharacterDTO dto) throws ParamNotFound {
+    public CharacterDTO update(Long id, CharacterDTO dto) throws ParamNotFound {
         //Validation of new attributes
         validation(dto);
         Optional<CharacterEntity> result = characterRepository.findById(id);
@@ -108,7 +102,7 @@ public class CharacterServiceImpl implements CharacterService {
 
     public List<CharacterDTO> getByFilters(String name, Integer age, Set<Long> movies) {
         CharacterFiltersDTO filtersDTO = new CharacterFiltersDTO(name, age, movies);
-        List<CharacterEntity> entityList = characterRepository.findAll(characterSpecification.getFiltered(filtersDTO));
+        List<CharacterEntity> entityList = characterRepository.findAll(characterSpecification.getByFilters(filtersDTO));
         List<CharacterDTO> resultDTO = characterMapper.charListEntity2DTOList(entityList, true);
         return resultDTO;
     }
@@ -116,7 +110,7 @@ public class CharacterServiceImpl implements CharacterService {
     // ERROR HANDLING
     public CharacterEntity handleFindById(Long id) {
         Optional<CharacterEntity> toBeFound = characterRepository.findById(id);
-        if (!toBeFound.isPresent()) {
+        if(!toBeFound.isPresent()) {
             throw new ParamNotFound("No Character for id: " + id);
         }
         return toBeFound.get();

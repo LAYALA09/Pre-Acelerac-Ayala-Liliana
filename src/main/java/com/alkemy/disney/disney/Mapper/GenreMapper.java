@@ -7,8 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class GenreMapper {
-    @Autowired
-    private MovieMapper movieMapper;
+
 
     //DTO TO ENTITY
     public GenreEntity genreDTO2Entity(GenreDTO dto) {

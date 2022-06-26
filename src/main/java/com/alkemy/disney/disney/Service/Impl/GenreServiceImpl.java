@@ -6,10 +6,9 @@ import com.alkemy.disney.disney.Service.GenreService;
 import com.alkemy.disney.disney.dto.GenreDTO;
 import com.alkemy.disney.disney.entity.GenreEntity;
 import com.alkemy.disney.disney.exception.InvalidDTOException;
-import com.alkemy.disney.disney.exception.ParamNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.Optional;
+
 
 @Service
 public class GenreServiceImpl implements GenreService {
@@ -21,6 +20,9 @@ public class GenreServiceImpl implements GenreService {
 
 
     public GenreDTO saveNewGenre(GenreDTO dto) {
+
+        //Validamos primero que el DTO sea válido
+        validation(dto);
 
         //Utilizamos el método de conversión del Mapper para pasarle el DTO recibido y obtener el Entity
         GenreEntity entity = genreMapper.genreDTO2Entity(dto);

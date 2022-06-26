@@ -7,8 +7,10 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 
-@Repository
-public interface CharacterRepository extends JpaRepository<CharacterEntity, Long>, JpaSpecificationExecutor<CharacterEntity> {
-    List<CharacterEntity> findAll(Specification<CharacterEntity> specs);
 
+@Repository
+public interface CharacterRepository extends JpaRepository<CharacterEntity, Long> {
+
+    // Método para buscarlos a todos los que cumplan con ciertas especificaciones o filtros
+    List<CharacterEntity> findAll(Specification<CharacterEntity> spec);
 }

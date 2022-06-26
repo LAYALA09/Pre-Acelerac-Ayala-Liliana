@@ -18,19 +18,18 @@ import java.util.List;
 @Component
 public class CharacterSpecification {
 
-    public Specification<CharacterEntity> getFiltered(CharacterFiltersDTO filtersDTO
-    ){
-
-        // LAMBDA Function:
+    /**
+     * Method for building dinamic queries for the DataBase according to the Filters received
+     * @param filtersDTO To be applied to the query
+     * @return A Specification of CharacterEntity type
+     */
+    public Specification<CharacterEntity> getByFilters(CharacterFiltersDTO filtersDTO) {
         return (root, query, criteriaBuilder) -> {
 
-            List<Predicate> predicates = new ArrayList<>();
+            List<Predicate> predicates = new ArrayList();
 
-            // == Name ==
-            // IF hay algo en la String:
-            // 	predicates.add(
-            //		Buildeamos un SQL LIKE -> (Database Table, a Comparar) --> ejemplo: (name, valorDTO)
-            if(StringUtils.hasLength(filtersDTO.getName())) {
+            // Adding name specificaction
+            if (StringUtils.hasLength(filtersDTO.getName())) {
                 predicates.add(
                         criteriaBuilder.like(
                                 criteriaBuilder.lower(root.get("name")),
@@ -40,29 +39,26 @@ public class CharacterSpecification {
             }
 
             // Adding age specificaction
-            // IF Hay algo -> Comparar "age" con el INT pasado en DTO.
-            if(filtersDTO.getAge() != null) {
+            if (filtersDTO.getAge() != null) {
                 predicates.add(
-                        criteriaBuilder.equal(root.get("age"), filtersDTO.getAge())								);
+                        criteriaBuilder.equal((root.get("age")),
+                                filtersDTO.getAge()
+                        )
+
+                );
             }
-            //Pegamos las tablas (Character y Movie) (Hibernate se encarga de encontrarlas
-            //a partir de las entidades)
-            //Tomamos el ID de movie, para cada una de las relaciones existentes, y lo guardamos (moviesID)
-            //Add -> si dicho moviesID, coincide con el del DTO Filtrado.
-            if(!CollectionUtils.isEmpty(filtersDTO.getMovies())) {
-                Join<CharacterEntity, MovieEntity> join = root.join("characterMovies", JoinType.INNER);
+
+            // Adding Movies specificaction
+            if (!CollectionUtils.isEmpty(filtersDTO.getMovies())) {
+                Join<MovieEntity, CharacterEntity> join = root.join("associatedMovies", JoinType.INNER);
                 Expression<String> moviesId = join.get("id");
                 predicates.add(moviesId.in(filtersDTO.getMovies()));
             }
 
-            // Removemos Duplicados:
+            //Remove duplicates
             query.distinct(true);
-            // Damos un orden HARD CODEADO: ASC por NAME
-            query.orderBy(criteriaBuilder.asc(root.get("name")));
 
-            // MAIN RETURN:
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
-
         };
     }
 }

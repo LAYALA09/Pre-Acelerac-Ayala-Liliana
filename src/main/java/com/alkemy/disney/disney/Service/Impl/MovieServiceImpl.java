@@ -1,8 +1,6 @@
 package com.alkemy.disney.disney.Service.Impl;
 
-import com.alkemy.disney.disney.Mapper.CharacterMapper;
 import com.alkemy.disney.disney.Mapper.MovieMapper;
-import com.alkemy.disney.disney.Repository.CharacterRepository;
 import com.alkemy.disney.disney.Repository.MovieRepository;
 import com.alkemy.disney.disney.Repository.specifications.MovieSpecifications;
 import com.alkemy.disney.disney.Service.CharacterService;
@@ -16,10 +14,9 @@ import com.alkemy.disney.disney.exception.InvalidDTOException;
 import com.alkemy.disney.disney.exception.ParamNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
+;
 
 @Service
 public class MovieServiceImpl implements MovieService {
@@ -45,33 +42,31 @@ public class MovieServiceImpl implements MovieService {
     }
 
     // GET MOVIE BASIC DTO
-    //TODO CORREGIDO
-    public List<MovieBasicDTO> getBasicMoviesList() {
+   /*public List<MovieBasicDTO> getBasicMoviesList() {
         List<MovieEntity> dbList = movieRepository.findAll();
         List<MovieBasicDTO> resultDTO = movieMapper.entityList2BasicDTO(dbList);
         return resultDTO;
-    }
+    }*/
 
 
     //GET FOR ID
     public MovieDTO getMovieDetails(Long id) {
         MovieEntity dbMovie = this.handleFindById(id);
-        MovieDTO resultDTO = movieMapper.entity2DTO(dbMovie, true);
+        MovieDTO resultDTO = movieMapper.MovieEntity2DTO(dbMovie, true);
         return resultDTO;
     }
 
 
     // POST
-    //TODO CORREGIDO
     public MovieDTO saveNewMovie(MovieDTO dto) {
         validation(dto);
         MovieEntity newEntity = movieMapper.movieDTO2Entity(dto);
         MovieEntity save = movieRepository.save(newEntity);
-        MovieDTO resultDTO = movieMapper.entity2DTO(save, true);
+        MovieDTO resultDTO = movieMapper.MovieEntity2DTO(save, true);
         return resultDTO;
     }
 
-    @Override
+
     public void addCharacterToMovie(Long movieId, Long charId) {
         MovieEntity savedMovie = this.handleFindById(movieId);
         CharacterEntity savedChar = characterServiceImpl.handleFindById(charId);
@@ -84,13 +79,11 @@ public class MovieServiceImpl implements MovieService {
     /**
      * Update
      * an Entity related to the received id with the new attributes from the received dto
-     *
      * @param id  of the entity to be updated
      * @param dto with all the new attributes
      * @return The Entity as DTO with its updated attributes
      * @throws ParamNotFound
      */
-    //TODO CORREGIDO
     public MovieDTO editMovieById(Long id, MovieDTO dto) throws ParamNotFound {
         //Validation of new attributes
         validation(dto);
@@ -99,20 +92,20 @@ public class MovieServiceImpl implements MovieService {
         if (result.isPresent()) {
             MovieEntity entity = movieMapper.updateMovieDTO2Entity(result.get(), dto);
             MovieEntity entityUpdated = movieRepository.save(entity);
-            MovieDTO dtoUpdated = movieMapper.entity2DTO(entityUpdated, true);
+            MovieDTO dtoUpdated = movieMapper.MovieEntity2DTO(entityUpdated, true);
             return dtoUpdated;
         } else {
             throw new ParamNotFound("Requested movie was not found.");
         }
     }
 
+
+
     /**
      * Performs a logic delete to the Entity related to the received id
-     *
      * @param id of the entity to be deleted
      */
     //DELETE
-    //TODO CORREGIDO
     public void deleteMovieById(Long id) {
         if (movieRepository.findById(id) == null)
             throw new ParamNotFound("Movie requested was not found.");
@@ -120,15 +113,14 @@ public class MovieServiceImpl implements MovieService {
     }
 
     //FILTERS
-    //TODO CORREGIDO
     public List<MovieDTO> getByFilters(String title, Long genreId, String order) {
 
         /* Creates a filtersDTO with the specifications, brings all the entities which meet these and
          * then turns the list of entitites into a list of DTOs */
-        MovieFiltersDTO movieFilters = new MovieFiltersDTO(title, genreId, order);
-        List<MovieEntity> entityList = movieRepository.findAll(movieSpecifications.getFiltered(movieFilters));
-        List<MovieDTO> resultDTO = movieMapper.movieEntityList2DTOList(entityList, true);
-        return resultDTO;
+        MovieFiltersDTO filtersDTO = new MovieFiltersDTO(title, genreId, order);
+        List<MovieEntity> entities = movieRepository.findAll(movieSpecifications.getByFilters(filtersDTO));
+        List<MovieDTO> dtos = movieMapper.movieEntityList2DTOList(entities, true);
+        return dtos;
     }
 
 
@@ -142,7 +134,7 @@ public class MovieServiceImpl implements MovieService {
         return toBeFound.get();
     }
 
-    //VALIDACION
+    //VALIDATION
 
     /**
      * Validates all attributes of the received dto and throws an exception if any does not meet the requirements

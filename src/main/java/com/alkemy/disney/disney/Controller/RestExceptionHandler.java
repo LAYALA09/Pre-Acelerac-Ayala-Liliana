@@ -21,7 +21,7 @@ import java.util.List;
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     /**
-     * Handles NotFoundExceptions
+     * Handles ParamNotFound
      * @param ex Exception thrown
      * @param request Request received when exception was thrown
      * @return Error message and an Array listing other errors

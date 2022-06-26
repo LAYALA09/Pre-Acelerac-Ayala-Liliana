@@ -14,7 +14,7 @@ public class MovieBasicDTO {
 
     @NotBlank(message = "Image is required")
     private String image;
-    @NotBlank(message = "Title is required")
+    @NotNull(message = "Title is required")
     private String title;
     @JsonFormat(pattern = "yyyy/MM/dd")
     @NotNull(message = "Creation date is required")
