@@ -1,19 +1,11 @@
 package com.alkemy.disney.disney.Controller;
-import com.alkemy.disney.disney.Mapper.CharacterMapper;
-import com.alkemy.disney.disney.Repository.CharacterRepository;
-import com.alkemy.disney.disney.Repository.specifications.CharacterSpecification;
 import com.alkemy.disney.disney.Service.CharacterService;
-import com.alkemy.disney.disney.dto.CharacterBasicDTO;
 import com.alkemy.disney.disney.dto.CharacterDTO;
 import com.alkemy.disney.disney.exception.ParamNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-
-import javax.validation.Valid;
 import java.util.List;
 import java.util.Set;
 
@@ -22,7 +14,7 @@ import java.util.Set;
 @RequestMapping("characters")
 //Controller==> se recibe una solicitud y se devuelve una respuesta
 public class CharacterController {
-
+@Autowired
 CharacterService characterService;
 
    //GET DETAILS BY ID/OK POSTMAN
@@ -45,7 +37,9 @@ CharacterService characterService;
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteById( @PathVariable Long id){
         characterService.deleteCharacterById(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity
+                .status(HttpStatus.NO_CONTENT)
+                .build();
     }
 
     // FILTERS
@@ -64,7 +58,7 @@ CharacterService characterService;
     public ResponseEntity<CharacterDTO> saveNewCharacter( @RequestBody CharacterDTO character) {
         CharacterDTO characterUpdated = characterService.saveNewCharacter(character);
         return ResponseEntity
-                .status(HttpStatus
-                        .CREATED).body(characterUpdated);
+                .status(HttpStatus.CREATED)
+                .body(characterUpdated);
     }
 }

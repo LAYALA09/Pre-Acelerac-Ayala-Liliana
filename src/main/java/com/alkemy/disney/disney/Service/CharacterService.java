@@ -11,15 +11,15 @@ public interface CharacterService {
 
     // GET
 
-    CharacterDTO getCharDetails(Long id);
+    CharacterDTO getCharDetails(Long id); // ok postman x id and get all
 
     List<CharacterEntity> lookCreate(List<CharacterDTO> dtos);
 
     // POST
-    CharacterDTO saveNewCharacter(CharacterDTO newChar);
+    CharacterDTO saveNewCharacter(CharacterDTO newChar);//ok postman
 
     // DEL
-    void deleteCharacterById(Long id);
+    void deleteCharacterById(Long id);//ok postman
 
     // PUT
     CharacterDTO update(Long id, CharacterDTO dto) throws ParamNotFound;
