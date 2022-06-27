@@ -14,7 +14,7 @@ import java.util.Set;
 @Setter
 public class CharacterFiltersDTO {
 
-    @NotBlank(message = "Name is required")
+    @NotNull(message = "Name is required")
     private String name;
     @NotNull(message = "Age is required")
     private Integer age;

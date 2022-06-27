@@ -12,9 +12,9 @@ import java.util.List;
 public class CharacterDTO {
 
     private Long id;
-    @NotBlank(message = "Image is required")
+    @NotNull(message = "Image is required")
     private String image;
-    @NotBlank(message = "Name is required")
+    @NotNull(message = "Name is required")
     private String name;
     @NotNull(message = "Age is required")
     private Integer age;

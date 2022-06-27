@@ -27,7 +27,7 @@ public interface MovieService {
     MovieDTO editMovieById(Long id, MovieDTO movieToEdit);
 
     // FILTERS
-    public List<MovieDTO> getByFilters(String title, Long genreId, String order);
+     List<MovieDTO> getByFilters(String title, Long genreId, String order);
 
 
 

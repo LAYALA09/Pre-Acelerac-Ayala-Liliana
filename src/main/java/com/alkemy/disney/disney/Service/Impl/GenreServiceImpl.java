@@ -9,6 +9,8 @@ import com.alkemy.disney.disney.exception.InvalidDTOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class GenreServiceImpl implements GenreService {
@@ -36,6 +38,19 @@ public class GenreServiceImpl implements GenreService {
         //Devolvemos el DTO con su id en la base de datos
         return result;
     }
+
+    public List<GenreDTO> getAllGenres() {
+
+        //Traemos todos los géneros como Entidades del Repository
+        List<GenreEntity> genres = genreRepository.findAll();
+
+        //Convertimos esa lista en tipo DTO usando un método de nuestro Mapper
+        List<GenreDTO> result = genreMapper.genreEntityList2DTOList(genres);
+
+        //Devolvemos la Lista con los Géneros en formato DTO
+        return result;
+    }
+
 
     private void validation(GenreDTO dto) {
         if (dto == null)

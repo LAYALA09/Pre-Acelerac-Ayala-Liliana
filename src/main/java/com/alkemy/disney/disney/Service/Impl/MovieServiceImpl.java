@@ -33,12 +33,11 @@ public class MovieServiceImpl implements MovieService {
 
     // Setter/Field Injection of Dependencies so we can handle BeanCurrentlyInCreationException
     @Autowired
-    public void setMovieRepository(MovieRepository movieRepository, MovieSpecifications movieSpecifications, MovieMapper movieMapper, CharacterService characterService, CharacterServiceImpl charService) {
+    public void setMovieRepository(MovieRepository movieRepository, MovieSpecifications movieSpecifications, MovieMapper movieMapper) {
         this.movieRepository = movieRepository;
         this.movieSpecifications = movieSpecifications;
         this.movieMapper = movieMapper;
-        this.characterService = characterService;
-        this.characterServiceImpl = characterServiceImpl;
+
     }
 
     // GET MOVIE BASIC DTO

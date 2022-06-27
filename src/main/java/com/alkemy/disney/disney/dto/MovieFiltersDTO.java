@@ -20,6 +20,8 @@ public class MovieFiltersDTO {
     private Long genreId;
     private String order;
 
+
+
     public boolean isASC() {
         return this.order.compareToIgnoreCase("ASC") == 0;
     }

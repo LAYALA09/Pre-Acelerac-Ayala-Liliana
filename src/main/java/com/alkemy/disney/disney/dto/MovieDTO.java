@@ -13,7 +13,7 @@ import java.util.List;
 public class MovieDTO {
 
     private Long id;
-    @NotBlank(message = "Image is required")
+    @NotNull(message = "Image is required")
     private String image;
     @NotNull(message = "Title is required")
     private String title;

@@ -12,7 +12,7 @@ import javax.validation.constraints.PastOrPresent;
 @Setter
 public class MovieBasicDTO {
 
-    @NotBlank(message = "Image is required")
+    @NotNull(message = "Image is required")
     private String image;
     @NotNull(message = "Title is required")
     private String title;
