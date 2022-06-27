@@ -43,11 +43,7 @@ public class CharacterServiceImpl implements CharacterService {
         return resultDTO;
     }
 
-    /**
-     * Saves the CharacterDTO received to the DB and returns it with its brand-new id
-     * @param dto CharacterDTO with all their attributes setted
-     * @return The same CharacterDTO with its id setted
-     */
+
     //POST//OK POSTMAN
     public CharacterDTO saveNewCharacter(CharacterDTO dto) {
         //Verifies if the DTO has all the attributes well setted
@@ -70,13 +66,7 @@ public class CharacterServiceImpl implements CharacterService {
     }
 
     // PUT
-    /**
-     * Updates the attributes of the Entity related to the received id and sets the new attributes from the DTO received
-     * @param id Of the entity to update
-     * @param dto with the updated attributes
-     * @return The DTO with its attributes updated
-     * @throws ParamNotFound
-     */
+
     public CharacterDTO update(Long id, CharacterDTO dto) throws ParamNotFound {
         //Validation of new attributes
         validation(dto);
@@ -92,13 +82,7 @@ public class CharacterServiceImpl implements CharacterService {
     }
 
     //FILTERS
-    /**
-     * Returns a List of CharacterDTOs that met the received filters
-     * @param name Filter by name
-     * @param age Filter by age
-     * @param movies Filter by Associated Movies
-     * @return A List of CharacterDTOs which met the filters
-     */
+
 
     public List<CharacterDTO> getByFilters(String name, Integer age, Set<Long> movies) {
         CharacterFiltersDTO filtersDTO = new CharacterFiltersDTO(name, age, movies);

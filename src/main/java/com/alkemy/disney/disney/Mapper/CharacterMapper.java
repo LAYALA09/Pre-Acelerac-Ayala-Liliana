@@ -43,12 +43,7 @@ public class CharacterMapper {
         return newDTO;
     }
 
-    /**
-     * Updates the CharacterEntity with the attributes inside the CharacterDTO. Then, returns the Entity updated
-     * @param entity To be updated
-     * @param dto with the new attributes to be set
-     * @return The Entity already updated
-     */
+
     public CharacterEntity updateCharacterDTO2Entity(CharacterEntity entity, CharacterDTO dto) {
 
         entity.setName(dto.getName());

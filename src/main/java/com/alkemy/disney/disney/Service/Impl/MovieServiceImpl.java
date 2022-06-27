@@ -75,14 +75,7 @@ public class MovieServiceImpl implements MovieService {
 
     // PUT
 
-    /**
-     * Update
-     * an Entity related to the received id with the new attributes from the received dto
-     * @param id  of the entity to be updated
-     * @param dto with all the new attributes
-     * @return The Entity as DTO with its updated attributes
-     * @throws ParamNotFound
-     */
+
     public MovieDTO editMovieById(Long id, MovieDTO dto) throws ParamNotFound {
         //Validation of new attributes
         validation(dto);
@@ -100,10 +93,7 @@ public class MovieServiceImpl implements MovieService {
 
 
 
-    /**
-     * Performs a logic delete to the Entity related to the received id
-     * @param id of the entity to be deleted
-     */
+
     //DELETE
     public void deleteMovieById(Long id) {
         if (movieRepository.findById(id) == null)
@@ -119,7 +109,7 @@ public class MovieServiceImpl implements MovieService {
         MovieFiltersDTO filtersDTO = new MovieFiltersDTO(title, genreId, order);
         List<MovieEntity> entities = movieRepository.findAll(movieSpecifications.getByFilters(filtersDTO));
         List<MovieDTO> dtos = movieMapper.movieEntityList2DTOList(entities, true);
-        return dtos;
+       return dtos;
     }
 
 
@@ -135,11 +125,7 @@ public class MovieServiceImpl implements MovieService {
 
     //VALIDATION
 
-    /**
-     * Validates all attributes of the received dto and throws an exception if any does not meet the requirements
-     *
-     * @param dto to be validated
-     */
+
     private void validation(MovieDTO dto) {
         if (dto == null)
             throw new InvalidDTOException("Movie cannot be null.");

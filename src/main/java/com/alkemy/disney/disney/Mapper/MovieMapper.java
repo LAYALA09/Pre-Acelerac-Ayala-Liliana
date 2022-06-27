@@ -61,12 +61,7 @@ public class MovieMapper {
     }
 
 
-    /**
-     * Converts a List of MovieEntity into a List of MovieDTO, optionally loading its characters too
-     * @param entList to be converted
-     * @param b       indicates if attribute 'characters' should be loaded or not
-     * @return a List with MovieDTOs
-     */
+
     //List<Entity> to List<DTO>
     public List<MovieDTO> movieEntityList2DTOList(List<MovieEntity> entList, boolean b) {
 
@@ -89,11 +84,7 @@ public class MovieMapper {
     }*/
 
 
-    /**
-     * Converts a List of MovieEntity into a List of MovieBasicDTO
-     * @param dbList to be converted
-     * @return a List of MovieBasicDTO
-     */
+
 
    /* //List<Entity> to List<BasicDTO>
     public List<MovieBasicDTO> entityList2BasicDTO(List<MovieEntity> dbList) {
@@ -105,12 +96,7 @@ public class MovieMapper {
     }*/
 
 
-    /**
-     * Updates the MovieEntity received with the attributes set in MovieDTO
-     * @param entity to be updated
-     * @param dto    with the new attributes
-     * @return the Entity already updated
-     */
+
     public MovieEntity updateMovieDTO2Entity(MovieEntity entity, MovieDTO dto) {
 
         entity.setImage(dto.getImage());
@@ -127,11 +113,7 @@ public class MovieMapper {
     }
 
 
-    /**
-     * Util which converts a Date as a String with format "yyyy/MM/dd" into a LocalDate Object
-     * @param enteredDate the date using a "yyyy/MM/dd" format
-     * @return The same date as LocalDate Object
-     */
+
     public LocalDate String2LocalDate(String enteredDate) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
         LocalDate transformedDate = LocalDate.parse(enteredDate, formatter);

@@ -65,14 +65,7 @@ public class MovieController {
 
     //8.Búsqueda de Películas
 
-    /**
-     * Returns a List of Movies as DTO that meet the specifications received
-     *
-     * @param title   Filter by title
-     * @param genreId Filter by genre
-     * @param order   Order by CreationDate (only accepting ASC / DESC)
-     * @return a List of Movies as DTO that meet the specifications received
-     */
+
     //Filter
     @GetMapping()
     public ResponseEntity<List<MovieDTO>> getDetailsByFilters(

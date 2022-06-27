@@ -18,11 +18,7 @@ import java.util.List;
 @Component
 public class CharacterSpecification {
 
-    /**
-     * Method for building dinamic queries for the DataBase according to the Filters received
-     * @param filtersDTO To be applied to the query
-     * @return A Specification of CharacterEntity type
-     */
+
     public Specification<CharacterEntity> getByFilters(CharacterFiltersDTO filtersDTO) {
         return (root, query, criteriaBuilder) -> {
 
