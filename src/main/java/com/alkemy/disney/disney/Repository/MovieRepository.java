@@ -10,6 +10,5 @@ import java.util.List;
 @Repository
 public interface MovieRepository extends JpaRepository<MovieEntity, Long>, JpaSpecificationExecutor<MovieEntity> {
 
-    // For Filtering:
     List<MovieEntity> findAll(Specification<MovieEntity> spec);
 }

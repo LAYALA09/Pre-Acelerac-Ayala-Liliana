@@ -17,6 +17,7 @@ public class GenreMapper {
         GenreEntity genreEntity = new GenreEntity();
         genreEntity.setName(dto.getName());
         genreEntity.setImage(dto.getImage());
+
         return genreEntity;
 
     }
@@ -33,16 +34,12 @@ public class GenreMapper {
     }
 
     public List<GenreDTO> genreEntityList2DTOList(List<GenreEntity> entities) {
-
         //Creamos la Lista donde guardaremos los DTOs
         List<GenreDTO> dtos = new ArrayList();
-
-        /*For Each para recorrer la lista del parámetro y guardar cada Entity
-        como un DTO usando el método de la propia clase para parsear de Entity 2 DTO */
         for (GenreEntity entity : entities) {
             dtos.add(genreEntity2DTO(entity));
         }
-        //Devolvemos el listado ya completo
+
         return dtos;
 
 

@@ -12,12 +12,12 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("characters")
-//Controller==> se recibe una solicitud y se devuelve una respuesta
 public class CharacterController {
+
 @Autowired
 CharacterService characterService;
 
-   //GET DETAILS BY ID/OK POSTMAN
+   //GET DETAILS BY ID
     @GetMapping("/{id}")
     public ResponseEntity<CharacterDTO> getDetailsById(@PathVariable Long id){
         CharacterDTO charDetails = characterService.getCharDetails(id);
@@ -30,10 +30,12 @@ CharacterService characterService;
     @PutMapping("/{id}")
     public ResponseEntity<CharacterDTO> update(@PathVariable Long id, @RequestBody CharacterDTO dto) throws ParamNotFound {
         CharacterDTO result = characterService.update(id, dto);
-        return ResponseEntity.ok().body(result);
+        return ResponseEntity
+                .ok()
+                .body(result);
     }
 
-    // DELETE/OK POSTMAN
+    // DELETE
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteById( @PathVariable Long id){
         characterService.deleteCharacterById(id);
@@ -50,10 +52,12 @@ CharacterService characterService;
             @RequestParam(required = false) Set<Long> movies
     ){
         List<CharacterDTO> charList = characterService.getByFilters(name, age, movies);
-        return ResponseEntity.status(HttpStatus.OK).body(charList);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(charList);
     }
 
-    //POST/OK POSTMAN
+    //POST
     @PostMapping
     public ResponseEntity<CharacterDTO> saveNewCharacter( @RequestBody CharacterDTO character) {
         CharacterDTO characterUpdated = characterService.saveNewCharacter(character);

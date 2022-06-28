@@ -18,6 +18,7 @@ import java.util.List;
 @Where(clause = "deleted=false")
 @Table(name = "characters")
 public class CharacterEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;

@@ -13,6 +13,7 @@ import javax.validation.constraints.Size;
 
 @Data
 public class UserDTO {
+
     //ATTRIBUTES
     @Email(message = "Username must be an email.")
     private String username;

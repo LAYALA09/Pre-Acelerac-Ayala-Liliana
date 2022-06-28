@@ -11,6 +11,7 @@ import java.util.List;
 
 @Component
 public class CharacterMapper {
+
     @Autowired
     private MovieMapper movieMapper;
     private MovieService movieService;
@@ -43,9 +44,8 @@ public class CharacterMapper {
         return newDTO;
     }
 
-
+    //DTO TO ENTITY
     public CharacterEntity updateCharacterDTO2Entity(CharacterEntity entity, CharacterDTO dto) {
-
         entity.setName(dto.getName());
         entity.setImage(dto.getImage());
         entity.setAge(dto.getAge());
@@ -56,7 +56,6 @@ public class CharacterMapper {
     }
 
     //List<Entity> TO List<DTO>
-
     public List<CharacterDTO> charListEntity2DTOList(List<CharacterEntity> movieCharacters, boolean b) {
         List<CharacterDTO> newList = new ArrayList<>();
         for (CharacterEntity ent : movieCharacters) {
@@ -64,9 +63,6 @@ public class CharacterMapper {
         }
         return newList;
     }
-
-
-
 
 }
 

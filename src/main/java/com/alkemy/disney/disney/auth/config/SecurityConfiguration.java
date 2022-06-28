@@ -19,6 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @SuppressWarnings("deprecation")
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
     /// ATTRIBUTES
     private UserDetailsCustomService userDetailsCustomService;
     private JwtRequestFilter jwtRequestFilter;

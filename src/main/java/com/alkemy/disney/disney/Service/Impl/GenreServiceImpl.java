@@ -14,6 +14,7 @@ import java.util.List;
 
 @Service
 public class GenreServiceImpl implements GenreService {
+
     @Autowired
     private GenreMapper genreMapper;
 
@@ -23,31 +24,31 @@ public class GenreServiceImpl implements GenreService {
 
     public GenreDTO saveNewGenre(GenreDTO dto) {
 
-        //Validamos primero que el DTO sea válido
+        //Valido primero que el DTO sea válido
         validation(dto);
 
-        //Utilizamos el método de conversión del Mapper para pasarle el DTO recibido y obtener el Entity
+        //Utilizo el método de conversión del Mapper para pasarle el DTO recibido y obtener el Entity
         GenreEntity entity = genreMapper.genreDTO2Entity(dto);
 
-        //Persistimos el DTO ahora hecho Entidad en la DB
+        //Persisto el DTO ahora hecho Entidad en la DB
         GenreEntity entitySaved = genreRepository.save(entity);
 
-        //Convertimos la Entidad ya persistida de vuelta en un DTO, ahora con id
+        //Convierto la Entidad ya persistida de vuelta en un DTO, ahora con id
         GenreDTO result = genreMapper.genreEntity2DTO(entitySaved);
 
-        //Devolvemos el DTO con su id en la base de datos
+        //Devuelvo el DTO con su id en la base de datos
         return result;
     }
 
     public List<GenreDTO> getAllGenres() {
 
-        //Traemos todos los géneros como Entidades del Repository
+        //Trae todos los géneros como Entidades del Repository
         List<GenreEntity> genres = genreRepository.findAll();
 
-        //Convertimos esa lista en tipo DTO usando un método de nuestro Mapper
+        //Convierte esa lista en tipo DTO usando un método de nuestro Mapper
         List<GenreDTO> result = genreMapper.genreEntityList2DTOList(genres);
 
-        //Devolvemos la Lista con los Géneros en formato DTO
+        //Devuelve la Lista con los Géneros en formato DTO
         return result;
     }
 
@@ -60,13 +61,6 @@ public class GenreServiceImpl implements GenreService {
         if (dto.getImage() == null || dto.getImage().isEmpty())
             throw new InvalidDTOException("Genre image cannot be empty or null");
     }
-
-
-
-
-
-
-
 
 
 }

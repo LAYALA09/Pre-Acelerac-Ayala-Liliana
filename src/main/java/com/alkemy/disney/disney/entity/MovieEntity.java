@@ -21,48 +21,41 @@ import java.util.List;
 @SQLDelete(sql = "UPDATE movies SET deleted = true WHERE id=?")
 @Where(clause = "deleted=false")
 public class MovieEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
 
     private Long id;
 
-    //Atributos
     @NotNull(message = "Image is required")
     private String image;
     @NotNull(message = "Title is required")
     private String title;
-
     @Column(name = "creation_date")
     @NotNull(message = "is required")
     @DateTimeFormat(pattern = "yyyy/MM/dd")
    /* @PastOrPresent(message = "the year must be past or present")*/
     private LocalDate creationDate;
-
-
     @NotNull(message = "The rating is required")
     @Min(1)
     @Max(5)
     private int rating;
-
-
     private boolean deleted = Boolean.FALSE;
 
-
     //Many to Many between movie and character
-    //El tipo de cascada de la relación será con las operaciones de persistir y mergear
     @ManyToMany(
             cascade = {
                     CascadeType.PERSIST,
                     CascadeType.MERGE,
             })
-    // Definimos el nombre de la tabla intermedia y los nombres de ambas columnas
+
     @JoinTable(
             name = "movie_characters",
             joinColumns= @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "character_id"))
     private List<CharacterEntity> movieCharacters = new ArrayList<>();
 
-    // RELACIÓNES
+
     // El Objeto GeneroEntity, este atributo será solo para traer la información del Genero
     // Se ha modificado el CascadeType.ALL para no eliminar el género si se elimina una película
     @ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE } )
@@ -75,16 +68,10 @@ public class MovieEntity {
 
 
 
-   /// CHARACTER
+   // CHARACTER
     public void addCharacterToMovie(CharacterEntity charToBeAdded) {
 
         this.movieCharacters.add(charToBeAdded);
     }
-
-    /*public void removeCharacterFromMovie(CharacterEntity charToBeRemoved) {
-        this.movieCharacters.remove(charToBeRemoved);
-    }*/
-
-
 
 }

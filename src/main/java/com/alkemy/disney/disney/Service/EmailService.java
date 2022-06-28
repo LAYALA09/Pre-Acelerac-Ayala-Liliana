@@ -6,4 +6,5 @@ public interface EmailService {
      * @param to email of a new user
      */
     void sendWelcomeEmailTo(String to);
+
 }

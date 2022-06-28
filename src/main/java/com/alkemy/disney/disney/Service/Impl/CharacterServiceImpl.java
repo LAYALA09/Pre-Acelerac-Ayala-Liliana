@@ -4,7 +4,6 @@ import com.alkemy.disney.disney.Mapper.CharacterMapper;
 import com.alkemy.disney.disney.Repository.CharacterRepository;
 import com.alkemy.disney.disney.Repository.specifications.CharacterSpecification;
 import com.alkemy.disney.disney.Service.CharacterService;
-import com.alkemy.disney.disney.dto.CharacterBasicDTO;
 import com.alkemy.disney.disney.dto.CharacterDTO;
 import com.alkemy.disney.disney.dto.CharacterFiltersDTO;
 import com.alkemy.disney.disney.entity.CharacterEntity;
@@ -35,11 +34,11 @@ public class CharacterServiceImpl implements CharacterService {
     }
 
 
-
-    //GET FOR ID//OK POSTMAN
+    //GET FOR ID
     public CharacterDTO getCharDetails(Long id) {
         CharacterEntity dbChar = this.handleFindById(id);
         CharacterDTO resultDTO = characterMapper.entity2DTO(dbChar, true);
+
         return resultDTO;
     }
 
@@ -66,7 +65,6 @@ public class CharacterServiceImpl implements CharacterService {
     }
 
     // PUT
-
     public CharacterDTO update(Long id, CharacterDTO dto) throws ParamNotFound {
         //Validation of new attributes
         validation(dto);
@@ -82,8 +80,6 @@ public class CharacterServiceImpl implements CharacterService {
     }
 
     //FILTERS
-
-
     public List<CharacterDTO> getByFilters(String name, Integer age, Set<Long> movies) {
         CharacterFiltersDTO filtersDTO = new CharacterFiltersDTO(name, age, movies);
         List<CharacterEntity> entityList = characterRepository.findAll(characterSpecification.getByFilters(filtersDTO));
@@ -121,8 +117,10 @@ public class CharacterServiceImpl implements CharacterService {
         return entities;
     }
 
+
     //VALIDATION
     private void validation(CharacterDTO dto) {
+
         if (dto == null)
             throw new InvalidDTOException("Character cannot be null");
         if (dto.getName() == null || dto.getName().isEmpty())

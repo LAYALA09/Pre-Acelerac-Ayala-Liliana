@@ -19,9 +19,9 @@ import javax.validation.constraints.NotNull;
 @SQLDelete(sql = "UPDATE genre SET deleted = true WHERE id=?") // Indicamos que query ejecutar al llamar un DELETE
 @Where(clause = "deleted=false") // Le agrega una clausula extra a las queries que se realicen para diferenciar a los borrados de los no borrados
 public class GenreEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-
     private Long id;
     @NotBlank(message = "Name is required")
     private String name;

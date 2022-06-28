@@ -11,22 +11,20 @@ import java.util.List;
 
 public interface MovieService {
 
-    // GET
-
+    // GET FOR ID
     MovieDTO getMovieDetails(Long id);
-
 
     // POST
     MovieDTO saveNewMovie(MovieDTO newMovie);
     void addCharacterToMovie(Long movieId, Long charId);
 
-    // DEL
+    // DEL FOR ID
     void deleteMovieById(Long id);
 
     // PUT
     MovieDTO editMovieById(Long id, MovieDTO movieToEdit);
 
-    // FILTERS
+    // FILTERS FOR TITLE, GENRE ID, ORDER, LIST MOVIE
      List<MovieDTO> getByFilters(String title, Long genreId, String order);
 
 

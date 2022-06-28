@@ -1,7 +1,6 @@
 package com.alkemy.disney.disney.auth.service;
 
 
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -14,13 +13,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-
 @Service
-public class JwtUtils   {
+public class JwtUtils {
+
     private String SECRET_KEY = "secret";
 
     /**
      * Returns the Username related to the received token
+     *
      * @param token
      * @return
      */
@@ -30,6 +30,7 @@ public class JwtUtils   {
 
     /**
      * Returns the expiration date as a Date Object related to the received token
+     *
      * @param token
      * @return
      */
@@ -48,6 +49,7 @@ public class JwtUtils   {
 
     /**
      * Returns true if the token is still valid
+     *
      * @param token
      * @return
      */
@@ -57,6 +59,7 @@ public class JwtUtils   {
 
     /**
      * Generates a token using the attributes in UserDetails
+     *
      * @param userDetails
      * @return
      */
@@ -67,6 +70,7 @@ public class JwtUtils   {
 
     /**
      * Creates a token using the JSON Web Token builder which lasts until 10 hours after creation
+     *
      * @param claims
      * @param subject
      * @return
@@ -80,6 +84,7 @@ public class JwtUtils   {
 
     /**
      * Returns true if the token corresponds to the UserDetails attributes and if it's still valid
+     *
      * @param token
      * @param userDetails
      * @return

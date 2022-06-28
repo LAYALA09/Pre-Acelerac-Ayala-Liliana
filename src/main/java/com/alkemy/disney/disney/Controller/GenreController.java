@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 
 
@@ -13,11 +12,10 @@ import javax.validation.Valid;
 @RequestMapping("genres")
 public class GenreController {
 
-    // Para q Spring me inicialice este servicio uso Autowired
     @Autowired
     private GenreService genreService;
 
-    //3. Creación de Géneros
+
     //POST GENRE
     @PostMapping
     public ResponseEntity<GenreDTO> postNewGenre(@Valid @RequestBody GenreDTO newGenre){

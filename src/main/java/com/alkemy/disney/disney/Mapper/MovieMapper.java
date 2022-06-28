@@ -2,12 +2,10 @@ package com.alkemy.disney.disney.Mapper;
 
 import com.alkemy.disney.disney.Repository.CharacterRepository;
 import com.alkemy.disney.disney.Service.CharacterService;
-import com.alkemy.disney.disney.dto.MovieBasicDTO;
 import com.alkemy.disney.disney.dto.MovieDTO;
 import com.alkemy.disney.disney.entity.MovieEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -64,11 +62,11 @@ public class MovieMapper {
 
     //List<Entity> to List<DTO>
     public List<MovieDTO> movieEntityList2DTOList(List<MovieEntity> entList, boolean b) {
-
         List<MovieDTO> dtoList = new ArrayList<>();
         for (MovieEntity ent : entList) {
             dtoList.add(this.MovieEntity2DTO(ent, b));
         }
+
         return dtoList;
     }
 
@@ -96,7 +94,7 @@ public class MovieMapper {
     }*/
 
 
-
+    //DTO  A ENTITY
     public MovieEntity updateMovieDTO2Entity(MovieEntity entity, MovieDTO dto) {
 
         entity.setImage(dto.getImage());
@@ -109,9 +107,9 @@ public class MovieMapper {
                         dto.getMovieCharacters()
                 )
         );
+
         return entity;
     }
-
 
 
     public LocalDate String2LocalDate(String enteredDate) {
@@ -119,6 +117,7 @@ public class MovieMapper {
         LocalDate transformedDate = LocalDate.parse(enteredDate, formatter);
         return transformedDate;
     }
+
 
     public String localDate2String(LocalDate dbDate) {
         String formattedDate = dbDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));

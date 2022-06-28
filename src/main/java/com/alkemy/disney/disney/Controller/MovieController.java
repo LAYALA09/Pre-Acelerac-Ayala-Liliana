@@ -1,10 +1,12 @@
 package com.alkemy.disney.disney.Controller;
+
 import com.alkemy.disney.disney.Service.MovieService;
 import com.alkemy.disney.disney.dto.MovieDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 
@@ -15,7 +17,6 @@ public class MovieController {
     @Autowired
     private MovieService movieService;
 
-    //6. Detalle de Película con sus personajes
     //GET FOR ID
     @GetMapping("/{id}")
     public ResponseEntity<MovieDTO> getDetailsById(@PathVariable Long id) {
@@ -26,10 +27,9 @@ public class MovieController {
     }
 
 
-    //7. Creación, Edición y Eliminación de Película
     //POST
     @PostMapping
-    public ResponseEntity<MovieDTO> postNewMovie( @RequestBody MovieDTO newMovie) {
+    public ResponseEntity<MovieDTO> postNewMovie(@RequestBody MovieDTO newMovie) {
         MovieDTO createdMovie = movieService.saveNewMovie(newMovie);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -38,9 +38,11 @@ public class MovieController {
 
 
     @PostMapping("/{movieId}/character/{charId}")
-    public ResponseEntity<Void> addChar( @PathVariable Long movieId, @PathVariable Long charId) {
+    public ResponseEntity<Void> addChar(@PathVariable Long movieId, @PathVariable Long charId) {
         movieService.addCharacterToMovie(movieId, charId);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .build();
     }
 
 
@@ -61,9 +63,6 @@ public class MovieController {
                 .status(HttpStatus.NO_CONTENT)
                 .build();
     }
-
-
-    //8.Búsqueda de Películas
 
 
     //Filter
