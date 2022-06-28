@@ -1,13 +1,28 @@
 package com.alkemy.disney.disney.auth.controller;
 
+
+
+import com.alkemy.disney.disney.auth.dto.AuthenticationRequest;
+import com.alkemy.disney.disney.auth.dto.AuthenticationResponse;
+import com.alkemy.disney.disney.auth.dto.UserDTO;
+import com.alkemy.disney.disney.auth.service.UserDetailsCustomService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/auth")
 public class UserAuthController {
+
+
     // ATTRIBUTES
-    /*private UserDetailsCustomService userDetailsCustomService;
+    private UserDetailsCustomService userDetailsCustomService;
 
     // CONSTRUCTOR
     @Autowired
@@ -20,7 +35,7 @@ public class UserAuthController {
      * @param dto
      * @return
      */
-    /*@PostMapping("/signup")
+    @PostMapping("/signup")
     public ResponseEntity<AuthenticationResponse> signUp(@Valid @RequestBody UserDTO dto) {
         userDetailsCustomService.save(dto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -32,9 +47,9 @@ public class UserAuthController {
      * @return Returns the token corresponding to the details in the Authentication Request
      * @throws Exception
      */
-    /*@PostMapping("/signin")
+    @PostMapping("/signin")
     public ResponseEntity<AuthenticationResponse> signIn(@RequestBody AuthenticationRequest authRequest) throws Exception {
         final String jwt = userDetailsCustomService.signIn(authRequest);
         return ResponseEntity.ok(new AuthenticationResponse(jwt));
-    }*/
-}
+    }
+    }

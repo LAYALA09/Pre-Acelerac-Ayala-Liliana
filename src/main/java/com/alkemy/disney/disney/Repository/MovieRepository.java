@@ -8,9 +8,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface MovieRepository extends JpaRepository<MovieEntity, Long> {
+public interface MovieRepository extends JpaRepository<MovieEntity, Long>, JpaSpecificationExecutor<MovieEntity> {
 
-    // Método para buscar a todos los que cumplan con ciertas especificaciones o filtros
+    // For Filtering:
     List<MovieEntity> findAll(Specification<MovieEntity> spec);
-
 }
