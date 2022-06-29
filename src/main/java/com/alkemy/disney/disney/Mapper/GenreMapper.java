@@ -25,7 +25,8 @@ public class GenreMapper {
     // ENTITY TO DTO
     public GenreDTO genreEntity2DTO(GenreEntity entity) {
         GenreDTO dto = new GenreDTO();
-        dto.setId(entity.getId());////Ahora que la entidad persistida tiene un id, se lo seteamos al DTO
+        //Ahora que la entidad persistida tiene un id, se lo seteamos al DTO
+        dto.setId(entity.getId());
         dto.setName(entity.getName());
         dto.setImage(entity.getImage());
 
