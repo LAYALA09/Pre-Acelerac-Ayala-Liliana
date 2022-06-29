@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Set;
 
@@ -28,7 +30,7 @@ CharacterService characterService;
 
     // PUT CHARACTER
     @PutMapping("/{id}")
-    public ResponseEntity<CharacterDTO> update(@PathVariable Long id, @RequestBody CharacterDTO dto) throws ParamNotFound {
+    public ResponseEntity<CharacterDTO> update(@Valid @PathVariable Long id, @RequestBody CharacterDTO dto) throws ParamNotFound {
         CharacterDTO result = characterService.update(id, dto);
         return ResponseEntity
                 .ok()
@@ -59,7 +61,7 @@ CharacterService characterService;
 
     //POST
     @PostMapping
-    public ResponseEntity<CharacterDTO> saveNewCharacter( @RequestBody CharacterDTO character) {
+    public ResponseEntity<CharacterDTO> saveNewCharacter(@Valid @RequestBody CharacterDTO character) {
         CharacterDTO characterUpdated = characterService.saveNewCharacter(character);
         return ResponseEntity
                 .status(HttpStatus.CREATED)

@@ -8,7 +8,6 @@ import com.alkemy.disney.disney.entity.GenreEntity;
 import com.alkemy.disney.disney.exception.InvalidDTOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 

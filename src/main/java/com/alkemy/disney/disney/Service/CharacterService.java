@@ -15,7 +15,7 @@ public interface CharacterService {
     List<CharacterEntity> lookCreate(List<CharacterDTO> dtos);
 
     // POST
-    CharacterDTO saveNewCharacter(CharacterDTO newChar);//ok postman
+    CharacterDTO saveNewCharacter(CharacterDTO newChar);
 
     // DEL FOR ID
     void deleteCharacterById(Long id);//ok postman

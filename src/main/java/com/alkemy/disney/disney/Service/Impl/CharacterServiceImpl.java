@@ -11,6 +11,7 @@ import com.alkemy.disney.disney.exception.InvalidDTOException;
 import com.alkemy.disney.disney.exception.ParamNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -43,7 +44,7 @@ public class CharacterServiceImpl implements CharacterService {
     }
 
 
-    //POST//OK POSTMAN
+    //POST
     public CharacterDTO saveNewCharacter(CharacterDTO dto) {
         //Verifies if the DTO has all the attributes well setted
         validation(dto);
@@ -55,12 +56,10 @@ public class CharacterServiceImpl implements CharacterService {
     }
 
 
-    // DELETE/ OK POSTMAN
-    // Performs a logic delete to the entity related to the received id
-    // @param id Of the entity to delete
+    // DELETE
     public void deleteCharacterById(Long id) {
         if (!characterRepository.findById(id).isPresent())
-            throw new ParamNotFound ("The id does not correspond to any Character in the Database.");
+            throw new ParamNotFound("The id does not correspond to any Character in the Database.");
         characterRepository.deleteById(id);
     }
 
@@ -90,7 +89,7 @@ public class CharacterServiceImpl implements CharacterService {
     // ERROR HANDLING
     public CharacterEntity handleFindById(Long id) {
         Optional<CharacterEntity> toBeFound = characterRepository.findById(id);
-        if(!toBeFound.isPresent()) {
+        if (!toBeFound.isPresent()) {
             throw new ParamNotFound("No Character for id: " + id);
         }
         return toBeFound.get();
