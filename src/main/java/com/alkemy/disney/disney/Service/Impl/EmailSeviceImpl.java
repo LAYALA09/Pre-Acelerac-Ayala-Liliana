@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
-
 import java.io.IOException;
 
 @Service
@@ -35,20 +34,22 @@ public class EmailSeviceImpl implements EmailService {
         if (!enabled)
             return;
 
-        // SendGrid API Key as environment variable
+        // SendGrid API Key as environment variable//obtener apiKey(clave para usar como contraseña)
+        // para poder ejecutar el envio de mails
         String apiKey = environment.getProperty("EMAIL_API_KEY");
 
         // Defining parts of the email like sender, recipient, content and subject
         Email fromEmail = new Email(emailSender);
         Email toEmail = new Email(to);
+        //Inicializar el cuerpo
         Content content = new Content(
                 "text/plain",
-                "Welcome to Disney API! A challenge from Alkemy Labs by Lilian Ayala."
+                "Welcome to Disney API! "
         );
         String subject = "Getting Started at Disney API";
 
         // Creating the Email with all its parts, a SendGrid Object with the API key and a Request
-        Mail mail = new Mail(fromEmail, subject, toEmail, content);
+        Mail mail = new Mail( fromEmail, subject, toEmail, content);
         SendGrid sendGrid = new SendGrid(apiKey);
         Request request = new Request();
 
@@ -61,9 +62,10 @@ public class EmailSeviceImpl implements EmailService {
             Response response = sendGrid.api(request);
 
             //Showing the response details in console
-            System.out.println(response.getStatusCode());
+            //logueo lo siguiente y luego capturo cualquier excepcion
+           /* System.out.println(response.getStatusCode());
             System.out.println(response.getBody());
-            System.out.println(response.getHeaders());
+            System.out.println(response.getHeaders());*/
 
         } catch (IOException e) {
             System.out.println("Error trying to send the email.");

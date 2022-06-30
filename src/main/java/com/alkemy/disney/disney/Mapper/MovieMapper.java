@@ -71,29 +71,6 @@ public class MovieMapper {
     }
 
 
-    //Entity to BasicDto
-   /* public MovieBasicDTO entity2BasicDTO(MovieEntity ent) {
-
-        MovieBasicDTO dto = new MovieBasicDTO();
-        dto.setImage(ent.getImage());
-        dto.setTitle(ent.getTitle());
-        dto.setCreationDate(this.localDate2String(ent.getCreationDate()));
-        return dto;
-    }*/
-
-
-
-
-   /* //List<Entity> to List<BasicDTO>
-    public List<MovieBasicDTO> entityList2BasicDTO(List<MovieEntity> dbList) {
-        List<MovieBasicDTO> newList = new ArrayList<>();
-        for (MovieEntity ent : dbList) {
-            newList.add(this.entity2BasicDTO(ent));
-        }
-        return newList;
-    }*/
-
-
     //DTO  A ENTITY
     public MovieEntity updateMovieDTO2Entity(MovieEntity entity, MovieDTO dto) {
 

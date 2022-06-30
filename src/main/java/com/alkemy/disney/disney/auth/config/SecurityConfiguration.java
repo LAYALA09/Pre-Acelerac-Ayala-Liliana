@@ -3,16 +3,14 @@ package com.alkemy.disney.disney.auth.config;
 
 import com.alkemy.disney.disney.auth.filter.JwtRequestFilter;
 import com.alkemy.disney.disney.auth.service.UserDetailsCustomService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -21,14 +19,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     /// ATTRIBUTES
-    private UserDetailsCustomService userDetailsCustomService;
-    private JwtRequestFilter jwtRequestFilter;
+    private UserDetailsCustomService userDetailsCustomService;//filtro
+    private JwtRequestFilter jwtRequestFilter;//servicio
 
-    @Autowired
-    public void setAttributes(UserDetailsCustomService userDetailsCustomService, @Lazy JwtRequestFilter jwtRequestFilter) {
-        this.userDetailsCustomService = userDetailsCustomService;
-        this.jwtRequestFilter = jwtRequestFilter;
-    }
+
 
     /**
      * Configure method to override the service used for UserDetails
@@ -42,16 +36,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsCustomService);
     }
 
-    /**
-     * No cripting password yet for being an educational project
-     *
-     * @return
-     */
+
     @Bean
     public PasswordEncoder passwordEncoder() {
 
-        return NoOpPasswordEncoder.getInstance();
+        return new BCryptPasswordEncoder();
     }
+
+    /*@Bean
+    public SendGrid sendGrid() {
+        return new SendGrid("XX");
+    }*/
 
     /**
      * Configure method to override HttpSecurity behaviour.
@@ -62,6 +57,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
      * @throws Exception
      */
     @Override
+    //indicamos a que endpoints se le da seguridad
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf().disable()
                 .authorizeRequests().antMatchers("/auth/*").permitAll()

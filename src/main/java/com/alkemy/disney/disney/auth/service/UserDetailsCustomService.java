@@ -7,7 +7,6 @@ import com.alkemy.disney.disney.auth.dto.UserDTO;
 import com.alkemy.disney.disney.auth.entity.UserEntity;
 import com.alkemy.disney.disney.auth.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,6 +15,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.Collections;
 
@@ -32,10 +32,10 @@ public class UserDetailsCustomService implements UserDetailsService{
     private EmailService emailService;
 
     @Autowired
-    public void setAttributes(
-            UserRepository userRepository,
-            JwtUtils jwtTokenUtil,
-            @Lazy AuthenticationManager authenticationManager) {
+    private PasswordEncoder encoder;
+
+    @Autowired
+    public void setAttributes(UserRepository userRepository, JwtUtils jwtTokenUtil,AuthenticationManager authenticationManager) {
         this.userRepository = userRepository;
         this.jwtTokenUtil = jwtTokenUtil;
         this.authenticationManager = authenticationManager;
@@ -68,8 +68,10 @@ public class UserDetailsCustomService implements UserDetailsService{
     public boolean save(UserDTO userDTO) {
         UserEntity userEntity = new UserEntity();
         userEntity.setUsername(userDTO.getUsername());
-        userEntity.setPassword(userDTO.getPassword());
+        userEntity.setPassword(encoder.encode(userDTO.getPassword()));
+
         UserEntity entitySaved = userRepository.save(userEntity);
+
         if (userEntity != null)
             emailService.sendWelcomeEmailTo(userEntity.getUsername());
         return entitySaved != null;
@@ -81,6 +83,8 @@ public class UserDetailsCustomService implements UserDetailsService{
      * @return Token corresponding to the AuthenticationRequest
      * @throws Exception
      */
+
+
     public String signIn(AuthenticationRequest authRequest) throws Exception {
 
         UserDetails userDetails;

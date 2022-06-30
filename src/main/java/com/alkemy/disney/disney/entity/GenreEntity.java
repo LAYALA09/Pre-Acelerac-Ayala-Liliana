@@ -27,7 +27,6 @@ public class GenreEntity {
     private String name;
     @NotNull(message = "Image is required")
     private String image;
-
     private boolean deleted = Boolean.FALSE; // Booleano para ejecutar un SOFT DELETE
 
 
