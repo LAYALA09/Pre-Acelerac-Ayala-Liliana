@@ -3,6 +3,8 @@ package com.alkemy.disney.disney.auth.config;
 
 import com.alkemy.disney.disney.auth.filter.JwtRequestFilter;
 import com.alkemy.disney.disney.auth.service.UserDetailsCustomService;
+import com.sendgrid.SendGrid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -19,17 +21,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     /// ATTRIBUTES
+    @Autowired
     private UserDetailsCustomService userDetailsCustomService;//filtro
+    @Autowired
     private JwtRequestFilter jwtRequestFilter;//servicio
 
 
-
-    /**
-     * Configure method to override the service used for UserDetails
-     *
-     * @param auth
-     * @throws Exception
-     */
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -43,10 +40,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    /*@Bean
+    @Bean
     public SendGrid sendGrid() {
         return new SendGrid("XX");
-    }*/
+    }
 
     /**
      * Configure method to override HttpSecurity behaviour.

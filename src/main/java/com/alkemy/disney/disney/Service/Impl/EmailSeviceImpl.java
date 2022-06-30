@@ -61,11 +61,6 @@ public class EmailSeviceImpl implements EmailService {
 
             Response response = sendGrid.api(request);
 
-            //Showing the response details in console
-            //logueo lo siguiente y luego capturo cualquier excepcion
-           /* System.out.println(response.getStatusCode());
-            System.out.println(response.getBody());
-            System.out.println(response.getHeaders());*/
 
         } catch (IOException e) {
             System.out.println("Error trying to send the email.");

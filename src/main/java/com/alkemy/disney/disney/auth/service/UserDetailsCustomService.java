@@ -34,12 +34,6 @@ public class UserDetailsCustomService implements UserDetailsService{
     @Autowired
     private PasswordEncoder encoder;
 
-    @Autowired
-    public void setAttributes(UserRepository userRepository, JwtUtils jwtTokenUtil,AuthenticationManager authenticationManager) {
-        this.userRepository = userRepository;
-        this.jwtTokenUtil = jwtTokenUtil;
-        this.authenticationManager = authenticationManager;
-    }
 
     /**
      * Overridden abstract method from UserDetailsService

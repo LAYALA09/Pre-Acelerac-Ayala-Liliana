@@ -26,7 +26,7 @@ public class JwtRequestFilter extends OncePerRequestFilter{
     private JwtUtils jwtUtil;
     private AuthenticationManager authenticationManager;
 
-    @Autowired
+   /* @Autowired
     public void setAttributes(
             UserDetailsCustomService userDetailsCustomService,
             JwtUtils jwtUtil,
@@ -34,7 +34,7 @@ public class JwtRequestFilter extends OncePerRequestFilter{
         this.userDetailsCustomService = userDetailsCustomService;
         this.jwtUtil = jwtUtil;
         this.authenticationManager = authenticationManager;
-    }
+    }*/
 
     /**
      * Filters every request before processing. Looks in the request header for an attribute called "Authorization" with a
@@ -74,8 +74,6 @@ public class JwtRequestFilter extends OncePerRequestFilter{
             if (jwtUtil.validateToken(jwt, userDetails)) {
                 UsernamePasswordAuthenticationToken authReq =
                         new UsernamePasswordAuthenticationToken(userDetails.getUsername(), userDetails.getPassword());
-
-               /* Authentication auth = authenticationManager.authenticate(authReq);*/
 
 
                 // Set auth in context*/
