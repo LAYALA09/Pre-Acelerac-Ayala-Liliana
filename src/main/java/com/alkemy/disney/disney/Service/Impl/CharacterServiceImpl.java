@@ -91,6 +91,7 @@ public class CharacterServiceImpl implements CharacterService {
 
 
     // ERROR HANDLING
+    //Method to check if the character exists
     public CharacterEntity handleFindById(Long id) {
         Optional<CharacterEntity> toBeFound = characterRepository.findById(id);
         if (!toBeFound.isPresent()) {

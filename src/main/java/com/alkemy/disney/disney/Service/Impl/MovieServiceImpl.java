@@ -116,7 +116,7 @@ public class MovieServiceImpl implements MovieService {
     }
 
 
-    //VALIDATION
+    ////VALIDATION OF NEW ATTRIBUTES
     private void validation(MovieDTO dto) {
         if (dto == null)
             throw new InvalidDTOException("Movie cannot be null.");
