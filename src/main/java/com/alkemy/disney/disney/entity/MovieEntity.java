@@ -31,9 +31,9 @@ public class MovieEntity {
     @NotNull(message = "Title is required")
     private String title;
     @Column(name = "creation_date")
-    @NotNull(message = "is required")
+    @NotNull(message = "Creation date is required")
     @DateTimeFormat(pattern = "yyyy/MM/dd")
-   /* @PastOrPresent(message = "the year must be past or present")*/
+    @PastOrPresent(message = "the year must be past or present")
     private LocalDate creationDate;
     @NotNull(message = "The rating is required")
     @Min(1)
@@ -61,7 +61,7 @@ public class MovieEntity {
     @JoinColumn(name = "genre_id", insertable = false, updatable = false)
     private GenreEntity genre;
 
-    //guardar y actualizar// define la columna de genreId en la base de datos
+    //Guardar y actualizar// define la columna de genreId en la base de datos
     @Column(name = "genre_id", nullable = false)
     private Long genreId;
 

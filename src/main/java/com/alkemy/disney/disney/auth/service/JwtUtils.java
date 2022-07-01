@@ -7,7 +7,6 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.cglib.core.internal.Function;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,6 +27,7 @@ public class JwtUtils {
         return extractClaim(token, Claims::getSubject);
     }
 
+
     /**
      * Returns the expiration date as a Date Object related to the received token
      *
@@ -47,6 +47,7 @@ public class JwtUtils {
         return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
     }
 
+
     /**
      * Returns true if the token is still valid
      *
@@ -56,6 +57,7 @@ public class JwtUtils {
     private Boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
+
 
     /**
      * Generates a token using the attributes in UserDetails
@@ -67,6 +69,7 @@ public class JwtUtils {
         Map<String, Object> claims = new HashMap();
         return createToken(claims, userDetails.getUsername());
     }
+
 
     /**
      * Creates a token using the JSON Web Token builder which lasts until 10 hours after creation

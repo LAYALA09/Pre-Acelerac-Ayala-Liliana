@@ -19,7 +19,7 @@ public interface MovieService {
     // PUT
     MovieDTO editMovieById(Long id, MovieDTO movieToEdit);
 
-    // FILTERS FOR TITLE, GENRE ID, ORDER, LIST MOVIE
+    // FILTERS FOR TITLE, GENRE ID, ORDER ASC-DESC, LIST MOVIE, LIST OF IMAGE,TITLE AND CREATION DATE
      List<MovieDTO> getByFilters(String title, Long genreId, String order);
 
 

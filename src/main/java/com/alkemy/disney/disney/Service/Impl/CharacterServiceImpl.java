@@ -11,7 +11,6 @@ import com.alkemy.disney.disney.exception.InvalidDTOException;
 import com.alkemy.disney.disney.exception.ParamNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -19,12 +18,14 @@ import java.util.Set;
 
 @Service
 public class CharacterServiceImpl implements CharacterService {
+
     @Autowired
     private CharacterRepository characterRepository;
     @Autowired
     private CharacterMapper characterMapper;
     @Autowired
     private CharacterSpecification characterSpecification;
+
 
     // Setter/Field Injection of Dependencies so we can handle BeanCurrentlyInCreationException
     @Autowired
@@ -63,6 +64,7 @@ public class CharacterServiceImpl implements CharacterService {
         characterRepository.deleteById(id);
     }
 
+
     // PUT
     public CharacterDTO update(Long id, CharacterDTO dto) throws ParamNotFound {
         //Validation of new attributes
@@ -78,6 +80,7 @@ public class CharacterServiceImpl implements CharacterService {
         }
     }
 
+
     //FILTERS
     public List<CharacterDTO> getByFilters(String name, Integer age, Set<Long> movies) {
         CharacterFiltersDTO filtersDTO = new CharacterFiltersDTO(name, age, movies);
@@ -85,6 +88,7 @@ public class CharacterServiceImpl implements CharacterService {
         List<CharacterDTO> resultDTO = characterMapper.charListEntity2DTOList(entityList, true);
         return resultDTO;
     }
+
 
     // ERROR HANDLING
     public CharacterEntity handleFindById(Long id) {

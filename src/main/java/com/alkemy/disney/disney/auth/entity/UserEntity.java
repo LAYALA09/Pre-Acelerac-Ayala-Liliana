@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 @Setter
 public class UserEntity {
 
-    // ATTRIBUTES
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

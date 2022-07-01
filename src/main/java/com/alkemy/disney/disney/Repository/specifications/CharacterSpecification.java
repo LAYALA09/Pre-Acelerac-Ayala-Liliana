@@ -24,7 +24,7 @@ public class CharacterSpecification {
 
             List<Predicate> predicates = new ArrayList();
 
-            // Adding name specificaction
+            // Adding name specification
             if (StringUtils.hasLength(filtersDTO.getName())) {
                 predicates.add(
                         criteriaBuilder.like(

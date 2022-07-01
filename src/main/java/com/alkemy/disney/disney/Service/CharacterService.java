@@ -17,13 +17,13 @@ public interface CharacterService {
     // POST
     CharacterDTO saveNewCharacter(CharacterDTO newChar);
 
-    // DEL FOR ID
-    void deleteCharacterById(Long id);//ok postman
+    // DELETE FOR ID
+    void deleteCharacterById(Long id);
 
     // PUT
     CharacterDTO update(Long id, CharacterDTO dto) throws ParamNotFound;
 
-    // FILTERS OF NAME, AGE, MOVIES, LIST CHARACTER
+    // FILTERS OF NAME, AGE, WEIGHT, MOVIES, LIST CHARACTER, LIST IMAGE AND NAME
     List<CharacterDTO> getByFilters(String name, Integer age, Set<Long> movies);
 
 

@@ -5,10 +5,8 @@ import com.alkemy.disney.disney.dto.GenreDTO;
 
 public interface GenreService {
 
-    //Post
+    //POST
     GenreDTO saveNewGenre(GenreDTO newGenre);
-
-
 
 
 }

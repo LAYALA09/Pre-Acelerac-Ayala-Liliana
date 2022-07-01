@@ -13,13 +13,14 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
+
+
     /**
      * Handles ParamNotFound
      * @param ex Exception thrown
@@ -36,6 +37,8 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                 );
         return handleExceptionInternal(ex, errorDTO, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
+
+
     /**
      * Handles InvaildDTOExceptions
      * @param ex Exception thrown
@@ -51,6 +54,8 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         );
         return handleExceptionInternal(ex, errorDTO, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
+
+
     /**
      * Handles IllegalArgumentExceptions
      * @param ex Exception thrown
@@ -62,6 +67,8 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         String bodyResponse = "You should be more specific with application requirements";
         return handleExceptionInternal(ex, bodyResponse, new HttpHeaders(), HttpStatus.CONFLICT, request);
     }
+
+
     /**
      * Handler for @Valid annotation
      * @param ex
@@ -70,6 +77,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
      * @param request
      * @return
      */
+
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
             MethodArgumentNotValidException ex,

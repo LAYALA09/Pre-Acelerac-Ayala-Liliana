@@ -20,7 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @SuppressWarnings("deprecation")
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    /// ATTRIBUTES
+
     @Autowired
     private UserDetailsCustomService userDetailsCustomService;//filtro
     @Autowired
@@ -53,6 +53,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
      * @param httpSecurity
      * @throws Exception
      */
+
     @Override
     //indicamos a que endpoints se le da seguridad
     protected void configure(HttpSecurity httpSecurity) throws Exception {

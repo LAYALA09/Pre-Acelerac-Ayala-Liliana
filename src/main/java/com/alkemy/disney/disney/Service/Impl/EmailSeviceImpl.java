@@ -18,7 +18,7 @@ import java.io.IOException;
 @Service
 public class EmailSeviceImpl implements EmailService {
 
-    // For environment variables usage
+
   @Autowired
     private Environment environment;
 
@@ -34,8 +34,7 @@ public class EmailSeviceImpl implements EmailService {
         if (!enabled)
             return;
 
-        // SendGrid API Key as environment variable//obtener apiKey(clave para usar como contraseña)
-        // para poder ejecutar el envio de mails
+        // SendGrid API Key as environment variable
         String apiKey = environment.getProperty("EMAIL_API_KEY");
 
         // Defining parts of the email like sender, recipient, content and subject

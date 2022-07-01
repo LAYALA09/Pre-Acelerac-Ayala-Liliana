@@ -14,6 +14,7 @@ import java.util.List;
 
 @Component
 public class MovieMapper {
+
     @Autowired
     private CharacterMapper characterMapper;
     @Autowired
@@ -57,7 +58,6 @@ public class MovieMapper {
         }
         return dto;
     }
-
 
 
     //List<Entity> to List<DTO>

@@ -3,10 +3,8 @@ package com.alkemy.disney.disney.auth.filter;
 
 import com.alkemy.disney.disney.auth.service.JwtUtils;
 import com.alkemy.disney.disney.auth.service.UserDetailsCustomService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -21,20 +19,11 @@ import java.io.IOException;
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter{
 
-    // ATTRIBUTES
+
     private UserDetailsCustomService userDetailsCustomService;
     private JwtUtils jwtUtil;
     private AuthenticationManager authenticationManager;
 
-   /* @Autowired
-    public void setAttributes(
-            UserDetailsCustomService userDetailsCustomService,
-            JwtUtils jwtUtil,
-            AuthenticationManager authenticationManager) {
-        this.userDetailsCustomService = userDetailsCustomService;
-        this.jwtUtil = jwtUtil;
-        this.authenticationManager = authenticationManager;
-    }*/
 
     /**
      * Filters every request before processing. Looks in the request header for an attribute called "Authorization" with a
@@ -48,6 +37,7 @@ public class JwtRequestFilter extends OncePerRequestFilter{
      * @throws ServletException
      * @throws IOException
      */
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {

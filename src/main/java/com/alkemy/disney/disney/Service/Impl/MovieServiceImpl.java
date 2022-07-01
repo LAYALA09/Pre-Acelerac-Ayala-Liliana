@@ -19,6 +19,7 @@ import java.util.Optional;
 
 @Service
 public class MovieServiceImpl implements MovieService {
+
     @Autowired
     private MovieRepository movieRepository;
     @Autowired
@@ -30,6 +31,7 @@ public class MovieServiceImpl implements MovieService {
     @Autowired
     private CharacterServiceImpl characterServiceImpl;
 
+
     // Setter/Field Injection of Dependencies so we can handle BeanCurrentlyInCreationException
     @Autowired
     public void setMovieRepository(MovieRepository movieRepository, MovieSpecifications movieSpecifications, MovieMapper movieMapper) {
@@ -38,13 +40,6 @@ public class MovieServiceImpl implements MovieService {
         this.movieMapper = movieMapper;
 
     }
-
-    // GET MOVIE BASIC DTO
-   /*public List<MovieBasicDTO> getBasicMoviesList() {
-        List<MovieEntity> dbList = movieRepository.findAll();
-        List<MovieBasicDTO> resultDTO = movieMapper.entityList2BasicDTO(dbList);
-        return resultDTO;
-    }*/
 
 
     //GET FOR ID
@@ -74,6 +69,7 @@ public class MovieServiceImpl implements MovieService {
         movieRepository.save(savedMovie);
     }
 
+
     // PUT
     public MovieDTO editMovieById(Long id, MovieDTO dto) throws ParamNotFound {
         //Validation of new attributes
@@ -98,6 +94,7 @@ public class MovieServiceImpl implements MovieService {
         movieRepository.deleteById(id);
     }
 
+
     //FILTERS
     public List<MovieDTO> getByFilters(String title, Long genreId, String order) {
         MovieFiltersDTO filtersDTO = new MovieFiltersDTO(title, genreId, order);
@@ -109,7 +106,7 @@ public class MovieServiceImpl implements MovieService {
 
 
     // ERROR HANDLING
-    //method para verificar si existe la película
+    //Method to check if the movie exists
     public MovieEntity handleFindById(Long id) {
         Optional<MovieEntity> toBeFound = movieRepository.findById(id);
         if (!toBeFound.isPresent()) {
@@ -117,6 +114,7 @@ public class MovieServiceImpl implements MovieService {
         }
         return toBeFound.get();
     }
+
 
     //VALIDATION
     private void validation(MovieDTO dto) {

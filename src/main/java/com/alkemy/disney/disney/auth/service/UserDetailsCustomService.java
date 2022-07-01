@@ -23,7 +23,7 @@ import java.util.Collections;
 @Service
 public class UserDetailsCustomService implements UserDetailsService{
 
-    // ATTRIBUTES
+
     private UserRepository userRepository;
     private JwtUtils jwtTokenUtil;
     private AuthenticationManager authenticationManager;
@@ -52,6 +52,7 @@ public class UserDetailsCustomService implements UserDetailsService{
         return new User(userEntity.getUsername(), userEntity.getPassword(), Collections.emptyList());
     }
 
+
     /**
      * Turns the UserDTO parameter into an Entity and saves it to the DB
      * Additionally, sends a welcome email to the User e-mail (not supported yet)
@@ -71,14 +72,13 @@ public class UserDetailsCustomService implements UserDetailsService{
         return entitySaved != null;
     }
 
+
     /**
      * Receives an AuthenticationRequest and tries to authenticate it. If it can, returns the proper token.
      * @param authRequest
      * @return Token corresponding to the AuthenticationRequest
      * @throws Exception
      */
-
-
     public String signIn(AuthenticationRequest authRequest) throws Exception {
 
         UserDetails userDetails;
