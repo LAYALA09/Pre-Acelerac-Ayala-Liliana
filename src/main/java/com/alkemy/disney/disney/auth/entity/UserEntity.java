@@ -16,7 +16,9 @@ public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+
     private Long id;
+
     @Email
     private String username;
     @Size(min = 8)

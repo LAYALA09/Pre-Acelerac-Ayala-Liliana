@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface CharacterRepository extends JpaRepository<CharacterEntity, Long> {
 
-    // Método para buscarlos a todos los que cumplan con ciertas especificaciones o filtros
+    // Method to search for all those who meet certain specifications or filters
     List<CharacterEntity> findAll(Specification<CharacterEntity> spec);
 }

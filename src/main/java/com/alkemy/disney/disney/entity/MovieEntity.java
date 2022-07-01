@@ -55,13 +55,14 @@ public class MovieEntity {
     private List<CharacterEntity> movieCharacters = new ArrayList<>();
 
 
-    // El Objeto GeneroEntity, este atributo será solo para traer la información del Genero
-    // Se ha modificado el CascadeType.ALL para no eliminar el género si se elimina una película
+    // The GeneroEntity Object, this attribute will be only to bring the information of the Gender
+    // The cascadetype.ALL has been modified not to delete the genre if a movie is deleted
     @ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE } )
     @JoinColumn(name = "genre_id", insertable = false, updatable = false)
     private GenreEntity genre;
 
-    //Guardar y actualizar// define la columna de genreId en la base de datos
+    //Save and update//
+    // Defines the genreId column in the database
     @Column(name = "genre_id", nullable = false)
     private Long genreId;
 

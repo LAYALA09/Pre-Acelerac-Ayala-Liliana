@@ -22,9 +22,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 
     @Autowired
-    private UserDetailsCustomService userDetailsCustomService;//filtro
+    private UserDetailsCustomService userDetailsCustomService;//Filter
     @Autowired
-    private JwtRequestFilter jwtRequestFilter;//servicio
+    private JwtRequestFilter jwtRequestFilter;//Service
 
 
 
@@ -53,9 +53,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
      * @param httpSecurity
      * @throws Exception
      */
-
     @Override
-    //indicamos a que endpoints se le da seguridad
+    //Indicate which endpoints are given security
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf().disable()
                 .authorizeRequests().antMatchers("/auth/*").permitAll()

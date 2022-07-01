@@ -29,7 +29,7 @@ public class CharacterMapper {
     }
 
     // ENTITY TO DTO
-    //uso boolean si debe cargar o no ese atributo
+    //I use boolean whether or not to load that attribute
     public CharacterDTO entity2DTO(CharacterEntity savedEntity, Boolean fetchMovies) {
         CharacterDTO newDTO = new CharacterDTO();
         newDTO.setId(savedEntity.getId());

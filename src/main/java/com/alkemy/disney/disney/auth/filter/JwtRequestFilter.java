@@ -37,7 +37,6 @@ public class JwtRequestFilter extends OncePerRequestFilter{
      * @throws ServletException
      * @throws IOException
      */
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {

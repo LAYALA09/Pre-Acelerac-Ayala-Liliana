@@ -40,7 +40,7 @@ public class EmailSeviceImpl implements EmailService {
         // Defining parts of the email like sender, recipient, content and subject
         Email fromEmail = new Email(emailSender);
         Email toEmail = new Email(to);
-        //Inicializar el cuerpo
+        //I initialize the body
         Content content = new Content(
                 "text/plain",
                 "Welcome to Disney API! "

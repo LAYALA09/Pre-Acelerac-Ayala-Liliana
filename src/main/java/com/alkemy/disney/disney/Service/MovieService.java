@@ -13,7 +13,7 @@ public interface MovieService {
     MovieDTO saveNewMovie(MovieDTO newMovie);
     void addCharacterToMovie(Long movieId, Long charId);
 
-    // DEL FOR ID
+    // DELETE FOR ID
     void deleteMovieById(Long id);
 
     // PUT

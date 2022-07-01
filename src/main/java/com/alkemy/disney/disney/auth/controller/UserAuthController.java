@@ -35,7 +35,6 @@ public class UserAuthController {
      * @param dto
      * @return
      */
-
     @PostMapping("/signup")
     public ResponseEntity<AuthenticationResponse> signUp(@Valid @RequestBody UserDTO dto) {
         userDetailsCustomService.save(dto);
@@ -49,7 +48,6 @@ public class UserAuthController {
      * @return Returns the token corresponding to the details in the Authentication Request
      * @throws Exception
      */
-
     @PostMapping("/signin")
     public ResponseEntity<AuthenticationResponse> signIn(@Valid @RequestBody AuthenticationRequest authRequest) throws Exception {
         final String jwt = userDetailsCustomService.signIn(authRequest);

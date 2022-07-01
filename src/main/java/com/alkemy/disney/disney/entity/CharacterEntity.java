@@ -14,7 +14,7 @@ import java.util.List;
 @Getter
 @Setter
 @SQLDelete(sql = "UPDATE characters SET deleted = true WHERE id=?")
-//diferencio de los que se borraron y los que no
+//differ from those that were deleted and those that were not
 @Where(clause = "deleted=false")
 @Table(name = "characters")
 public class CharacterEntity {

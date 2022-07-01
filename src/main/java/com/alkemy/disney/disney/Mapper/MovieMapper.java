@@ -51,7 +51,7 @@ public class MovieMapper {
         dto.setCreationDate(this.localDate2String(dbMovie.getCreationDate()));
         dto.setRating(dbMovie.getRating());
         dto.setGenreId(dbMovie.getGenreId());
-        //indico que guarde el personaje pero no  la pelicula
+        //I indicate that I save the character but not the movie
         if (b) {
             dto.setMovieCharacters(characterMapper.charListEntity2DTOList(dbMovie.getMovieCharacters(), false));
 

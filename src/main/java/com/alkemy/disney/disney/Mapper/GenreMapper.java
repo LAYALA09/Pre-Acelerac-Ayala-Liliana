@@ -25,7 +25,7 @@ public class GenreMapper {
     // ENTITY TO DTO
     public GenreDTO genreEntity2DTO(GenreEntity entity) {
         GenreDTO dto = new GenreDTO();
-        //Ahora que la entidad persistida tiene un id, se lo seteamos al DTO
+        //Now that the persisted entity has an id, we sete it to the DTO
         dto.setId(entity.getId());
         dto.setName(entity.getName());
         dto.setImage(entity.getImage());
@@ -35,7 +35,7 @@ public class GenreMapper {
     }
 
     public List<GenreDTO> genreEntityList2DTOList(List<GenreEntity> entities) {
-        //Creamos la Lista donde guardaremos los DTOs
+        //We create the List where we will save the DTOS
         List<GenreDTO> dtos = new ArrayList();
         for (GenreEntity entity : entities) {
             dtos.add(genreEntity2DTO(entity));
