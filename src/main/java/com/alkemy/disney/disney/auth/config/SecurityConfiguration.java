@@ -3,7 +3,7 @@ package com.alkemy.disney.disney.auth.config;
 
 import com.alkemy.disney.disney.auth.filter.JwtRequestFilter;
 import com.alkemy.disney.disney.auth.service.UserDetailsCustomService;
-import com.sendgrid.SendGrid;
+/*import com.sendgrid.SendGrid;*/
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -40,10 +40,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
+   /* @Bean
     public SendGrid sendGrid() {
         return new SendGrid("XX");
-    }
+    }*/
 
     /**
      * Configure method to override HttpSecurity behaviour.

@@ -33,7 +33,6 @@ public class MovieEntity {
     @Column(name = "creation_date")
     @NotNull(message = "Creation date is required")
     @DateTimeFormat(pattern = "yyyy/MM/dd")
-    @PastOrPresent(message = "the year must be past or present")
     private LocalDate creationDate;
     @NotNull(message = "The rating is required")
     @Min(1)
@@ -49,7 +48,7 @@ public class MovieEntity {
             })
 
     @JoinTable(
-            name = "movie_characters",
+            name = "movies_characters",
             joinColumns= @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "character_id"))
     private List<CharacterEntity> movieCharacters = new ArrayList<>();

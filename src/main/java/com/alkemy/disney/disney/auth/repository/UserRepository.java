@@ -14,4 +14,5 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
      * @return The UserEntity if exists
      */
     UserEntity findByUsername(String username);
+
 }

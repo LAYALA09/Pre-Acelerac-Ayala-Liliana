@@ -18,7 +18,6 @@ public class MovieDTO {
     private String title;
     @JsonFormat(pattern = "yyyy/MM/dd")
     @NotNull(message = "Creation date is required")
-    @PastOrPresent(message = "The date of creation can be past or present")
     private String creationDate;
     @Min(1)
     @Max(5)

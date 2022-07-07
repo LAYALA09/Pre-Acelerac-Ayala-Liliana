@@ -35,7 +35,7 @@ public class UserAuthController {
      * @param dto
      * @return
      */
-    @PostMapping("/signup")
+   @PostMapping("/signup")
     public ResponseEntity<AuthenticationResponse> signUp(@Valid @RequestBody UserDTO dto) {
         userDetailsCustomService.save(dto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
