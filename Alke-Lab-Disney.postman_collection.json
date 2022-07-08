@@ -61,14 +61,17 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/movies",
+									"raw": "http://localhost:8080/movies/48/characters/49",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
-										"movies"
+										"movies",
+										"48",
+										"characters",
+										"49"
 									]
 								}
 							},
@@ -92,7 +95,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/movies?title=Titanic\n\n",
+									"raw": "http://localhost:8080/movies?title=Titanic \n\n",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -104,7 +107,7 @@
 									"query": [
 										{
 											"key": "title",
-											"value": "Titanic\n\n"
+											"value": "Titanic \n\n"
 										}
 									]
 								}
@@ -129,20 +132,19 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/movies/filters?genreId=4",
+									"raw": "http://localhost:8080/movies?genreId=3",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
-										"movies",
-										"filters"
+										"movies"
 									],
 									"query": [
 										{
 											"key": "genreId",
-											"value": "4"
+											"value": "3"
 										}
 									]
 								}
@@ -167,7 +169,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/movies?order=desc",
+									"raw": "http://localhost:8080/movies?order=ASC",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -179,7 +181,7 @@
 									"query": [
 										{
 											"key": "order",
-											"value": "desc"
+											"value": "ASC"
 										}
 									]
 								}
@@ -204,7 +206,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/movies/50",
+									"raw": "http://localhost:8080/movies/44",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -212,7 +214,7 @@
 									"port": "8080",
 									"path": [
 										"movies",
-										"50"
+										"44"
 									]
 								}
 							},
@@ -227,7 +229,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n     \"id\": 5,\r\n     \"image\":\"uri//http/The Silence of the Lambs l2.jpg\",\r\n     \"title\":\"The Silence of the Lambs\",\r\n     \"creationDate\": \"2020/08/12\",\r\n     \"rating\": 2,\r\n     \"genreId\": 2,\r\n     \"movieCharacters\":[{\r\n         \"id\":14,\r\n         \"image\": \"uri//http/l33.gap..7\",\r\n         \"name\": \"Alicia Christian Foster\",\r\n         \"age\": 35,\r\n         \"weight\": 74,\r\n         \"history\":\"La cinta cuenta la historia de Clarice Starling, una joven detective en formación del FBI quien busca la ayuda del doctor Lecter con el objetivo de capturar a otro asesino en serie conocido como Buffalo Bill\",\r\n         \"characterMovies\":[]\r\n        \r\n     }]\r\n       \r\n}",
+							"raw": "{\r\n        \"image\": \"uri//http/La era de hielo 3.jpg\",\r\n        \"title\": \"Titanic \",\r\n        \"creationDate\": \"1998/08/12\",\r\n        \"rating\": 4,\r\n        \"genreId\": 3,\r\n        \"movieCharacters\": [\r\n            {\r\n                \"id\": 57,\r\n                \"image\": \"uri//http/prueba..247\",\r\n                \"name\": \"Rose DeWitt Bukater\",\r\n                \"age\": 20,\r\n                \"weight\": 60.0,\r\n                \"history\": \"Personaje principal 2\",\r\n                \"characterMovies\": null\r\n            }\r\n        ]\r\n    \r\n       \r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -254,14 +256,15 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/movies",
+							"raw": "http://localhost:8080/movies/42",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"movies"
+								"movies",
+								"42"
 							]
 						}
 					},
@@ -272,15 +275,25 @@
 					"request": {
 						"method": "PUT",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"id\": 44,\r\n        \"image\": \"uri//http/La era de hielo 3.jpg\",\r\n        \"title\": \"La era de hielo \",\r\n        \"creationDate\": \"2020/02/12\",\r\n        \"rating\": 4,\r\n        \"genreId\": 2,\r\n        \"movieCharacters\": [\r\n            {\r\n                \"id\": 1,\r\n                \"image\": \"uri//htt/img3.jpg\",\r\n                \"name\": \"Scrat\",\r\n                \"age\": 10,\r\n                \"weight\": 50.0,\r\n                \"history\": \"Es una ardilla de dientes de sable, que se fija en las semillas de roble.\",\r\n                \"characterMovies\": null\r\n            }\r\n        ]\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "http://localhost:8080/movies",
+							"raw": "http://localhost:8080/movies/44",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"movies"
+								"movies",
+								"44"
 							]
 						}
 					},
@@ -298,7 +311,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Aventura\",\r\n    \"image\":\"uri//htt/img4.jpg\"\r\n    \r\n}",
+							"raw": "{\r\n    \"name\": \"Suspenso\",\r\n    \"image\":\"uri//htt/img5421.jpg\"\r\n    \r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -329,8 +342,17 @@
 					"request": {
 						"method": "PUT",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"image\": \"Caribean1.jpg\",\r\n  \"title\": \"Caribean Pirates I\",\r\n  \"creationDate\": \"2001-03-05\",\r\n  \"rating\": 4,\r\n  \"genreId\": 1,\r\n  \"movieCharacters\": [\r\n    {\r\n      \"image\": \"Jack234.jpg\",\r\n      \"name\": \"Jack Sparrow\",\r\n      \"age\": 34,\r\n      \"weight\": 70.6,\r\n      \"history\": \"Principal character\"\r\n    }\r\n  ]   \r\n       \r\n        \r\n       \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "http://localhost:8080/characters/40",
+							"raw": "http://localhost:8080/characters/43",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -338,7 +360,7 @@
 							"port": "8080",
 							"path": [
 								"characters",
-								"40"
+								"43"
 							]
 						}
 					},
@@ -351,7 +373,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"id\": 3,\r\n  \"image\":\"uri//htt/ils/rsar.jpg\",\r\n  \"name\":\"Sid\",\r\n  \"age\": 10,\r\n  \"weight\": 30,\r\n  \"history\":\"Sid: Él es un perezoso Goliath apareció en cada una de las tres películas como uno de los héroes principales\",\r\n  \"characterMovies\":[]\r\n  \r\n  \r\n} ",
+							"raw": "{\r\n   \r\n                \"image\": \"uri//http/prueba..247\",\r\n                \"name\": \"Rose DeWitt Bukater\",\r\n                \"age\": 20,\r\n                \"weight\": 60.0,\r\n                \"history\": \"Personaje principal 2\",\r\n                \"characterMovies\": null\r\n            }\r\n  \r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -398,7 +420,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/characters",
+							"raw": "http://localhost:8080/characters?movies=Titanic ",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -406,6 +428,12 @@
 							"port": "8080",
 							"path": [
 								"characters"
+							],
+							"query": [
+								{
+									"key": "movies",
+									"value": "Titanic "
+								}
 							]
 						}
 					},
@@ -417,7 +445,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/characters",
+							"raw": "http://localhost:8080/characters?name=Manny",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -425,6 +453,12 @@
 							"port": "8080",
 							"path": [
 								"characters"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Manny"
+								}
 							]
 						}
 					},
@@ -436,7 +470,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/characters",
+							"raw": "http://localhost:8080/characters?age=10",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -444,6 +478,12 @@
 							"port": "8080",
 							"path": [
 								"characters"
+							],
+							"query": [
+								{
+									"key": "age",
+									"value": "10"
+								}
 							]
 						}
 					},
@@ -475,14 +515,15 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/characters",
+							"raw": "http://localhost:8080/characters/40",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"characters"
+								"characters",
+								"40"
 							]
 						}
 					},
